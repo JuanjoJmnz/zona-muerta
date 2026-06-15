@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Sanatorio de Agramón — Zona Muerta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .art-hero { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--border); }
+    .art-hero .breadcrumb { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+    .art-hero .breadcrumb a { color: var(--text2); }
+    .art-hero .breadcrumb a:hover { color: var(--text); }
+    .art-hero h1 { font-family: var(--font-disp); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600; line-height: 1.1; letter-spacing: 0.03em; margin-bottom: 1.25rem; max-width: 720px; }
+    .art-hero .art-meta { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text3); letter-spacing: 0.06em; display: flex; gap: 1rem; flex-wrap: wrap; }
+    .art-cover { width: 100%; aspect-ratio: 16/7; margin: 2.5rem 0; }
+    .art-cover .img-urbex { width: 100%; height: 100%; }
+    .art-body { max-width: 680px; padding: 0 0 5rem; }
+    .art-body p { font-size: 1rem; line-height: 1.9; color: var(--text2); margin-bottom: 1.4rem; }
+    .art-body h2 { font-family: var(--font-disp); font-size: 1.35rem; font-weight: 400; letter-spacing: 0.06em; color: var(--text); margin: 2.5rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .art-body h3 { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.15em; color: var(--red); text-transform: uppercase; margin: 2rem 0 0.75rem; }
+    blockquote { border-left: 2px solid var(--red); padding: 0.75rem 1.5rem; margin: 2rem 0; }
+    blockquote p { font-family: var(--font-spec); font-style: italic; font-size: 1.05rem; color: var(--text); margin: 0; }
+    .exp-box { background: var(--bg3); border: 1px solid var(--border2); border-left: 2px solid var(--red-dim); padding: 1.25rem 1.5rem; margin: 2rem 0; }
+    .exp-box-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text3); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .exp-box p { font-size: 0.85rem; margin: 0; color: var(--text2); }
+    .redacted { background: var(--text); color: transparent; user-select: none; padding: 0 2px; }
+    .art-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; padding: 3px 8px; border: 1px solid var(--border2); color: var(--text2); text-transform: uppercase; transition: color 0.15s, border-color 0.15s; }
+    .tag:hover { color: var(--red); border-color: var(--red-dim); }
+    .art-layout { display: grid; grid-template-columns: 1fr 260px; gap: 4rem; }
+    @media (max-width: 800px) { .art-layout { grid-template-columns: 1fr; } .art-sidebar { display: none; } }
+    .art-sidebar .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .art-sidebar .sidebar-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 1rem; }
+    .nav-posts { display: flex; flex-direction: column; gap: 1rem; }
+    .nav-post-item { display: flex; gap: 0.75rem; }
+    .nav-post-thumb { width: 48px; height: 48px; flex-shrink: 0; }
+    .nav-post-title { font-family: var(--font-spec); font-size: 0.85rem; color: var(--text2); line-height: 1.35; transition: color 0.15s; }
+    .nav-post-item:hover .nav-post-title { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="../index.html" class="logo-block">
+        <span class="logo-sym">⊗</span>
+        <span class="logo-name">ZONA MUERTA</span>
+      </a>
+      <nav>
+        <a href="#" class="nav-link active">Urbex</a>
+        <a href="#" class="nav-link">Leyendas</a>
+        <a href="#" class="nav-link">Folklore</a>
+        <a href="#" class="nav-link">Videojuegos</a>
+        <a href="#" class="nav-link">/x/</a>
+        <a href="#" class="nav-link">Media</a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
+
+    <div class="art-hero">
+      <div class="breadcrumb"><a href="../index.html">Inicio</a> → <a href="#">Urbex</a> → Expediente #001</div>
+      <div class="post-cat cat-urbex" style="margin-bottom:1rem;">Urbex</div>
+      <h1>El Sanatorio de Agramón: Tres Noches en el Lugar que Nadie Debería Visitar</h1>
+      <div class="art-meta">
+        <span>14 junio 2025</span>
+        <span>·</span>
+        <span>12 min lectura</span>
+        <span>·</span>
+        <span>N38°31'16" W1°46'09"</span>
+      </div>
+    </div>
+
+    <div class="art-cover">
+      <div class="img-urbex"></div>
+    </div>
+
+    <div class="art-layout">
+      <div class="art-body">
+        <p>No existe ningún sanatorio oficial en Agramón. Si buscas en Google Maps, en los registros del municipio de Hellín, o en cualquier base de datos pública, no encontrarás nada. Pero el edificio lleva en pie desde 1943, y la gente del pueblo sabe perfectamente lo que fue.</p>
+
+        <div class="exp-box">
+          <div class="exp-box-label">// Expediente municipal — clasificado</div>
+          <p>Estado actual del inmueble: <span class="redacted">█████████</span>. Propietario actual: <span class="redacted">Empresa ████ S.L.</span>. Último accidente registrado: <span class="redacted">██/██/20██</span>.</p>
+        </div>
+
+        <p>Fuimos tres. Llevamos cámaras con flash manual, una grabadora de audio de 24 bits y termómetros de contacto y ambiental. Sin cámaras de vídeo y sin equipamiento de "caza fantasmas". No somos eso.</p>
+
+        <h2>Primera noche — El ala administrativa</h2>
+
+        <p>El acceso es por el lateral este, donde el vallado industrial cedió hace años. La hierba llega a la cintura y el suelo esconde lo que antes fue un jardín terapéutico. La planta baja conserva la mayoría del mobiliario. Sillas de plástico apiladas, un mostrador de recepción, un tablón de anuncios con hojas todavía sujetas por chinchetas oxidadas.</p>
+
+        <p>No hay graffiti, lo cual es raro. Normalmente estos lugares atraen vándalos antes que exploradores.</p>
+
+        <h3>// Lo que encontramos en el archivo</h3>
+
+        <p>El archivo estaba en la primera planta. Había historiales médicos, expedientes de pacientes fechados entre 1957 y 1989. No los abrimos. Ese es un límite que no cruzamos. Sí documentamos que existían.</p>
+
+        <p>El archivo olía a humedad y a algo difícil de describir. Como ozono antes de una tormenta, pero en un espacio cerrado. La grabadora capturó algo esa noche que todavía no hemos podido identificar.</p>
+
+        <h2>Segunda noche — El ala psiquiátrica</h2>
+
+        <p>El ala psiquiátrica está en el edificio anexo, conectado al principal por un pasillo acristalado. La mitad de los cristales siguen en su sitio. La otra mitad está en el suelo, reducida a polvo brillante.</p>
+
+        <blockquote>
+          <p>"Las marcas en las paredes no eran pintura. Lo supimos cuando el flash iluminó la habitación 14 y vimos que llegaban hasta el techo."</p>
+        </blockquote>
+
+        <p>Las habitaciones tienen una característica que no esperábamos: todas las superficies de las paredes son la misma mezcla. No es pintura. Tres semanas después, el laboratorio devolvió el análisis: <em>queratina humana</em>.</p>
+
+        <div class="exp-box">
+          <div class="exp-box-label">// Informe CQ-Analytics — ref. 2025-0614</div>
+          <p>Muestra de superficie pared, 2cm². Composición: cal viva 67%, áridos 21%, materia orgánica 12%. La materia orgánica: <strong>queratina de origen humano</strong>. Período de deposición: indeterminado.</p>
+        </div>
+
+        <h3>// La habitación 14</h3>
+
+        <p>Cuando llegamos a la habitación 14, el termómetro ambiental marcó 4,3°C menos que el pasillo. Eran las 2:17 de la madrugada. El flash iluminó la habitación y los tres nos quedamos quietos. Las marcas llegaban hasta el techo. No eran una sola mano. Eran muchas, superpuestas, contando días.</p>
+
+        <h2>Tercera noche — Conclusiones</h2>
+
+        <p>La tercera noche no entramos. Llegamos al exterior, revisamos el equipo, y los tres decidimos no hacerlo. No podemos explicar por qué. No hubo un momento concreto, ningún avistamiento, ningún sonido. Simplemente no entramos.</p>
+
+        <blockquote>
+          <p>"Hay lugares que no quieren ser encontrados. No porque haya algo sobrenatural. Sino porque lo que ocurrió allí adentro fue suficientemente real."</p>
+        </blockquote>
+
+        <p>El archivo completo —fotos en alta resolución, grabaciones de audio, informe de laboratorio, temperaturas registradas por hora— está disponible en la sección de miembros.</p>
+
+        <div class="art-tags">
+          <a href="#" class="tag">Urbex</a>
+          <a href="#" class="tag">Albacete</a>
+          <a href="#" class="tag">Psiquiátrico</a>
+          <a href="#" class="tag">Edificio abandonado</a>
+          <a href="#" class="tag">Audio EVP</a>
+        </div>
+      </div>
+
+      <aside class="art-sidebar" style="padding-top:0.5rem;">
+        <div class="sidebar-block">
+          <div class="sidebar-title">Artículos relacionados</div>
+          <div class="nav-posts">
+            <a href="#" class="nav-post-item">
+              <div class="nav-post-thumb img-bunker"></div>
+              <div class="nav-post-title">Bunker de la Guerra Civil en Guadalajara</div>
+            </a>
+            <a href="#" class="nav-post-item">
+              <div class="nav-post-thumb img-media"></div>
+              <div class="nav-post-title">El canal de YouTube que desapareció</div>
+            </a>
+            <a href="#" class="nav-post-item">
+              <div class="nav-post-thumb img-xchan"></div>
+              <div class="nav-post-title">La puerta que no existía en los planos</div>
+            </a>
+          </div>
+        </div>
+        <div class="sidebar-block">
+          <div class="sidebar-title">Categoría</div>
+          <p style="font-family:var(--font-spec);font-size:0.9rem;color:var(--text2);">Urban Exploration — 43 entradas</p>
+        </div>
+      </aside>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="logo-sym">⊗</span>
+        <span class="logo-name">ZONA MUERTA</span>
+      </div>
+      <nav class="footer-nav">
+        <a href="#">Inicio</a><a href="#">Urbex</a><a href="#">Leyendas</a>
+        <a href="#">Folklore</a><a href="#">Videojuegos</a><a href="#">/x/</a>
+        <a href="#">Media</a><a href="#">Contacto</a>
+      </nav>
+      <div class="footer-copy">© 2025 Zona Muerta</div>
+    </div>
+  </footer>
+
+  <script>
+    console.log('%c⊗ ZONA MUERTA','color:#c0392b;font-size:18px;font-family:monospace;font-weight:bold');
+  </script>
+</body>
+</html>
