@@ -1,5 +1,5 @@
 ---
-layout: ../layouts/PostLayout.astro
+layout: ../../layouts/PostLayout.astro
 title: "El Sanatorio de Agramón: Tres Noches en el Lugar que Nadie Debería Visitar"
 date: "2026-06-16"
 duration: "12 min"
