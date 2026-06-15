@@ -1,7 +1,37 @@
 ---
-// Capturamos los datos que vienen desde el archivo Markdown
 const { frontmatter } = Astro.props;
+
+const postsGlob = import.meta.glob('../pages/posts/*.md', { eager: true });
+const allPosts = Object.values(postsGlob).map((post: any) => ({
+  url: post.url,
+  frontmatter: post.frontmatter
+}));
+
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+const recentPosts = sortedPosts.slice(0, 3);
+
+const categoriesCount = {
+  Urbex: allPosts.filter(p => p.frontmatter.category === 'Urbex').length,
+  Leyendas: allPosts.filter(p => p.frontmatter.category === 'Leyendas').length,
+  Folklore: allPosts.filter(p => p.frontmatter.category === 'Folklore').length,
+  Videojuegos: allPosts.filter(p => p.frontmatter.category === 'Videojuegos').length,
+  x: allPosts.filter(p => p.frontmatter.category === '/x/').length,
+  Media: allPosts.filter(p => p.frontmatter.category === 'Media').length,
+};
+
+// Agrupar posts por Mes y Año para el Archivo (con tipos corregidos)
+const archiveGroups = allPosts.reduce((groups: Record<string, number>, post: any) => {
+  const dateObj = new Date(post.frontmatter.date);
+  // Formateamos la fecha para obtener "Mes Año" (ej: "junio de 2026")
+  const monthYear = dateObj.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+  // Capitalizamos la primera letra
+  const formattedLabel = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
+  
+  groups[formattedLabel] = (groups[formattedLabel] || 0) + 1;
+  return groups;
+}, {});
 ---
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +41,6 @@ const { frontmatter } = Astro.props;
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
   
-  <!-- Usamos la barra inicial / para que busque en la carpeta public -->
   <link rel="stylesheet" href="/css/style.css">
   
   <style is:inline>
@@ -37,14 +66,9 @@ const { frontmatter } = Astro.props;
     .tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; padding: 3px 8px; border: 1px solid var(--border2); color: var(--text2); text-transform: uppercase; transition: color 0.15s, border-color 0.15s; }
     .tag:hover { color: var(--red); border-color: var(--red-dim); }
     .art-layout { display: grid; grid-template-columns: 1fr 260px; gap: 4rem; }
-    @media (max-width: 800px) { .art-layout { grid-template-columns: 1fr; } .art-sidebar { display: none; } }
-    .art-sidebar .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
-    .art-sidebar .sidebar-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 1rem; }
-    .nav-posts { display: flex; flex-direction: column; gap: 1rem; }
-    .nav-post-item { display: flex; gap: 0.75rem; }
-    .nav-post-thumb { width: 48px; height: 48px; flex-shrink: 0; }
-    .nav-post-title { font-family: var(--font-spec); font-size: 0.85rem; color: var(--text2); line-height: 1.35; transition: color 0.15s; }
-    .nav-post-item:hover .nav-post-title { color: var(--text); }
+    @media (max-width: 800px) { .art-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+    .sidebar .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .sidebar .sidebar-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 1rem; }
   </style>
 </head>
 <body>
@@ -88,7 +112,7 @@ const { frontmatter } = Astro.props;
     <div class="art-layout">
       <div class="art-body">
         
-        <!-- AQUÍ SE INYECTARÁ EL TEXTO ESCREITO EN EL MARKDOWN -->
+        <!-- AQUÍ SE INYECTARÁ EL TEXTO ESCRITO EN EL MARKDOWN -->
         <slot />
 
         <div class="art-tags">
@@ -99,20 +123,63 @@ const { frontmatter } = Astro.props;
         </div>
       </div>
 
-      <aside class="art-sidebar" style="padding-top:0.5rem;">
+      <!-- SIDEBAR REAL ACTUALIZADA -->
+      <aside class="sidebar" style="padding-top:0.5rem;">
+
         <div class="sidebar-block">
-          <div class="sidebar-title">Artículos relacionados</div>
-          <div class="nav-posts">
-            <a href="#" class="nav-post-item">
-              <div class="nav-post-thumb img-bunker"></div>
-              <div class="nav-post-title">Bunker de la Guerra Civil en Guadalajara</div>
-            </a>
+          <div class="sidebar-title">SOBRE ZONA MUERTA</div>
+          <p class="sidebar-text">Documentamos lo inexplicable: urbex, leyendas, folklore, hilos de /x/ y todo lo que la realidad oficial prefiere ignorar. Sin clickbait. Sin exageraciones.</p>
+        </div>
+
+        <div class="sidebar-block">
+          <div class="sidebar-title">Categorías</div>
+          <div class="nav-categories" style="display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem;">
+            <p style="color: var(--text2)">Urban Exploration: <span style="color: var(--red)">{categoriesCount.Urbex}</span></p>
+            <p style="color: var(--text2)">Leyendas Urbanas: <span style="color: var(--red)">{categoriesCount.Leyendas}</span></p>
+            <p style="color: var(--text2)">Folklore: <span style="color: var(--red)">{categoriesCount.Folklore}</span></p>
+            <p style="color: var(--text2)">Videojuegos: <span style="color: var(--red)">{categoriesCount.Videojuegos}</span></p>
+            <p style="color: var(--text2)">Hilos /x/: <span style="color: var(--red)">{categoriesCount.x}</span></p>
+            <p style="color: var(--text2)">Vídeos y Libros: <span style="color: var(--red)">{categoriesCount.Media}</span></p>
           </div>
         </div>
+
         <div class="sidebar-block">
-          <div class="sidebar-title">Categoría</div>
-          <p style="font-family:var(--font-spec);font-size:0.9rem;color:var(--text2);">{frontmatter.category} — Entrada activa</p>
+          <div class="sidebar-title">ENTRADAS RECIENTES</div>
+          <div class="recent-list">
+            {recentPosts.map((post) => (
+              <a href={post.url} class="recent-item">
+                <div class={`recent-thumb ${post.frontmatter.imgClass}`}></div>
+                <div class="recent-text">
+                  <div class="recent-title">{post.frontmatter.title}</div>
+                  <div class="recent-date">{post.frontmatter.date}</div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
+
+        <div class="sidebar-block sidebar-newsletter">
+          <div class="sidebar-title">TRANSMISIONES</div>
+          <p class="sidebar-text">Artículos nuevos directo a tu correo. Sin spam.</p>
+          <form class="sub-form">
+            <input type="email" placeholder="tu@email.com" class="sub-input" required>
+            <button type="submit" class="sub-btn">Suscribirse</button>
+          </form>
+        </div>
+
+        <div class="sidebar-block">
+          <div class="sidebar-title">ARCHIVO</div>
+          <ul class="archive-list">
+            {Object.entries(archiveGroups).map(([monthYear, count]) => (
+              <li>
+                <a href="#">
+                  {monthYear} <span style="color: var(--red)">{count}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
       </aside>
     </div>
 
