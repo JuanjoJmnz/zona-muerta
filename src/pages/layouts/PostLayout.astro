@@ -1,0 +1,138 @@
+---
+// Capturamos los datos que vienen desde el archivo Markdown
+const { frontmatter } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{frontmatter.title} — Zona Muerta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+  
+  <!-- Usamos la barra inicial / para que busque en la carpeta public -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <style is:inline>
+    .art-hero { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--border); }
+    .art-hero .breadcrumb { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+    .art-hero .breadcrumb a { color: var(--text2); }
+    .art-hero .breadcrumb a:hover { color: var(--text); }
+    .art-hero h1 { font-family: var(--font-disp); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600; line-height: 1.1; letter-spacing: 0.03em; margin-bottom: 1.25rem; max-width: 720px; }
+    .art-hero .art-meta { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text3); letter-spacing: 0.06em; display: flex; gap: 1rem; flex-wrap: wrap; }
+    .art-cover { width: 100%; aspect-ratio: 16/7; margin: 2.5rem 0; }
+    .art-cover .img-urbex { width: 100%; height: 100%; }
+    .art-body { max-width: 680px; padding: 0 0 5rem; }
+    .art-body p { font-size: 1rem; line-height: 1.9; color: var(--text2); margin-bottom: 1.4rem; }
+    .art-body h2 { font-family: var(--font-disp); font-size: 1.35rem; font-weight: 400; letter-spacing: 0.06em; color: var(--text); margin: 2.5rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .art-body h3 { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.15em; color: var(--red); text-transform: uppercase; margin: 2rem 0 0.75rem; }
+    blockquote { border-left: 2px solid var(--red); padding: 0.75rem 1.5rem; margin: 2rem 0; }
+    blockquote p { font-family: var(--font-spec); font-style: italic; font-size: 1.05rem; color: var(--text); margin: 0; }
+    .exp-box { background: var(--bg3); border: 1px solid var(--border2); border-left: 2px solid var(--red-dim); padding: 1.25rem 1.5rem; margin: 2rem 0; }
+    .exp-box-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text3); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .exp-box p { font-size: 0.85rem; margin: 0; color: var(--text2); }
+    .redacted { background: var(--text); color: transparent; user-select: none; padding: 0 2px; }
+    .art-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; padding: 3px 8px; border: 1px solid var(--border2); color: var(--text2); text-transform: uppercase; transition: color 0.15s, border-color 0.15s; }
+    .tag:hover { color: var(--red); border-color: var(--red-dim); }
+    .art-layout { display: grid; grid-template-columns: 1fr 260px; gap: 4rem; }
+    @media (max-width: 800px) { .art-layout { grid-template-columns: 1fr; } .art-sidebar { display: none; } }
+    .art-sidebar .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+    .art-sidebar .sidebar-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 1rem; }
+    .nav-posts { display: flex; flex-direction: column; gap: 1rem; }
+    .nav-post-item { display: flex; gap: 0.75rem; }
+    .nav-post-thumb { width: 48px; height: 48px; flex-shrink: 0; }
+    .nav-post-title { font-family: var(--font-spec); font-size: 0.85rem; color: var(--text2); line-height: 1.35; transition: color 0.15s; }
+    .nav-post-item:hover .nav-post-title { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo-block">
+        <span class="logo-sym">⊗</span>
+        <span class="logo-name">ZONA MUERTA</span>
+      </a>
+      <nav>
+        <a href="#" class="nav-link active">{frontmatter.category}</a>
+        <a href="#" class="nav-link">Leyendas</a>
+        <a href="#" class="nav-link">Folklore</a>
+        <a href="#" class="nav-link">Videojuegos</a>
+        <a href="#" class="nav-link">/x/</a>
+        <a href="#" class="nav-link">Media</a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
+
+    <div class="art-hero">
+      <div class="breadcrumb"><a href="/">Inicio</a> → <a href="#">{frontmatter.category}</a> → Expediente</div>
+      <div class={`post-cat ${frontmatter.catClass}`} style="margin-bottom:1rem;">{frontmatter.category}</div>
+      <h1>{frontmatter.title}</h1>
+      <div class="art-meta">
+        <span>{frontmatter.date}</span>
+        <span>·</span>
+        <span>{frontmatter.duration} lectura</span>
+        <span>·</span>
+        <span>N38°31'16" W1°46'09"</span>
+      </div>
+    </div>
+
+    <div class="art-cover">
+      <div class={frontmatter.imgClass}></div>
+    </div>
+
+    <div class="art-layout">
+      <div class="art-body">
+        
+        <!-- AQUÍ SE INYECTARÁ EL TEXTO ESCREITO EN EL MARKDOWN -->
+        <slot />
+
+        <div class="art-tags">
+          <a href="#" class="tag">{frontmatter.category}</a>
+          <a href="#" class="tag">Albacete</a>
+          <a href="#" class="tag">Psiquiátrico</a>
+          <a href="#" class="tag">Edificio abandonado</a>
+        </div>
+      </div>
+
+      <aside class="art-sidebar" style="padding-top:0.5rem;">
+        <div class="sidebar-block">
+          <div class="sidebar-title">Artículos relacionados</div>
+          <div class="nav-posts">
+            <a href="#" class="nav-post-item">
+              <div class="nav-post-thumb img-bunker"></div>
+              <div class="nav-post-title">Bunker de la Guerra Civil en Guadalajara</div>
+            </a>
+          </div>
+        </div>
+        <div class="sidebar-block">
+          <div class="sidebar-title">Categoría</div>
+          <p style="font-family:var(--font-spec);font-size:0.9rem;color:var(--text2);">{frontmatter.category} — Entrada activa</p>
+        </div>
+      </aside>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="logo-sym">⊗</span>
+        <span class="logo-name">ZONA MUERTA</span>
+      </div>
+      <nav class="footer-nav">
+        <a href="/">Inicio</a><a href="#">Urbex</a><a href="#">Leyendas</a>
+      </nav>
+      <div class="footer-copy">© 2026 Zona Muerta</div>
+    </div>
+  </footer>
+
+  <script is:inline>
+    console.log('%c⊗ ZONA MUERTA','color:#c0392b;font-size:18px;font-family:monospace;font-weight:bold');
+  </script>
+</body>
+</html>
