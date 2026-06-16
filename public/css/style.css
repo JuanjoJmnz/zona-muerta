@@ -1703,62 +1703,106 @@ video {
 /* Cambios estructurales para pantallas de móviles (Máximo 768px) */
 @media (max-width: 768px) {
 
-  /* 1. Forzar al header a que no corte el menú desplegable */
+  /* 1. EVITAR QUE LA CABECERA OCULTE COSAS */
   header {
-    position: relative;
+    position: relative !important;
     overflow: visible !important;
+    background-color: #111111 !important; /* Asegura el fondo oscuro */
+    height: 60px !important;
   }
+
   .header-inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+    padding: 0 1.5rem !important;
     overflow: visible !important;
   }
 
-  /* 2. El menú colapsado: lo transformamos en una capa flotante sobre toda la pantalla */
+  /* 2. FORZAR VISIBILIDAD DEL BOTÓN HAMBURGUESA */
+  .menu-toggle {
+    display: flex !important; /* Obliga a que aparezca en móvil */
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    width: 26px !important;
+    height: 18px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    order: 2 !important; /* Lo posiciona correctamente */
+    z-index: 9999999 !important;
+  }
+
+  /* Forzar el color de las 3 líneas hijas */
+  .menu-toggle .bar {
+    display: block !important;
+    width: 100% !important;
+    height: 2px !important;
+    background-color: #ffffff !important; /* Cambiado a blanco puro para asegurar contraste */
+    transition: all 0.3s ease-in-out !important;
+  }
+
+  /* Animación de la hamburguesa transformándose en X */
+  .menu-toggle.open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg) !important;
+    background-color: var(--red) !important;
+  }
+  .menu-toggle.open .bar:nth-child(2) {
+    opacity: 0 !important;
+  }
+  .menu-toggle.open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg) !important;
+    background-color: var(--red) !important;
+  }
+
+  /* 3. EL MENÚ DESPLEGABLE TOTALMENTE INMUNE */
   header nav {
-    display: block !important; /* Cambiamos a block para evitar conflictos de alineación flex heredados */
+    display: block !important;
     position: fixed !important;
-    top: 60px !important; /* Si tu header es más alto, sube este valor (ej: 70px o 80px) */
-    left: -100% !important; /* Completamente oculto a la izquierda por defecto */
+    top: 60px !important; /* Se abre justo debajo del header */
+    left: -100% !important; /* Escondido a la izquierda */
     width: 100% !important;
     height: calc(100vh - 60px) !important;
-    background-color: #111111 !important; /* Forzamos el color de fondo oscuro puro de Zona Muerta */
-    border-top: 1px solid var(--border);
+    background-color: #111111 !important; /* Fondo idéntico al de la web */
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
     padding: 2rem 0 !important;
     margin: 0 !important;
-    
-    /* Animación de transición por hardware */
-    transition: transform 0.3s ease-in-out, left 0.3s ease-in-out !important;
-    z-index: 999999 !important; /* Lo ponemos por encima de cualquier otra capa, canvas o texto */
+    transition: left 0.3s ease-in-out !important;
+    z-index: 999999 !important; /* Por encima de todo el contenido de la web */
   }
 
-  /* 3. CLASE ENTRANTE: Cuando el JS inyecta 'mobile-open', el menú entra en la pantalla */
+  /* Cuando el JS añade la clase, el menú entra implacablemente */
   header nav.mobile-open {
     left: 0 !important;
-    transform: translateX(0) !important;
   }
 
-  /* 4. Los enlaces del menú en móvil: uno debajo de otro, grandes y legibles */
+  /* 4. ENLACES INTERNOS EN VERTICAL */
   header nav .nav-link {
     display: block !important;
     width: 100% !important;
-    padding: 1.2rem 2rem !important;
+    padding: 1.2rem 2.5rem !important;
     font-family: var(--font-mono) !important;
-    font-size: 1.3rem !important;
-    color: var(--text) !important;
+    font-size: 1.25rem !important;
+    color: #ffffff !important;
     text-align: left !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    letter-spacing: 2px;
-    visibility: visible !important;
-    opacity: 1 !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    letter-spacing: 2px !important;
   }
 
   header nav .nav-link:hover,
   header nav .nav-link.active {
     color: var(--red) !important;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.02) !important;
   }
 
-  /* Ocultar el bloque derecho de búsqueda en móviles si te estorba o colisiona (Opcional) */
+  /* Forzar orden del logo y elementos para que no colisionen */
+  .logo-block {
+    order: 1 !important;
+  }
   .header-right {
-    z-index: 1000000;
+    order: 3 !important;
   }
 }
