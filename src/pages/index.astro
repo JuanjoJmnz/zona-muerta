@@ -82,7 +82,14 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
           <span class="logo-sym">⊗</span>
           <span class="logo-name">ZONA MUERTA</span>
         </a>
-        <nav>
+
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
+        <nav id="nav-menu">
           <a href="/" class="nav-link active">Inicio</a>
           <a href="/categorias/urbex" class="nav-link">Urbex</a>
           <a href="/categorias/leyendas" class="nav-link">Leyendas</a>
@@ -92,6 +99,7 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
           <a href="/categorias/media" class="nav-link">Media</a>
           <a href="/categorias/contacto" class="nav-link">Contacto</a>
         </nav>
+
         <div class="header-right">
           <button class="search-btn" onclick="toggleSearch()"><span>&#9906;</span></button>
         </div>
