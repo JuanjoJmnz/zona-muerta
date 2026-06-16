@@ -48,7 +48,22 @@ const { tagName, posts } = Astro.props;
             <h2 class="post-row-title"><a href={post.url}>{post.frontmatter.title}</a></h2>
             <p class="post-row-excerpt">{post.frontmatter.excerpt}</p>
           </div>
-          <div class={`post-row-thumb ${post.frontmatter.imgClass}`}></div>
+          
+          <div class={`post-row-thumb ${post.frontmatter.imgClass || ''}`}>
+            {post.frontmatter.thumbImg ? (
+              <img 
+                src={post.frontmatter.thumbImg} 
+                alt={post.frontmatter.title} 
+                style="width:100%; height:100%; object-fit:cover;" 
+              />
+            ) : post.frontmatter.coverImg ? (
+              <img 
+                src={post.frontmatter.coverImg} 
+                alt={post.frontmatter.title} 
+                style="width:100%; height:100%; object-fit:cover;" 
+              />
+            ) : null}
+          </div>
         </article>
         <div class="post-divider"></div>
       </>
