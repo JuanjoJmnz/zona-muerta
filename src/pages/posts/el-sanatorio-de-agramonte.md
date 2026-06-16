@@ -11,15 +11,22 @@ imgClass: "img-urbex"
 thumbImg: "/img/santuario_agramonte.png"
 coverImg: "/img/santuario_agramonte.png"
 excerpt: "Las marcas en las paredes del ala psiquiátrica no eran pintura. Lo supimos cuando el flash de la cámara iluminó la habitación 14 y encontramos que llegaban hasta el techo."
+urbexStatus: "status-risk"
+urbexStatusTxt: "Acceso con riesgo"
+urbexVisit: "Junio 2025"
+urbexRiskPips: 3
+urbexEquipment: "Casco, linterna, mascarilla"
 tags: ["Albacete", "Psiquiátrico", "Abandono"]
 ---
-
-No existe ningún sanatorio oficial en Agramonte. Si buscas en Google Maps, en los registros del municipio de Hellín, o en cualquier base de datos pública, no encontrarás nada. Pero el edificio lleva en pie desde 1943, y la gente del pueblo sabe perfectamente lo que fue.
-
+<br><br><br>
 <div class="exp-box">
   <div class="exp-box-label">// Expediente municipal — clasificado</div>
   <p>Estado actual del inmueble: <span class="redacted">█████████</span>. Propietario actual: <span class="redacted">Empresa ████ S.L.</span>. Último accidente registrado: <span class="redacted">██/██/20██</span>.</p>
 </div>
+<br><br><br>
+No existe ningún sanatorio oficial en Agramonte. Si buscas en Google Maps, en los registros del municipio de Hellín, o en cualquier base de datos pública, no encontrarás nada. Pero el edificio lleva en pie desde 1943, y la gente del pueblo sabe perfectamente lo que fue.
+
+
 
 Fuimos tres. Llevamos cámaras con flash manual, una grabadora de audio de 24 bits y termómetros de contacto y ambiental. Sin cámaras de vídeo y sin equipamiento de "caza fantasmas". No somos eso.
 

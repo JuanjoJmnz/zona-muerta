@@ -343,6 +343,8 @@ main {
   margin-bottom: 1rem;
 }
 
+.cat-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.75rem; }
+
 .cat-urbex {
   background: rgba(192, 57, 43, 0.15);
   color: #e07060;
@@ -1434,3 +1436,103 @@ video {
     margin-left: 0;
   }
 }
+
+/* =====================
+   Variantes Posts
+   ===================== */
+
+  /* ── URBEX BRIEFING ── */
+  .urbex-brief { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .urbex-brief-header { background: var(--color-background-secondary); padding: 0.65rem 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .urbex-brief-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--color-text-secondary); text-transform: uppercase; }
+  .urbex-status { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 3px; }
+  .status-open   { background: #eaf3de; color: #3b6d11; }
+  .status-risk   { background: #faeeda; color: #854f0b; }
+  .status-closed { background: #fcebeb; color: #a32d2d; }
+  .urbex-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .urbex-field { padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); border-right: 0.5px solid var(--color-border-tertiary); }
+  .urbex-field:nth-child(even) { border-right: none; }
+  .urbex-field:nth-last-child(-n+2) { border-bottom: none; }
+  .urbex-field-label { font-size: 10px; color: var(--color-text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+  .urbex-field-val { font-size: 13px; color: var(--color-text-primary); font-weight: 500; }
+  .risk-bar { display: flex; gap: 3px; margin-top: 4px; }
+  .risk-pip { width: 16px; height: 6px; border-radius: 2px; }
+  .pip-on  { background: #e24b4a; }
+  .pip-off { background: var(--color-border-tertiary); }
+
+  /* ── /x/ THREAD ── */
+  .thread-wrap { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; font-family: var(--font-mono); font-size: 12px; }
+  .thread-banner { background: #639922; color: #eaf3de; padding: 5px 12px; font-size: 10px; letter-spacing: 0.1em; display: flex; justify-content: space-between; }
+  .thread-post { padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .thread-post:last-child { border-bottom: none; }
+  .thread-post-header { display: flex; gap: 1rem; align-items: baseline; margin-bottom: 0.4rem; flex-wrap: wrap; }
+  .thread-anon { color: #3b6d11; font-weight: 500; }
+  .thread-date { color: var(--color-text-tertiary); font-size: 11px; }
+  .thread-num  { color: var(--color-text-tertiary); font-size: 11px; }
+  .thread-num a { color: #185fa5; }
+  .thread-body { color: var(--color-text-secondary); line-height: 1.6; }
+  .thread-body .greentext { color: #3b6d11; display: block; }
+  .thread-reply { color: #185fa5; }
+  .thread-deleted { background: var(--color-background-secondary); padding: 0.6rem 1rem; font-size: 11px; color: var(--color-text-tertiary); text-align: center; letter-spacing: 0.06em; border-top: 0.5px solid var(--color-border-tertiary); }
+
+  /* ── VIDEOJUEGO RATING ── */
+  .game-card { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .game-card-header { padding: 0.75rem 1rem; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; justify-content: space-between; align-items: center; }
+  .game-card-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .game-card-year { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-tertiary); }
+  .game-metrics { padding: 0.75rem 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .metric-row { display: flex; align-items: center; gap: 0.75rem; }
+  .metric-name { font-size: 12px; color: var(--color-text-secondary); width: 110px; flex-shrink: 0; }
+  .metric-track { flex: 1; height: 5px; background: var(--color-border-tertiary); border-radius: 2px; overflow: hidden; }
+  .metric-fill { height: 100%; border-radius: 2px; background: #534ab7; }
+  .metric-val { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-tertiary); width: 28px; text-align: right; flex-shrink: 0; }
+  .game-verdict { margin: 0 1rem 0.75rem; padding: 0.6rem 0.75rem; background: #eeedfe; border-radius: var(--border-radius-md); font-size: 12px; color: #3c3489; line-height: 1.5; }
+
+  /* ── LEYENDA MAPA ── */
+  .leyenda-geo { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .leyenda-geo-header { padding: 0.65rem 1rem; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); font-family: var(--font-mono); font-size: 11px; color: var(--color-text-secondary); letter-spacing: 0.1em; text-transform: uppercase; }
+  .leyenda-regions { padding: 0.75rem 1rem; display: flex; flex-direction: column; gap: 0; }
+  .leyenda-region { display: flex; align-items: center; gap: 0.75rem; padding: 0.45rem 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .leyenda-region:last-child { border-bottom: none; }
+  .region-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-high   { background: #e24b4a; }
+  .dot-mid    { background: #ef9f27; }
+  .dot-low    { background: #888780; }
+  .region-name { font-size: 13px; color: var(--color-text-primary); flex: 1; }
+  .region-variant { font-size: 11px; color: var(--color-text-tertiary); font-style: italic; }
+  .leyenda-geo-footer { padding: 0.5rem 1rem; border-top: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); display: flex; gap: 1.25rem; }
+  .geo-legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-tertiary); }
+
+  /* ── FOLKLORE VARIANTES ── */
+  .folk-variants { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .folk-variants-header { padding: 0.65rem 1rem; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); font-family: var(--font-mono); font-size: 11px; color: var(--color-text-secondary); letter-spacing: 0.1em; text-transform: uppercase; }
+  .folk-row { display: grid; grid-template-columns: 130px 1fr 1fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .folk-row:last-child { border-bottom: none; }
+  .folk-row.folk-head { background: var(--color-background-secondary); }
+  .folk-cell { padding: 0.55rem 0.85rem; font-size: 12px; color: var(--color-text-secondary); border-right: 0.5px solid var(--color-border-tertiary); }
+  .folk-cell:last-child { border-right: none; }
+  .folk-head .folk-cell { font-size: 10px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+  .folk-cell strong { color: var(--color-text-primary); font-weight: 500; }
+
+  /* ── MEDIA FICHA ── */
+  .media-card { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .media-card-header { padding: 0.65rem 1rem; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; justify-content: space-between; align-items: center; }
+  .media-type-badge { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; padding: 2px 7px; background: #f1efe8; color: #444441; border-radius: 3px; text-transform: uppercase; }
+  .media-title-small { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .media-timeline { padding: 0.75rem 1rem; display: flex; flex-direction: column; gap: 0; position: relative; }
+  .media-timeline::before { content: ''; position: absolute; left: 1.85rem; top: 1rem; bottom: 1rem; width: 1px; background: var(--color-border-tertiary); }
+  .timeline-item { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.4rem 0; position: relative; }
+  .timeline-time { font-family: var(--font-mono); font-size: 11px; color: #185fa5; width: 42px; flex-shrink: 0; padding-top: 1px; }
+  .timeline-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-border-secondary); flex-shrink: 0; margin-top: 4px; position: relative; z-index: 1; }
+  .timeline-dot.active { background: #e24b4a; }
+  .timeline-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+  .media-quote { margin: 0 1rem 0.75rem; padding: 0.65rem 0.85rem; border-left: 2px solid #888780; font-size: 12px; color: var(--color-text-secondary); font-style: italic; line-height: 1.6; }
+  .media-quote-src { font-style: normal; font-size: 11px; color: var(--color-text-tertiary); margin-top: 4px; display: block; }
+
+  @media (prefers-color-scheme: dark) {
+    .status-open   { background: #173404; color: #97c459; }
+    .status-risk   { background: #412402; color: #fac775; }
+    .status-closed { background: #501313; color: #f09595; }
+    .game-verdict  { background: #26215c; color: #afa9ec; }
+    .media-type-badge { background: #2c2c2a; color: #b4b2a9; }
+  }

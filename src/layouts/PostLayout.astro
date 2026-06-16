@@ -10,7 +10,34 @@ const finalPost = {
   imgClass: frontmatter?.imgClass || "img-default",
   date: frontmatter?.date || "",
   duration: frontmatter?.duration || "",
-  coordinates: frontmatter?.coordinates || ""
+  coordinates: frontmatter?.coordinates || "",
+  
+  // VARIABLES NUEVAS PARA LOS COMPONENTES
+  urbexStatus: frontmatter?.urbexStatus || "",        // 'status-open', 'status-risk', 'status-closed'
+  urbexStatusTxt: frontmatter?.urbexStatusTxt || "",  // Texto del estado
+  urbexVisit: frontmatter?.urbexVisit || "",          // Fecha última visita
+  urbexRiskPips: frontmatter?.urbexRiskPips || 0,     // Número del 1 al 5
+  urbexEquipment: frontmatter?.urbexEquipment || "",  // Equipo recomendado
+  
+  threadBannerRight: frontmatter?.threadBannerRight || "hilo eliminado · conservado íntegro",
+  threadPosts: frontmatter?.threadPosts || [],        // Array de objetos de posts simulados
+  threadDeletedTxt: frontmatter?.threadDeletedTxt || "",
+  
+  gameDeveloper: frontmatter?.gameDeveloper || "",
+  gameYear: frontmatter?.gameYear || "",
+  gameMetrics: frontmatter?.gameMetrics || [],        // Array de métricas [{name: 'Atmósfera', val: 9.5}]
+  gameVerdict: frontmatter?.gameVerdict || "",
+  
+  leyendaHeader: frontmatter?.leyendaHeader || "",
+  leyendaRegions: frontmatter?.leyendaRegions || [],  // Array de regiones [{dot: 'dot-high', name: '...', variant: '...'}]
+  
+  folkHeader: frontmatter?.folkHeader || "",
+  folkRows: frontmatter?.folkRows || [],              // Array de variantes [{region: '...', name: '...', diff: '...'}]
+  
+  mediaBadge: frontmatter?.mediaBadge || "",
+  mediaTimeline: frontmatter?.mediaTimeline || [],    // Array de hitos [{time: '22:03', text: '...', active: false}]
+  mediaQuote: frontmatter?.mediaQuote || "",
+  mediaQuoteSrc: frontmatter?.mediaQuoteSrc || ""
 };
 
 // --- TODO TU CÓDIGO INTERNO SE QUEDA IGUAL ---
@@ -176,17 +203,169 @@ const { pathname } = Astro.url;
     )}
 
     <div class="art-layout">
-      <div class="art-body">
+<div class="art-body">
         
-        <slot />
-          {finalPost.category !== "Sistema" && frontmatter?.tags && (
-            <div class="art-tags">
-              {frontmatter.tags.map((tag: string) => (
-                <a href={`/tags/${tag.toLowerCase()}`} class="tag">{tag}</a>
+        {/* 1. FICHA EXCLUSIVA: URBEX */}
+        {finalPost.category === "Urbex" && finalPost.urbexStatus && (
+          <div class="cat-brief-block">
+            <div class="cat-label">Urbex — briefing de entrada</div>
+            <div class="urbex-brief">
+              <div class="urbex-brief-header">
+                <span class="urbex-brief-title">// Datos de la ubicación</span>
+                <span class={`urbex-status ${finalPost.urbexStatus}`}>● {finalPost.urbexStatusTxt}</span>
+              </div>
+              <div class="urbex-grid">
+                <div class="urbex-field">
+                  <div class="urbex-field-label">Coordenadas</div>
+                  <div class="urbex-field-val">{finalPost.coordinates || "No registradas"}</div>
+                </div>
+                <div class="urbex-field">
+                  <div class="urbex-field-label">Última visita documentada</div>
+                  <div class="urbex-field-val">{finalPost.urbexVisit}</div>
+                </div>
+                <div class="urbex-field">
+                  <div class="urbex-field-label">Nivel de riesgo</div>
+                  <div class="urbex-field-val">
+                    <div class="risk-bar">
+                      {[1, 2, 3, 4, 5].map((num) => (
+                        <div class={`risk-pip ${num <= finalPost.urbexRiskPips ? 'pip-on' : 'pip-off'}`}></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div class="urbex-field">
+                  <div class="urbex-field-label">Equipo recomendado</div>
+                  <div class="urbex-field-val">{finalPost.urbexEquipment}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 2. FICHA EXCLUSIVA: /x/ PARANORMAL */}
+        {(finalPost.category === "x" || finalPost.category === "/x/" || finalPost.category === "-x-") && finalPost.threadPosts.length > 0 && (
+          <div class="cat-brief-block">
+            <div class="cat-label">/x/ — simulación de hilo archivado</div>
+            <div class="thread-wrap">
+              <div class="thread-banner">
+                <span>/x/ — paranormal — archivo zona muerta</span>
+                <span>{finalPost.threadBannerRight}</span>
+              </div>
+              {finalPost.threadPosts.map((post: any) => (
+                <div class="thread-post">
+                  <div class="thread-post-header">
+                    <span class="thread-anon">{post.anonName || "Anónimo"}</span>
+                    <span class="thread-date">{post.date}</span>
+                    <span class="thread-num">No.<a href="#">{post.num}</a></span>
+                  </div>
+                  <div class="thread-body" set:html={post.body}></div>
+                </div>
+              ))}
+              {finalPost.threadDeletedTxt && (
+                <div class="thread-deleted">{finalPost.threadDeletedTxt}</div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* 3. FICHA EXCLUSIVA: VIDEOJUEGOS */}
+        {finalPost.category === "Videojuegos" && finalPost.gameMetrics.length > 0 && (
+          <div class="cat-brief-block">
+            <div class="cat-label">Videojuegos — análisis de perturbación</div>
+            <div class="game-card">
+              <div class="game-card-header">
+                <span class="game-card-title">{finalPost.title}</span>
+                <span class="game-card-year">{finalPost.gameDeveloper} · {finalPost.gameYear}</span>
+              </div>
+              <div class="game-metrics">
+                {finalPost.gameMetrics.map((m: any) => (
+                  <div class="metric-row">
+                    <span class="metric-name">{m.name}</span>
+                    <div class="metric-track"><div class="metric-fill" style={`width:${m.val * 10}%`}></div></div>
+                    <span class="metric-val">{m.val.toFixed(1)}</span>
+                  </div>
+                ))}
+              </div>
+              {finalPost.gameVerdict && <div class="game-verdict">{finalPost.gameVerdict}</div>}
+            </div>
+          </div>
+        )}
+
+        {/* 4. FICHA EXCLUSIVA: LEYENDAS */}
+        {finalPost.category === "Leyendas" && finalPost.leyendaRegions.length > 0 && (
+          <div class="cat-brief-block">
+            <div class="cat-label">Leyendas — distribución geográfica</div>
+            <div class="leyenda-geo">
+              <div class="leyenda-geo-header">{finalPost.leyendaHeader || "// Presencia documentada"}</div>
+              <div class="leyenda-regions">
+                {finalPost.leyendaRegions.map((r: any) => (
+                  <div class="leyenda-region">
+                    <div class={`region-dot ${r.dot}`}></div>
+                    <span class="region-name">{r.name}</span>
+                    <span class="region-variant">{r.variant}</span>
+                  </div>
+                ))}
+              </div>
+              <div class="leyenda-geo-footer">
+                <div class="geo-legend-item"><div class="region-dot dot-high"></div> Presencia fuerte</div>
+                <div class="geo-legend-item"><div class="region-dot dot-mid"></div> Presencia moderada</div>
+                <div class="geo-legend-item"><div class="region-dot dot-low"></div> Registros aislados</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 5. FICHA EXCLUSIVA: FOLKLORE */}
+        {finalPost.category === "Folklore" && finalPost.folkRows.length > 0 && (
+          <div class="cat-brief-block">
+            <div class="cat-label">Folklore — variantes regionales</div>
+            <div class="folk-variants">
+              <div class="folk-variants-header">{finalPost.folkHeader || "// Comparativa de versiones"}</div>
+              <div class="folk-row folk-head">
+                <div class="folk-cell">Región</div>
+                <div class="folk-cell">Nombre local</div>
+                <div class="folk-cell">Diferencia clave</div>
+              </div>
+              {finalPost.folkRows.map((row: any) => (
+                <div class="folk-row">
+                  <div class="folk-cell"><strong>{row.region}</strong></div>
+                  <div class="folk-cell">{row.name}</div>
+                  <div class="folk-cell">{row.diff}</div>
+                </div>
               ))}
             </div>
-          )}
-      </div>
+          </div>
+        )}
+
+        {/* 6. FICHA EXCLUSIVA: MEDIA */}
+        {finalPost.category === "Media" && finalPost.mediaTimeline.length > 0 && (
+          <div class="cat-brief-block">
+            <div class="cat-label">Media — ficha con línea temporal</div>
+            <div class="media-card">
+              <div class="media-card-header">
+                <span class="media-type-badge">{finalPost.mediaBadge || "Registro"}</span>
+                <span class="media-title-small">{finalPost.title}</span>
+              </div>
+              <div class="media-timeline">
+                {finalPost.mediaTimeline.map((item: any) => (
+                  <div class="timeline-item">
+                    <span class="timeline-time">{item.time}</span>
+                    <div class={`timeline-dot ${item.active ? 'active' : ''}`}></div>
+                    <span class="timeline-text">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+              {finalPost.mediaQuote && (
+                <div class="media-quote">
+                  "{finalPost.mediaQuote}"
+                  {finalPost.mediaQuoteSrc && <span class="media-quote-src">— {finalPost.mediaQuoteSrc}</span>}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <slot />
 
       <aside class="sidebar" style="padding-top:0.5rem;">
 
