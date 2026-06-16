@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+#carpetas
+src/pages/plantillas/
+
 # dependencies
 node_modules/
 
