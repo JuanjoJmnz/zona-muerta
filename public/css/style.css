@@ -1153,6 +1153,99 @@ video {
   margin-bottom: 1rem;
 }
 
+/* ===================================================
+   VISTA DE CATEGORÍAS ([CATEGORY].ASTRO)
+   =================================================== */
+.category-page {}
+
+.page-title { 
+  font-family: var(--font-mono);
+  font-size: 2rem; 
+  color: #fff; 
+  text-transform: uppercase; 
+}
+
+.highlight { 
+  color: var(--red);
+}
+
+.page-subtitle { 
+  color: #7f8c8d; 
+  font-family: var(--font-mono); 
+  margin-bottom: 2.5rem; 
+  font-size: 0.9rem; 
+}
+
+.posts-grid { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 2rem; 
+}
+
+.post-card { 
+  background: #121212; 
+  padding: 1.5rem; 
+  border: 1px solid #222;
+  border-left: 3px solid var(--red); 
+}
+
+.card-header { 
+  display: flex; 
+  justify-content: space-between; 
+  margin-bottom: 0.5rem; 
+  font-family: var(--font-mono); 
+  font-size: 0.8rem; 
+}
+
+.category-badge { 
+  color: var(--red); 
+  font-weight: bold; 
+}
+
+.post-duration { 
+  color: #555; 
+}
+
+.post-card h2 { 
+  margin: 0.5rem 0; 
+  font-size: 1.4rem; 
+}
+
+.post-card h2 a { 
+  color: #fff; 
+  text-decoration: none; 
+}
+
+.post-card h2 a:hover { 
+  color: var(--red); 
+}
+
+.post-date { 
+  color: #666; 
+  font-size: 0.85rem; 
+  font-family: var(--font-mono); 
+  margin-bottom: 0.8rem; 
+}
+
+.post-excerpt { 
+  color: #b3b3b3; 
+  line-height: 1.5; 
+  font-size: 0.95rem; 
+}
+
+.read-more { 
+  display: inline-block; 
+  margin-top: 1rem; 
+  color: var(--red); 
+  text-decoration: none; 
+  font-family: var(--font-mono); 
+  font-size: 0.9rem; 
+}
+
+.read-more:hover { 
+  text-decoration: underline; 
+}
+
 /* =====================
    RESPONSIVE
    ===================== */
