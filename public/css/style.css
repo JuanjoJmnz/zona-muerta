@@ -1703,81 +1703,47 @@ video {
 /* Cambios estructurales para pantallas de móviles (Máximo 768px) */
 @media (max-width: 768px) {
   
-  /* 1. HEADER Y MENÚ HAMBURGUESA */
-  .menu-toggle {
-    display: flex; /* Se muestra el botón */
+  /* Fuerza al header-inner a no cortar el contenido que se desborda */
+  .header-inner {
+    position: relative;
+    overflow: visible !important;
   }
 
   header nav {
+    display: flex !important; /* Nos aseguramos de que no tenga un display: none previo */
     position: fixed;
-    top: 60px; /* Justo debajo del header base */
-    left: -100%; /* Escondido por completo a la izquierda */
+    top: 60px; /* Ajusta esto según los píxeles de alto que mida tu header real */
+    left: -100%; /* Escondido a la izquierda */
     width: 100%;
-    height: calc(100vh - 60px);
-    background-color: var(--bg2);
+    height: calc(100vh - 60px); /* Ocupa todo el resto de la pantalla del móvil */
+    background-color: var(--bg2); /* El fondo oscuro de Zona Muerta */
     border-right: 1px solid var(--border);
+    
+    /* Control de disposición vertical de las categorías */
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     padding-top: 3rem;
     gap: 2rem;
+    
+    /* Animación suave de desplazamiento */
     transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 100;
+    z-index: 99999 !important; /* Prioridad absoluta para que no lo tape el contenido o el canvas */
   }
 
-  /* Clase activa que inyectará el JavaScript al hacer click */
+  /* Esta es la clase que activa el JS. Al ponerse a left: 0, entra en la pantalla */
   header nav.mobile-open {
-    left: 0; /* Despliega el menú hacia el centro */
+    left: 0 !important;
   }
 
-  .header-inner {
-    justify-content: space-between;
-    padding: 0 1rem;
-  }
-
-  /* Animación de la hamburguesa transformándose en una 'X' al abrirse */
-  .menu-toggle.open .bar:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-    background-color: var(--red);
-  }
-  .menu-toggle.open .bar:nth-child(2) {
-    opacity: 0;
-  }
-  .menu-toggle.open .bar:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-    background-color: var(--red);
-  }
-
-
-  /* 2. MAQUETACIÓN GLOBAL Y COLUMNAS */
-  .content-layout {
-    flex-direction: column; /* La barra lateral pasa abajo del todo */
-    gap: 3rem;
-    padding: 0 1rem;
-  }
-
-  .sidebar {
-    width: 100% !important; /* La sidebar toma todo el ancho */
-  }
-
-  /* 3. TARJETAS DE POSTS (POST-ROW) RE-ADAPTADAS */
-  .post-row {
-    flex-direction: column-reverse !important; /* La imagen pasa arriba del texto en móviles */
-    gap: 15px !important;
-  }
-
-  .post-row-thumb {
-    width: 100% !important; /* La imagen del post ocupa todo el ancho disponible */
-    height: 180px !important;
-  }
-
-  /* Ajustes en el post destacado */
-  .featured-inner {
-    flex-direction: column-reverse !important;
-    padding: 1rem;
-  }
-
-  .featured-title {
-    font-size: 1.5rem !important;
+  /* Aseguramos que los enlaces dentro del menú móvil se vean grandes y limpios */
+  header nav .nav-link {
+    display: block !important;
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
   }
 }
