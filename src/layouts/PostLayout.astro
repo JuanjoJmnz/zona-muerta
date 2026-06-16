@@ -11,6 +11,7 @@ const finalPost = {
   date: frontmatter?.date || "",
   duration: frontmatter?.duration || "",
   coordinates: frontmatter?.coordinates || "",
+  tags: frontmatter?.tags || [],
   
   // VARIABLES NUEVAS PARA LOS COMPONENTES
   urbexStatus: frontmatter?.urbexStatus || "",        // 'status-open', 'status-risk', 'status-closed'
@@ -60,7 +61,7 @@ const categoriesCount = {
     const cat = (p.frontmatter?.category || '').toLowerCase().replace(/\//g, '').trim();
     return cat === 'x' || cat === '-x-';
   }).length,
-    Media: allPosts.filter(p => (p.frontmatter?.category || '') === 'Media').length,
+  Media: allPosts.filter(p => (p.frontmatter?.category || '') === 'Media').length,
 };
 
 // Agrupar posts por Mes y Año guardando la etiqueta y la URL limpia de manera segura
@@ -121,7 +122,7 @@ const { pathname } = Astro.url;
 
   <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
 
-  <div class="art-hero">
+    <div class="art-hero">
       {finalPost.category !== "Sistema" ? (
         /* 1. Formato para posts individuales reales */
         <div class="breadcrumb">
@@ -137,10 +138,10 @@ const { pathname } = Astro.url;
           <a href="/">Inicio</a> → 
           
           {pathname.startsWith('/archivo') && (
-          <>
-            <span style="color: var(--text2, #7f8c8d);">Archivo</span> → 
-            <span style="color: #fff;">Registros por Fecha</span>
-          </>
+            <>
+              <span style="color: var(--text2, #7f8c8d);">Archivo</span> → 
+              <span style="color: #fff;">Registros por Fecha</span>
+            </>
           )}
           
           {pathname.startsWith('/tags') && (
@@ -190,6 +191,17 @@ const { pathname } = Astro.url;
           </>
         )}
       </div>
+
+      {/* RESTAURADO: Elemento original con tus clases del proyecto */}
+      {finalPost.tags && finalPost.tags.length > 0 && (
+        <div class="art-tags">
+          {finalPost.tags.map((tag: string) => (
+            <a href={`/tags/${tag.toLowerCase()}`} class="tag">
+              {tag}
+            </a>
+          ))}
+        </div>
+      )}
     </div>
 
     {finalPost.category !== "Sistema" && (

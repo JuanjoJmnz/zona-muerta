@@ -8,7 +8,6 @@ export async function getStaticPaths() {
     frontmatter: post.frontmatter
   }));
 
-  // Agrupamos de la misma manera para saber qué fechas existen
   const archiveSlugs = new Set(
     allPosts.map((post: any) => {
       const d = new globalThis.Date(post.frontmatter.date);
@@ -18,9 +17,7 @@ export async function getStaticPaths() {
     })
   );
 
-  // Generamos una página por cada mes/año encontrado
   return Array.from(archiveSlugs).map((dateSlug) => {
-    // Filtrar los posts que pertenecen a este mes y año específico
     const filteredPosts = allPosts.filter((post: any) => {
       const d = new globalThis.Date(post.frontmatter.date);
       const m = d.toLocaleDateString('es-ES', { month: 'long' });
@@ -29,7 +26,6 @@ export async function getStaticPaths() {
       return currentSlug === dateSlug;
     });
 
-    // Obtener la etiqueta bonita del primer post del grupo para usarla de título
     const sampleDate = new globalThis.Date(filteredPosts[0].frontmatter.date);
     const rawLabel = sampleDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
     const archiveLabel = rawLabel.charAt(0).toUpperCase() + rawLabel.slice(1);
@@ -50,48 +46,69 @@ const { archiveLabel, posts } = Astro.props;
 ---
 
 <PostLayout title={`Archivo: ${archiveLabel}`}>
-  <div class="archive-header" style="margin-bottom: 2rem;">
-    <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red);">REGISTROS DEL SISTEMA</p>
-    <h2 style="font-family: var(--font-disp); font-size: 1.5rem; margin-top: 0.5rem;">
-      Expedientes clasificados en {archiveLabel}
-    </h2>
-    <p style="font-size: 0.85rem; color: var(--text2); margin-top: 0.25rem;">
-      Se han recuperado {posts.length} documentos de la base de datos.
-    </p>
-  </div>
+  <div class="archive-list-page">
+    
+    <div class="archive-header" style="margin-bottom: 2rem;">
+      <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red); margin: 0;">REGISTROS DEL SISTEMA</p>
+      <h2 class="archive-main-title" style="font-family: var(--font-disp); font-size: 1.5rem; margin-top: 0.5rem; border: none; padding: 0;">
+        Expedientes clasificados en {archiveLabel}
+      </h2>
+      <p style="font-size: 0.85rem; color: var(--text2); margin-top: 0.25rem;">
+        Se han recuperado {posts.length} documentos de la base de datos.
+      </p>
+    </div>
 
-  <section class="posts-column">
-    {posts.map((post) => (
-      <>
-        <article class="post-row">
-          <div class="post-row-text">
-            <div class={`post-cat ${post.frontmatter.catClass}`}>{post.frontmatter.category}</div>
-            <h2 class="post-row-title"><a href={post.url}>{post.frontmatter.title}</a></h2>
-            <p class="post-row-excerpt">{post.frontmatter.excerpt}</p>
-            <div class="post-meta">
-              <span>{post.frontmatter.date}</span>
-              <span class="sep">·</span>
-              <span>{post.frontmatter.duration}</span>
+    <section class="posts-column">
+      {posts.map((post) => (
+        <>
+          <article class="post-row">
+            <div class="post-row-text">
+              <div class={`post-cat ${post.frontmatter.catClass}`}>{post.frontmatter.category}</div>
+              <h2 class="post-row-title"><a href={post.url}>{post.frontmatter.title}</a></h2>
+              <p class="post-row-excerpt">{post.frontmatter.excerpt}</p>
+              <div class="post-meta">
+                <span>{post.frontmatter.date}</span>
+                <span class="sep">·</span>
+                <span>{post.frontmatter.duration}</span>
+              </div>
             </div>
-          </div>
-          <div class={`post-row-thumb ${post.frontmatter.imgClass || ''}`}>
-            {post.frontmatter.thumbImg ? (
-              <img 
-                src={post.frontmatter.thumbImg} 
-                alt={post.frontmatter.title} 
-                style="width:100%; height:100%; object-fit:cover;" 
-              />
-            ) : post.frontmatter.coverImg ? (
-              <img 
-                src={post.frontmatter.coverImg} 
-                alt={post.frontmatter.title} 
-                style="width:100%; height:100%; object-fit:cover;" 
-              />
-            ) : null}
-          </div>
-        </article>
-        <div class="post-divider"></div>
-      </>
-    ))}
-  </section>
+            <div class={`post-row-thumb ${post.frontmatter.imgClass || ''}`}>
+              {post.frontmatter.thumbImg ? (
+                <img 
+                  src={post.frontmatter.thumbImg} 
+                  alt={post.frontmatter.title} 
+                  style="width:100%; height:100%; object-fit:cover;" 
+                />
+              ) : null}
+            </div>
+          </article>
+          <div class="post-divider"></div>
+        </>
+      ))}
+    </section>
+  </div>
 </PostLayout>
+
+<style>
+  .archive-list-page .post-row {
+    display: flex !important;
+    align-items: flex-start !important;
+  }
+  
+  .archive-list-page .post-row-title {
+    border: none !important;
+    padding: 0 !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 1.25rem !important;
+  }
+
+  .archive-list-page .post-row-title a {
+    text-decoration: none !important;
+    border: none !important;
+  }
+
+  .archive-list-page .post-row-thumb {
+    flex-shrink: 0 !important;
+  }
+</style>

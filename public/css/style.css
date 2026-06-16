@@ -1157,6 +1157,17 @@ video {
   margin-bottom: 1rem;
 }
 
+/* =====================
+   FIX BUSCADOR
+   ===================== */
+
+.post-row-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
 /* ===================================================
    PÁGINA GENERAL DE CATEGORÍAS
    =================================================== */
@@ -1432,6 +1443,8 @@ video {
   }
 }
 
+
+
 /* =====================
    Variantes Posts
    ===================== */
@@ -1531,3 +1544,46 @@ video {
     .game-verdict  { background: #26215c; color: #afa9ec; }
     .media-type-badge { background: #2c2c2a; color: #b4b2a9; }
   }
+
+  /* Estilos globales para las tarjetas de posts (reutilizados en index, archivo, etiquetas y buscador) */
+.post-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 20px !important;
+  margin-bottom: 2rem !important; /* Asegura separación entre filas */
+}
+
+.post-row-title {
+  font-size: 1.25rem !important;
+  margin: 0.5rem 0 !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.post-row-title a {
+  text-decoration: none !important;
+  border: none !important;
+}
+
+.post-meta {
+  font-size: 0.85rem !important;
+  color: var(--text2) !important;
+  margin-top: 0.5rem !important;
+  font-family: var(--font-mono) !important;
+}
+
+.post-row-thumb {
+  flex-shrink: 0 !important;
+  width: 200px;
+  height: 150px;
+}
+
+@media (max-width: 600px) {
+  .post-row {
+    flex-direction: column !important;
+  }
+  .post-row-thumb {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
