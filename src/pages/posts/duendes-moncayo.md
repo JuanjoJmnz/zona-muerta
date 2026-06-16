@@ -11,3 +11,8 @@ excerpt: "Tras las historias tradicionales se esconden registros policiales de s
 tags: ["Montaña", "Mitos", "Desapariciones"]
 ---
 El monte esconde guardianes ancestrales...
+
+<div class="exp-box exp-box--folklore">
+  <div class="exp-box-label">// Distribución geográfica</div>
+  <p>Registrado en: <strong>Galicia, Asturias, norte de Portugal</strong>...</p>
+</div>

@@ -1,6 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "El Sanatorio de Agramonte: Tres Noches en el Lugar que Nadie Debería Visitar"
+slug: "el-sanatorio-de-agramonte"
 date: "2026-06-16"
 duration: "12 min"
 category: "Urbex"
@@ -25,14 +26,44 @@ Fuimos tres. Llevamos cámaras con flash manual, una grabadora de audio de 24 bi
 
 El acceso es por el lateral este, donde el vallado industrial cedió hace años...
 
+<div class="audio-evidence">
+  <p class="evidence-tag">🔊 REGISTRO DE AUDIO FILTRADO</p>
+  <audio controls src="/audio/psicofonia-sanatorio.mp3"></audio>
+  <span class="evidence-caption">EVIDENCIA-03: Captura de frecuencia residual en el ala norte.</span>
+</div>
+
 ### // Lo que encontramos en el archivo
 
 El archivo estaba en la primera planta...
+
+<figure class="post-internal-image">
+  <img src="/img/santuario_agramonte.png" alt="Pabellón 4" />
+  <figcaption>FIG. 04: Vista general del pasillo central. Captura realizada a las 03:14 AM.</figcaption>
+</figure>
 
 ## Segunda noche — El ala psiquiátrica
 
 El ala psiquiátrica está en el edificio anexo...
 
+<div class="video-evidence">
+  <p class="evidence-tag">📹 GRABACIÓN DE SEGURIDAD / CAMPO</p>
+  <video controls src="/video/incursion-sotano.mp4" poster="/img/cover-video.jpg"></video>
+  <span class="evidence-caption">METRAJE-09: Exploración del sótano inundado.</span>
+</div>
+
 > "Las marcas en las paredes no eran pintura. Lo supimos cuando el flash iluminó la habitación 14 y vimos que llegaban hasta el techo."
+
+<div class="video-responsive">
+  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/bW2EZhD6C9E?si=JL2I1srLEX1ZuF4d" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerpolicy="strict-origin-when-cross-origin" 
+    allowfullscreen>
+  </iframe>
+</div>
 
 Las habitaciones tienen una característica que no esperábamos, la...

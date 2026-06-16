@@ -922,6 +922,20 @@ blockquote p {
 }
 
 .exp-box {
+  border-left: 2px solid;
+  padding: 1rem 1.25rem;
+  margin: 2rem 0;
+}
+
+.exp-box-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.exp-box {
   background: var(--bg3);
   border: 1px solid var(--border2);
   border-left: 2px solid var(--red-dim);
@@ -938,10 +952,56 @@ blockquote p {
   margin-bottom: 0.5rem;
 }
 
+
 .exp-box p {
   font-size: 0.85rem;
   margin: 0;
   color: var(--text2);
+}
+
+.exp-box--leyenda {
+  border-color: #854f0b;
+  background: rgba(186, 117, 23, 0.06);
+}
+
+.exp-box--leyenda .exp-box-label {
+  color: #d4904a;
+}
+
+.exp-box--folklore {
+  border-color: #185fa5;
+  background: rgba(55, 138, 221, 0.06);
+}
+
+.exp-box--folklore .exp-box-label {
+  color: #5b9ec9;
+}
+
+.exp-box--game {
+  border-color: #534ab7;
+  background: rgba(127, 119, 221, 0.06);
+}
+
+.exp-box--game .exp-box-label {
+  color: #a87dc4;
+}
+
+.exp-box--xchan {
+  border-color: #3b6d11;
+  background: rgba(99, 153, 34, 0.06);
+}
+
+.exp-box--xchan .exp-box-label {
+  color: #5dba7d;
+}
+
+.exp-box--media {
+  border-color: #5f5e5a;
+  background: rgba(136, 135, 128, 0.06);
+}
+
+.exp-box--media .exp-box-label {
+  color: #8a9a9b;
 }
 
 .redacted {
@@ -980,6 +1040,92 @@ blockquote p {
   display: grid;
   grid-template-columns: 1fr 260px;
   gap: 4rem;
+}
+
+.post-internal-image {
+  margin: 2.5rem auto;
+  max-width: 90%;
+  text-align: center;
+}
+
+.post-internal-image img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border2);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.post-internal-image figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===================================================
+   REPRODUCTORES MULTIMEDIA DE EVIDENCIAS
+   =================================================== */
+
+.audio-evidence, .video-evidence {
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px dashed var(--border2);
+  padding: 1rem;
+  margin: 2.5rem auto;
+  max-width: 90%;
+}
+
+.evidence-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--red);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+
+.evidence-caption {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text2);
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+}
+
+/* Forzar que el reproductor de audio use la tipografía y colores oscuros */
+audio {
+  width: 100%;
+  height: 40px;
+  filter: invert(0.9) hue-rotate(180deg); /* Truco pro para oscurecer el reproductor por defecto del navegador */
+}
+
+/* Forzar que los vídeos locales no se salgan del post */
+video {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+/* Contenedor Responsive para Vídeos de YouTube (mantiene formato 16:9 en móviles) */
+.video-responsive {
+  position: relative;
+  padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+  height: 0;
+  overflow: hidden;
+  max-width: 90%;
+  margin: 2.5rem auto;
+  border: 1px solid var(--border2);
+}
+
+.video-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 800px) {

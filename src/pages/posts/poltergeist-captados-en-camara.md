@@ -12,3 +12,8 @@ tags: ["Poltergeist", "Vídeos", "Fenómenos"]
 ---
 
 Las grabaciones de seguridad suelen capturar situaciones inesperadas, pero pocas resultan tan inquietantes como este caso. En el vídeo, una cocina aparentemente vacía permanece en silencio hasta que varios objetos comienzan a desplazarse sin explicación visible. Cajones que se abren, utensilios que caen y una silla que se mueve por sí sola hicieron que muchos espectadores hablaran de la posible presencia de un poltergeist. Aunque los escépticos apuntan a causas convencionales, las imágenes continúan siendo uno de los vídeos paranormales más comentados de los últimos años.
+
+<div class="exp-box exp-box--media">
+  <div class="exp-box-label">// Ficha del documento</div>
+  <p>Tipo: <strong>canal de YouTube</strong>. Vídeos: <strong>47</strong>...</p>
+</div>
