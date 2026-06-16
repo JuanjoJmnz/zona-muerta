@@ -121,14 +121,12 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
     <div class="art-layout">
       <div class="art-body">
         
-        <!-- AQUÍ SE INYECTARÁ EL TEXTO ESCRITO EN EL MARKDOWN -->
         <slot />
-          {finalPost.category !== "Sistema" && (
+          {finalPost.category !== "Sistema" && frontmatter?.tags && (
             <div class="art-tags">
-              <a href="#" class="tag">{finalPost.category}</a>
-              <a href="#" class="tag">Albacete</a>
-              <a href="#" class="tag">Psiquiátrico</a>
-              <a href="#" class="tag">Edificio abandonado</a>
+              {frontmatter.tags.map((tag: string) => (
+                <a href={`/tags/${tag.toLowerCase()}`} class="tag">{tag}</a>
+              ))}
             </div>
           )}
       </div>

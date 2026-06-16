@@ -2,10 +2,10 @@
 layout: ../../layouts/PostLayout.astro
 title: "Phasmophobia: Cuando el miedo escucha tu voz"
 slug: "phasmophobia-cuando-el-miedo-escucha-tu-voz"
-date: "2026-06-16"
+date: "2026-06-17"
 category: "Videojuegos"
-catClass: "cat-videojuegos"
-imgClass: "img-videojuegos"
+catClass: "cat-game"
+imgClass: "img-game"
 duration: "6 min"
 excerpt: "Cada ruido, cada sombra y cada palabra pueden atraer a entidades que acechan en la oscuridad esperando el momento perfecto para atacar."
 tags: ["Terror", "Cooperativo", "Fantasmas"]

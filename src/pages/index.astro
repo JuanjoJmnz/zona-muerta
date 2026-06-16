@@ -79,7 +79,7 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
 
     <header>
       <div class="header-inner">
-        <a href="index.html" class="logo-block">
+        <a href="/" class="logo-block">
           <span class="logo-sym">⊗</span>
           <span class="logo-name">ZONA MUERTA</span>
         </a>
@@ -98,7 +98,7 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
         </div>
       </div>
       <div id="search-bar" class="search-bar hidden">
-        <input type="text" placeholder="buscar en el archivo..." class="search-input" autofocus>
+        <input type="text" id="header-search-input" placeholder="Buscar en el archivo..." class="search-input" autofocus>
       </div>
     </header>
 

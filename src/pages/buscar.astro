@@ -1,0 +1,94 @@
+---
+import PostLayout from '../layouts/PostLayout.astro';
+
+const postsGlob = import.meta.glob('./posts/*.md', { eager: true });
+const allPosts = Object.values(postsGlob).map((post: any) => ({
+  url: post.url,
+  title: post.frontmatter.title,
+  excerpt: post.frontmatter.excerpt,
+  category: post.frontmatter.category,
+  catClass: post.frontmatter.catClass,
+  imgClass: post.frontmatter.imgClass,
+  date: post.frontmatter.date,
+  tags: post.frontmatter.tags || []
+}));
+---
+
+<PostLayout title="Buscador de Expedientes">
+  <div class="search-page-header" style="margin-bottom: 2rem;">
+    <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red);">TERMINAL DE BÚSQUEDA</p>
+    <input 
+      type="text" 
+      id="local-search-input" 
+      placeholder="Introduce palabras clave (ej: psiquiátrico, curva...)" 
+      style="width:100%; max-width:600px; background:var(--bg3); border:1px solid var(--border2); padding:0.75rem; font-family:var(--font-mono); color:var(--text); margin-top:1rem; outline:none;"
+    />
+    <p id="search-counter" style="font-size: 0.85rem; color: var(--text2); margin-top: 0.75rem;">
+      Escribe algo para escanear los archivos.
+    </p>
+  </div>
+
+  <section id="search-results-container" class="posts-column"></section>
+</PostLayout>
+
+<script define:vars={{ allPosts }}>
+  const searchInput = document.getElementById('local-search-input');
+  const resultsContainer = document.getElementById('search-results-container');
+  const counter = document.getElementById('search-counter');
+
+  function renderPosts(postsToRender) {
+    if (postsToRender.length === 0) {
+      resultsContainer.innerHTML = `<p style="color:var(--text2); font-size:0.9rem;">No se encontraron registros autorizados con ese criterio.</p>`;
+      return;
+    }
+
+    resultsContainer.innerHTML = postsToRender.map(post => `
+      <article class="post-row">
+        <div class="post-row-text">
+          <div class="post-cat ${post.catClass}">${post.category}</div>
+          <h2 class="post-row-title"><a href="${post.url}">${post.title}</a></h2>
+          <p class="post-row-excerpt">${post.excerpt}</p>
+        </div>
+        <div class="post-row-thumb ${post.imgClass}"></div>
+      </article>
+      <div class="post-divider"></div>
+    `).join('');
+  }
+
+  // FUNCIÓN DE FILTRADO REUTILIZABLE
+  function executeSearch(query) {
+    if (query.length < 2) {
+      resultsContainer.innerHTML = '';
+      counter.innerText = 'Escribe al menos 2 caracteres para escanear...';
+      return;
+    }
+
+    const filtered = allPosts.filter(post => {
+      return post.title.toLowerCase().includes(query) || 
+             post.excerpt.toLowerCase().includes(query) ||
+             post.category.toLowerCase().includes(query) ||
+             post.tags.some(t => t.toLowerCase().includes(query));
+    });
+
+    counter.innerText = `Se han detectado ${filtered.length} coincidencias.`;
+    renderPosts(filtered);
+  }
+
+  // Escuchar la escritura manual en la propia página de búsqueda
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    executeSearch(query);
+  });
+
+  // NUEVO: Capturar el parámetro 'q' de la URL al cargar la página
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryFromUrl = urlParams.get('q');
+
+    if (queryFromUrl) {
+      const cleanQuery = queryFromUrl.toLowerCase().trim();
+      searchInput.value = queryFromUrl; // Rellenamos el input de la página
+      executeSearch(cleanQuery);        // Ejecutamos la búsqueda automáticamente
+    }
+  });
+</script>

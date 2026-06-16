@@ -111,6 +111,26 @@ window.toggleSearch = function() {
   }
 };
 
+/* =====================
+   BÚSQUEDA REDIRECT
+   ===================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const headerSearchInput = document.getElementById('header-search-input');
+  
+  if (headerSearchInput) {
+    headerSearchInput.addEventListener('keypress', function(e) {
+      // Si pulsa la tecla Intro (Enter)
+      if (e.key === 'Enter') {
+        const query = e.target.value.trim();
+        if (query.length >= 2) {
+          // Redirigimos a la página /buscar pasándole el parámetro q en la URL
+          window.location.href = `/buscar?q=${encodeURIComponent(query)}`;
+        }
+      }
+    });
+  }
+});
+
 
 /* =====================
    FADE IN AL HACER SCROLL

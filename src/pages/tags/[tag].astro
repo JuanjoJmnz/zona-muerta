@@ -1,0 +1,57 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+
+export async function getStaticPaths() {
+  const postsGlob = import.meta.glob('../posts/*.md', { eager: true });
+  const allPosts = Object.values(postsGlob).map((post: any) => ({
+    url: post.url,
+    frontmatter: post.frontmatter
+  }));
+
+  // Extraer todos los tags únicos de todos los posts
+  const allTags = new Set<string>();
+  allPosts.forEach(post => {
+    if (post.frontmatter.tags) {
+      post.frontmatter.tags.forEach((t: string) => allTags.add(t.toLowerCase()));
+    }
+  });
+
+  // Generar una página por cada etiqueta
+  return Array.from(allTags).map((tag) => {
+    const filteredPosts = allPosts.filter(post => 
+      post.frontmatter.tags?.map((t: string) => t.toLowerCase()).includes(tag)
+    );
+    return {
+      params: { tag },
+      props: { tagName: tag, posts: filteredPosts },
+    };
+  });
+}
+
+const { tagName, posts } = Astro.props;
+---
+
+<PostLayout title={`Etiqueta: ${tagName}`}>
+  <div class="archive-header" style="margin-bottom: 2rem;">
+    <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red);">FILTRO POR ETIQUETA</p>
+    <h2 style="font-family: var(--font-disp); font-size: 1.5rem; margin-top: 0.5rem; text-transform: uppercase;">
+      Resultados para: #{tagName}
+    </h2>
+  </div>
+
+  <section class="posts-column">
+    {posts.map((post) => (
+      <>
+        <article class="post-row">
+          <div class="post-row-text">
+            <div class={`post-cat ${post.frontmatter.catClass}`}>{post.frontmatter.category}</div>
+            <h2 class="post-row-title"><a href={post.url}>{post.frontmatter.title}</a></h2>
+            <p class="post-row-excerpt">{post.frontmatter.excerpt}</p>
+          </div>
+          <div class={`post-row-thumb ${post.frontmatter.imgClass}`}></div>
+        </article>
+        <div class="post-divider"></div>
+      </>
+    ))}
+  </section>
+</PostLayout>
