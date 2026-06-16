@@ -52,6 +52,8 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
   groups[urlSlug].count += 1;
   return groups;
 }, {});
+
+const { pathname } = Astro.url;
 ---
 
 <!DOCTYPE html>
@@ -89,21 +91,59 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
   <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
 
   <div class="art-hero">
-    {finalPost.category !== "Sistema" && (
-          <div class="breadcrumb">
-            <a href="/">Inicio</a> → 
-            <a href={`/categorias/${finalPost.category === 'x' ? '-x-' : finalPost.category.toLowerCase()}`}>
-              {finalPost.category === 'x' ? '/x/' : finalPost.category}
-            </a>
-            {" → Expediente"}
-          </div>
-        )}
-        
-        {finalPost.category !== "Sistema" && (
-          <div class={`post-cat ${finalPost.catClass}`} style="margin-bottom:1rem;">{finalPost.category}</div>
-        )}
-        
-        <h1>{finalPost.title}</h1>
+      {finalPost.category !== "Sistema" ? (
+        /* 1. Formato para posts individuales reales */
+        <div class="breadcrumb">
+          <a href="/">Inicio</a> → 
+          <a href={`/categorias/${finalPost.category === 'x' ? '-x-' : finalPost.category.toLowerCase()}`}>
+            {finalPost.category === 'x' ? '/x/' : finalPost.category}
+          </a>
+          {" → Expediente"}
+        </div>
+      ) : (
+        /* 2. Formato idéntico para páginas de sistema con enlaces activos */
+        <div class="breadcrumb">
+          <a href="/">Inicio</a> → 
+          
+          {pathname.startsWith('/archivo') && (
+            <>
+              <a href="/archivo" style="color: var(--red, #c0392b); text-decoration: none;">Archivo</a> → 
+              <span style="color: #fff;">Registros por Fecha</span>
+            </>
+          )}
+          
+          {pathname.startsWith('/tags') && (
+            <>
+              <span style="color: var(--text2, #7f8c8d);">Etiquetas</span> → 
+              <span style="color: #fff;">Clasificación</span>
+            </>
+          )}
+          
+          {pathname.startsWith('/buscar') && (
+            <>
+              <span style="color: var(--text2, #7f8c8d);">Terminal</span> → 
+              <span style="color: #fff;">Buscador</span>
+            </>
+          )}
+          
+          {pathname.includes('/categorias') && !pathname.endsWith('/categorias') && (
+            <>
+              <a href="/categorias" style="color: var(--red, #c0392b); text-decoration: none;">Categorías</a> → 
+              <span style="color: #fff;">{(finalPost.title.replace('Categoría: ', ''))}</span>
+            </>
+          )}
+
+          {pathname.endsWith('/categorias') && (
+            <span style="color: #fff;">Categorías</span>
+          )}
+        </div>
+      )}
+      
+      {finalPost.category !== "Sistema" && (
+        <div class={`post-cat ${finalPost.catClass}`} style="margin-bottom:1rem;">{finalPost.category}</div>
+      )}
+      
+      <h1>{finalPost.title}</h1>
       <div class="art-meta">
         <span>{finalPost.date}</span>
         {finalPost.duration && (

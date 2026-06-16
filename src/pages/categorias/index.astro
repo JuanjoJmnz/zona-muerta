@@ -13,7 +13,7 @@ const categoriesData = [
         slug: "leyendas",
         name: "Leyendas Urbanas",
         icon: "👻",
-        queryName: "Leyendas", // <--- Ajustado a lo que pones en tus Markdown
+        queryName: "Leyendas",
         desc: "Mitos contemporáneos y relatos de terror nacidos en el asfalto de todas las ciudades.",
     },
     {
@@ -34,7 +34,7 @@ const categoriesData = [
         slug: "-x-",
         name: "/x/",
         icon: "📡",
-        queryName: "x", // <--- Tu categoría paranormal 'x' bien definida
+        queryName: "x",
         desc: "Los hilos de /x/ más terroríficos y misteriosos extraídos directamente del tablón paranormal de internet.",
     },
     {
@@ -53,50 +53,16 @@ const totalPosts = allPosts.length;
 
 const getCount = (categoryName: string) => {
     return allPosts.filter(
-        (post: any) => post.frontmatter.category === categoryName,
+        (post: any) => post.frontmatter.category === categoryName
     ).length;
 };
 ---
 
 <PostLayout title="Índice de Categorías" category="Sistema">
     <main style="padding: 2rem 0;">
-        <div
-            class="breadcrumb"
-            style="margin-bottom: 2rem; font-family: var(--font-mono, monospace); font-size: 0.8rem; color: #7f8c8d;"
-        >
-            <a
-                href="/"
-                style="color: var(--red, #c0392b); text-decoration: none;"
-            >
-                Inicio
-            </a>
-            →
-            <span style="color: #fff;">Categorías</span>
-        </div>
+        <h1 style="font-family: var(--font-mono, monospace); font-size: 2.2rem; color: #fff; text-transform: uppercase;"> Terminal de <span style="color: var(--red, #c0392b);">Categorías</span></h1>
 
-        <h1
-            style="
-        font-family: var(--font-mono, monospace);
-        font-size: 2.2rem;
-        color: #fff;
-        text-transform: uppercase;
-      "
-        >
-            Terminal de <span style="color: var(--red, #c0392b);"
-                >Categorías</span
-            >
-        </h1>
-
-        <p
-            style="
-        color: #7f8c8d;
-        font-family: var(--font-mono, monospace);
-        font-size: 0.9rem;
-      "
-        >
-            Selecciona un sector de la base de datos para escanear sus
-            transmisiones.
-        </p>
+        <p style="color: #7f8c8d;font-family: var(--font-mono, monospace);font-size: 0.9rem;">Selecciona un sector de la base de datos para escanear sus transmisiones.</p>
 
         <div class="database-stats">
             <span>ARCHIVOS TOTALES: {totalPosts}</span>
@@ -105,15 +71,18 @@ const getCount = (categoryName: string) => {
 
         <p class="categories-intro">
             Explora todos los archivos disponibles en la base de datos. Desde
-            exploraciones urbanas abandonadas hasta leyendas modernas, folklore
-            ancestral, videojuegos inquietantes y fenómenos paranormales
-            documentados en internet.
+            exploraciones urbanas abandonadas hasta leyendas modernas,
+            folklore ancestral, videojuegos inquietantes y fenómenos
+            paranormales documentados en internet.
         </p>
 
         <div class="categories-grid">
             {
                 categoriesData.map((cat) => (
-                    <a href={`/categorias/${cat.slug}`} class="category-card">
+                    <a
+                        href={`/categorias/${cat.slug}`}
+                        class="category-card"
+                    >
                         <div>
                             <div class="category-file">
                                 [ ARCHIVO CLASIFICADO ]
@@ -123,13 +92,18 @@ const getCount = (categoryName: string) => {
                                 {cat.icon} {cat.name}
                             </h2>
 
-                            <p class="category-card-desc">{cat.desc}</p>
+                            <p class="category-card-desc">
+                                {cat.desc}
+                            </p>
 
-                            <div class="category-status">ESTADO: ACTIVO</div>
+                            <div class="category-status">
+                                ESTADO: ACTIVO
+                            </div>
                         </div>
 
                         <span class="category-count">
-                            EXPEDIENTES ACTIVOS // {getCount(cat.queryName)}
+                            EXPEDIENTES ACTIVOS //{" "}
+                            {getCount(cat.queryName)}
                         </span>
                     </a>
                 ))

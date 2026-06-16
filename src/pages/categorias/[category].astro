@@ -17,7 +17,6 @@ interface MarkdownPost {
   frontmatter: PostFrontmatter;
 }
 
-// Diccionario clonado para emparejar descripciones automáticamente en base al parámetro de la URL
 const categoriesInfo: Record<string, { name: string, desc: string }> = {
   'urbex': { name: 'Urbex', desc: 'Exploraciones urbanas que desafían el olvido y desentierran secretos ocultos en el hormigón abandonado.' },
   'leyendas': { name: 'Leyendas Urbanas', desc: 'Mitos contemporáneos y relatos de terror nacidos en el asfalto de todas las ciudades.' },
@@ -58,19 +57,11 @@ interface Props {
 
 const { categoryName, posts } = Astro.props as Props;
 
-// EVITAR EL ERROR DEL PROBLEMA 4:
-// Si la categoría nos llega como 'x' o '-x-', la renombramos limpiamente a '/x/'
 const finalCategoryTitle = (categoryName === 'x' || categoryName === '-x-') ? '/x/' : categoryName;
 ---
 
 <PostLayout title={`Categoría: ${finalCategoryTitle}`}>
   <main class="category-page">
-    
-    <div class="breadcrumb" style="margin-bottom: 2rem; font-family: monospace; font-size: 0.8rem; color: #7f8c8d;">
-      <a href="/" style="color: #c0392b; text-decoration: none;">Inicio</a> → 
-      <a href="/categorias" style="color: #c0392b; text-decoration: none;">Categorías</a> → 
-      <span style="color: #fff;">{finalCategoryTitle}</span>
-    </div>
 
     <h1 class="page-title">Transmisiones en: <span class="highlight">{finalCategoryTitle}</span></h1>
     <p class="page-subtitle">Se han encontrado {posts.length} archivos clasificados en la base de datos.</p>
