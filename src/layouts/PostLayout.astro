@@ -29,8 +29,11 @@ const categoriesCount = {
   Leyendas: allPosts.filter(p => (p.frontmatter?.category || '') === 'Leyendas').length,
   Folklore: allPosts.filter(p => (p.frontmatter?.category || '') === 'Folklore').length,
   Videojuegos: allPosts.filter(p => (p.frontmatter?.category || '') === 'Videojuegos').length,
-  x: allPosts.filter(p => (p.frontmatter?.category || '') === 'x' || (p.frontmatter?.category || '') === '/x/' || (p.frontmatter?.category || '') === '-x-').length,
-  Media: allPosts.filter(p => (p.frontmatter?.category || '') === 'Media').length,
+  x: allPosts.filter(p => {
+    const cat = (p.frontmatter?.category || '').toLowerCase().replace(/\//g, '').trim();
+    return cat === 'x' || cat === '-x-';
+  }).length,
+    Media: allPosts.filter(p => (p.frontmatter?.category || '') === 'Media').length,
 };
 
 // Agrupar posts por Mes y Año guardando la etiqueta y la URL limpia de manera segura

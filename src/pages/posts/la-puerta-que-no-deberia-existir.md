@@ -3,7 +3,7 @@ layout: ../../layouts/PostLayout.astro
 title: "La puerta que no existía en los planos"
 slug: "puerta-no-existia-planos"
 date: "2026-06-16"
-category: "-x-"
+category: "x"
 catClass: "cat-xchan"
 imgClass: "img-xchan"
 thumbImg: "/img/santuario_agramonte.png"
