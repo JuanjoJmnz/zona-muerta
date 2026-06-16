@@ -1,6 +1,5 @@
 ---
 import PostLayout from '../../layouts/PostLayout.astro';
-// IMPORTANTE: Importamos el componente de optimización de imágenes de Astro
 import { Image } from 'astro:assets';
 
 export async function getStaticPaths() {
@@ -76,7 +75,6 @@ const { archiveLabel, posts } = Astro.props;
             </div>
             <div class={`post-row-thumb ${post.frontmatter.imgClass || ''}`}>
               {post.frontmatter.thumbImg ? (
-                /* REEMPLAZADO POR EL COMPONENTE OPTIMIZADO */
                 <Image 
                   src={post.frontmatter.thumbImg} 
                   alt={post.frontmatter.title} 
@@ -96,7 +94,6 @@ const { archiveLabel, posts } = Astro.props;
 </PostLayout>
 
 <style>
-  /* Por defecto en Escritorio es Flex horizontal */
   .archive-list-page .post-row {
     display: flex !important;
     align-items: flex-start !important;
