@@ -6,6 +6,8 @@ date: "2026-06-16"
 category: "-x-"
 catClass: "cat-xchan"
 imgClass: "img-xchan"
+thumbImg: "/img/santuario_agramonte.png"
+coverImg: "/img/santuario_agramonte.png"
 duration: "5 min"
 excerpt: "Un usuario de 4Chan aseguró haber encontrado una puerta oculta en su vivienda que no figuraba en ningún plano oficial de la propiedad."
 tags: ["4Chan", "Misterios", "Paranormal"]
