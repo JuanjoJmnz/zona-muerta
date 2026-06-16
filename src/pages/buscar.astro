@@ -7,8 +7,8 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
   title: post.frontmatter.title,
   excerpt: post.frontmatter.excerpt,
   category: post.frontmatter.category,
-  catClass: post.frontmatter.catClass,
   imgClass: post.frontmatter.imgClass,
+  thumbImg: post.frontmatter.thumbImg,
   date: post.frontmatter.date,
   tags: post.frontmatter.tags || []
 }));
@@ -37,23 +37,30 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
   const counter = document.getElementById('search-counter');
 
   function renderPosts(postsToRender) {
-    if (postsToRender.length === 0) {
-      resultsContainer.innerHTML = `<p style="color:var(--text2); font-size:0.9rem;">No se encontraron registros autorizados con ese criterio.</p>`;
-      return;
-    }
+      if (postsToRender.length === 0) {
+        resultsContainer.innerHTML = `<p style="color:var(--text2); font-size:0.9rem;">No se encontraron registros autorizados con ese criterio.</p>`;
+        return;
+      }
 
-    resultsContainer.innerHTML = postsToRender.map(post => `
-      <article class="post-row">
-        <div class="post-row-text">
-          <div class="post-cat ${post.catClass}">${post.category}</div>
-          <h2 class="post-row-title"><a href="${post.url}">${post.title}</a></h2>
-          <p class="post-row-excerpt">${post.excerpt}</p>
-        </div>
-        <div class="post-row-thumb ${post.imgClass}"></div>
-      </article>
-      <div class="post-divider"></div>
-    `).join('');
-  }
+      resultsContainer.innerHTML = postsToRender.map(post => {
+        // Controlar si se renderiza una tag img real o el fondo abstracto
+        const imageContent = post.thumbImg 
+          ? `<img src="${post.thumbImg}" alt="${post.title}" style="width:100%; height:100%; object-fit:cover;" />`
+          : '';
+
+        return `
+          <article class="post-row">
+            <div class="post-row-text">
+              <div class="post-cat ${post.catClass}">${post.category}</div>
+              <h2 class="post-row-title"><a href="${post.url}">${post.title}</a></h2>
+              <p class="post-row-excerpt">${post.excerpt}</p>
+            </div>
+            <div class="post-row-thumb ${post.imgClass || ''}">${imageContent}</div>
+          </article>
+          <div class="post-divider"></div>
+        `;
+      }).join('');
+    }
 
   // FUNCIÓN DE FILTRADO REUTILIZABLE
   function executeSearch(query) {
@@ -80,7 +87,7 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
     executeSearch(query);
   });
 
-  // NUEVO: Capturar el parámetro 'q' de la URL al cargar la página
+  // Capturar el parámetro 'q' de la URL al cargar la página
   document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const queryFromUrl = urlParams.get('q');

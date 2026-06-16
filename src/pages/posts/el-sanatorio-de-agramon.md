@@ -1,16 +1,18 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "El Sanatorio de Agramón: Tres Noches en el Lugar que Nadie Debería Visitar"
+title: "El Sanatorio de Agramonte: Tres Noches en el Lugar que Nadie Debería Visitar"
 date: "2026-06-16"
 duration: "12 min"
 category: "Urbex"
 catClass: "cat-urbex"
 imgClass: "img-urbex"
+thumbImg: "/img/santuario_agramonte.png"
+coverImg: "/img/santuario_agramonte.png"
 excerpt: "Las marcas en las paredes del ala psiquiátrica no eran pintura. Lo supimos cuando el flash de la cámara iluminó la habitación 14 y encontramos que llegaban hasta el techo."
 tags: ["Albacete", "Psiquiátrico", "Abandono"]
 ---
 
-No existe ningún sanatorio oficial en Agramón. Si buscas en Google Maps, en los registros del municipio de Hellín, o en cualquier base de datos pública, no encontrarás nada. Pero el edificio lleva en pie desde 1943, y la gente del pueblo sabe perfectamente lo que fue.
+No existe ningún sanatorio oficial en Agramonte. Si buscas en Google Maps, en los registros del municipio de Hellín, o en cualquier base de datos pública, no encontrarás nada. Pero el edificio lleva en pie desde 1943, y la gente del pueblo sabe perfectamente lo que fue.
 
 <div class="exp-box">
   <div class="exp-box-label">// Expediente municipal — clasificado</div>
