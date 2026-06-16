@@ -137,19 +137,45 @@ if ('IntersectionObserver' in window) {
 
 
 /* =====================
-   NEWSLETTER SIDEBAR
+   NEWSLETTER SIDEBAR (A TRAVÉS DE NUESTRA API)
    ===================== */
-window.handleSub = function(e) {
+window.handleSub = async function(e) {
   e.preventDefault();
   const btn = e.target.querySelector('button');
   const inp = e.target.querySelector('input');
-  btn.textContent = '✓ Suscrito';
-  btn.style.background = '#27ae60';
-  inp.value = '';
+  const email = inp.value;
+
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  try {
+    // Llamamos a nuestro propio archivo de Astro de forma segura
+    const response = await fetch('/api/subscribe.json', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      btn.textContent = '✓ Transmisión Establecida';
+      btn.style.background = '#c0392b'; // Rojo Zona Muerta
+      inp.value = '';
+    } else {
+      btn.textContent = data.message || 'Error';
+      btn.style.background = '#7f8c8d';
+    }
+  } catch (error) {
+    btn.textContent = 'Error de Red';
+    btn.style.background = '#7f8c8d';
+  }
+
   setTimeout(() => {
     btn.textContent = 'Suscribirse';
     btn.style.background = '';
-  }, 3500);
+    btn.disabled = false;
+  }, 4000);
 };
 
 
