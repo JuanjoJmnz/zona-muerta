@@ -1674,3 +1674,110 @@ video {
 .submit-form-btn:active {
   transform: scale(0.98);
 }
+
+/* ==========================================================================
+   DISEÑO RESPONSIVO (MÓVILES Y TABLETS)
+   ========================================================================== */
+
+/* Por defecto, el botón hamburguesa está oculto en ordenadores */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 101;
+}
+
+.menu-toggle .bar {
+  width: 100%;
+  height: 2px;
+  background-color: var(--text);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Cambios estructurales para pantallas de móviles (Máximo 768px) */
+@media (max-width: 768px) {
+  
+  /* 1. HEADER Y MENÚ HAMBURGUESA */
+  .menu-toggle {
+    display: flex; /* Se muestra el botón */
+  }
+
+  header nav {
+    position: fixed;
+    top: 60px; /* Justo debajo del header base */
+    left: -100%; /* Escondido por completo a la izquierda */
+    width: 100%;
+    height: calc(100vh - 60px);
+    background-color: var(--bg2);
+    border-right: 1px solid var(--border);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 3rem;
+    gap: 2rem;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+  }
+
+  /* Clase activa que inyectará el JavaScript al hacer click */
+  header nav.mobile-open {
+    left: 0; /* Despliega el menú hacia el centro */
+  }
+
+  .header-inner {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  /* Animación de la hamburguesa transformándose en una 'X' al abrirse */
+  .menu-toggle.open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    background-color: var(--red);
+  }
+  .menu-toggle.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: var(--red);
+  }
+
+
+  /* 2. MAQUETACIÓN GLOBAL Y COLUMNAS */
+  .content-layout {
+    flex-direction: column; /* La barra lateral pasa abajo del todo */
+    gap: 3rem;
+    padding: 0 1rem;
+  }
+
+  .sidebar {
+    width: 100% !important; /* La sidebar toma todo el ancho */
+  }
+
+  /* 3. TARJETAS DE POSTS (POST-ROW) RE-ADAPTADAS */
+  .post-row {
+    flex-direction: column-reverse !important; /* La imagen pasa arriba del texto en móviles */
+    gap: 15px !important;
+  }
+
+  .post-row-thumb {
+    width: 100% !important; /* La imagen del post ocupa todo el ancho disponible */
+    height: 180px !important;
+  }
+
+  /* Ajustes en el post destacado */
+  .featured-inner {
+    flex-direction: column-reverse !important;
+    padding: 1rem;
+  }
+
+  .featured-title {
+    font-size: 1.5rem !important;
+  }
+}

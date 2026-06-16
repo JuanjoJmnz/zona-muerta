@@ -202,3 +202,27 @@ window.handleSub = async function(e) {
 /* Easter egg en consola */
 console.log('%c⊗ ZONA MUERTA', 'color:#c0392b;font-size:18px;font-family:monospace;font-weight:bold');
 console.log('%c// Si estás leyendo esto, ya es demasiado tarde.', 'color:#5a1a13;font-family:monospace;font-size:11px');
+
+// Lógica de apertura y cierre del menú hamburguesa para Zona Muerta
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      // Alterna la clase 'open' para animar las barras en una 'X'
+      menuToggle.classList.toggle('open');
+      // Alterna la clase 'mobile-open' para deslizar el menú a la pantalla
+      navMenu.classList.toggle('mobile-open');
+    });
+
+    // Opcional: Cerrar el menú si se hace click en algún enlace interno
+    const navLinks = navMenu.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('open');
+        navMenu.classList.remove('mobile-open');
+      });
+    });
+  }
+});
