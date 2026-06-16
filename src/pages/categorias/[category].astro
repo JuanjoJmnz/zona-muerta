@@ -1,0 +1,97 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+
+interface PostFrontmatter {
+  title: string;
+  date: string;
+  duration: string;
+  category: string;
+  catClass?: string;
+  imgClass?: string;
+  excerpt: string;
+  layout?: string;
+}
+
+interface MarkdownPost {
+  url: string;
+  frontmatter: PostFrontmatter;
+}
+
+
+export async function getStaticPaths() {
+  const postFiles = import.meta.glob<MarkdownPost>('../posts/*.md', { eager: true });
+  const allPosts: MarkdownPost[] = Object.values(postFiles);
+  
+  const uniqueCategories: string[] = [
+    ...new Set(allPosts.map((post) => post.frontmatter.category).filter(Boolean))
+  ];
+
+  return uniqueCategories.map((category: string) => {
+    const urlParam = category.toLowerCase().replace(/\s+/g, '-');
+    const filteredPosts = allPosts.filter((post) => post.frontmatter.category === category);
+    
+    return {
+      params: { category: urlParam },
+      props: { categoryName: category, posts: filteredPosts },
+    };
+  });
+}
+
+interface Props {
+  categoryName: string;
+  posts: MarkdownPost[];
+}
+
+const { categoryName, posts } = Astro.props as Props;
+---
+
+<PostLayout title={`Categoría: ${categoryName}`}>
+  <main class="category-page">
+    <h1 class="page-title">Transmisiones en: <span class="highlight">{categoryName}</span></h1>
+    <p class="page-subtitle">Se han encontrado {posts.length} archivos clasificados en la base de datos.</p>
+
+    <div class="posts-grid">
+      {posts.map((post) => (
+        <article class="post-card">
+          <!-- Usamos tus clases dinámicas del frontmatter si quieres darles estilos únicos -->
+          <div class={`card-header ${post.frontmatter.catClass || ''}`}>
+            <span class="category-badge">{post.frontmatter.category}</span>
+            <span class="post-duration">// Lectura: {post.frontmatter.duration}</span>
+          </div>
+          
+          <h2><a href={post.url}>{post.frontmatter.title}</a></h2>
+          <p class="post-date">Fecha de registro: {post.frontmatter.date}</p>
+          <p class="post-excerpt">{post.frontmatter.excerpt}</p>
+          <a href={post.url} class="read-more">Abrir expediente →</a>
+        </article>
+      ))}
+    </div>
+  </main>
+</PostLayout>
+
+<style>
+  .page-title { font-family: monospace; font-size: 2rem; color: #fff; text-transform: uppercase; }
+  .highlight { color: #c0392b; }
+  .page-subtitle { color: #7f8c8d; font-family: monospace; margin-bottom: 2.5rem; font-size: 0.9rem; }
+  .posts-grid { display: flex; flex-direction: column; gap: 2rem; }
+  
+  .post-card { 
+    background: #121212; 
+    padding: 1.5rem; 
+    border: 1px solid #222;
+    border-left: 3px solid #c0392b; 
+  }
+  
+  .card-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-family: monospace; font-size: 0.8rem; }
+  .category-badge { color: #c0392b; font-weight: bold; }
+  .post-duration { color: #555; }
+  
+  .post-card h2 { margin: 0.5rem 0; font-size: 1.4rem; }
+  .post-card h2 a { color: #fff; text-decoration: none; }
+  .post-card h2 a:hover { color: #c0392b; }
+  
+  .post-date { color: #666; font-size: 0.85rem; font-family: monospace; margin-bottom: 0.8rem; }
+  .post-excerpt { color: #b3b3b3; line-height: 1.5; font-size: 0.95rem; }
+  .read-more { display: inline-block; margin-top: 1rem; color: #c0392b; text-decoration: none; font-family: monospace; font-size: 0.9rem; }
+  .read-more:hover { text-decoration: underline; }
+</style>

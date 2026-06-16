@@ -1,6 +1,18 @@
 ---
-const { frontmatter } = Astro.props;
+// Extraemos las propiedades de forma flexible
+const { frontmatter, title: customTitle } = Astro.props;
 
+// Creamos un objeto seguro. Si no viene 'frontmatter', usamos valores por defecto o el título manual
+const finalPost = {
+  title: frontmatter?.title || customTitle || "Archivo Clasificado",
+  category: frontmatter?.category || "Sistema",
+  catClass: frontmatter?.catClass || "cat-sistema",
+  imgClass: frontmatter?.imgClass || "img-default",
+  date: frontmatter?.date || "",
+  duration: frontmatter?.duration || ""
+};
+
+// --- TODO TU CÓDIGO INTERNO SE QUEDA IGUAL ---
 const postsGlob = import.meta.glob('../pages/posts/*.md', { eager: true });
 const allPosts = Object.values(postsGlob).map((post: any) => ({
   url: post.url,
@@ -19,15 +31,24 @@ const categoriesCount = {
   Media: allPosts.filter(p => p.frontmatter.category === 'Media').length,
 };
 
-// Agrupar posts por Mes y Año para el Archivo (con tipos corregidos)
-const archiveGroups = allPosts.reduce((groups: Record<string, number>, post: any) => {
+// Agrupar posts por Mes y Año guardando la etiqueta y la URL limpia
+const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, count: number }>, post: any) => {
   const dateObj = new Date(post.frontmatter.date);
-  // Formateamos la fecha para obtener "Mes Año" (ej: "junio de 2026")
-  const monthYear = dateObj.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
-  // Capitalizamos la primera letra
-  const formattedLabel = monthYear.charAt(0).toUpperCase() + monthYear.slice(1);
   
-  groups[formattedLabel] = (groups[formattedLabel] || 0) + 1;
+  // 1. Crear el slug para la URL (ej: "junio-2026")
+  const month = dateObj.toLocaleDateString('es-ES', { month: 'long' });
+  const year = dateObj.toLocaleDateString('es-ES', { year: 'numeric' });
+  const urlSlug = `${month}-${year}`.toLowerCase().replace(/\s+/g, '-');
+
+  // 2. Crear la etiqueta bonita (ej: "Junio de 2026")
+  const monthYearLabel = dateObj.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+  const formattedLabel = monthYearLabel.charAt(0).toUpperCase() + monthYearLabel.slice(1);
+  
+  if (!groups[urlSlug]) {
+    groups[urlSlug] = { label: formattedLabel, count: 0 };
+  }
+  
+  groups[urlSlug].count += 1;
   return groups;
 }, {});
 ---
@@ -37,39 +58,11 @@ const archiveGroups = allPosts.reduce((groups: Record<string, number>, post: any
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{frontmatter.title} — Zona Muerta</title>
+  <title>{finalPost.title} — Zona Muerta</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="/css/style.css">
-  
-  <style is:inline>
-    .art-hero { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--border); }
-    .art-hero .breadcrumb { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
-    .art-hero .breadcrumb a { color: var(--text2); }
-    .art-hero .breadcrumb a:hover { color: var(--text); }
-    .art-hero h1 { font-family: var(--font-disp); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600; line-height: 1.1; letter-spacing: 0.03em; margin-bottom: 1.25rem; max-width: 720px; }
-    .art-hero .art-meta { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text3); letter-spacing: 0.06em; display: flex; gap: 1rem; flex-wrap: wrap; }
-    .art-cover { width: 100%; aspect-ratio: 16/7; margin: 2.5rem 0; }
-    .art-cover .img-urbex { width: 100%; height: 100%; }
-    .art-body { max-width: 680px; padding: 0 0 5rem; }
-    .art-body p { font-size: 1rem; line-height: 1.9; color: var(--text2); margin-bottom: 1.4rem; }
-    .art-body h2 { font-family: var(--font-disp); font-size: 1.35rem; font-weight: 400; letter-spacing: 0.06em; color: var(--text); margin: 2.5rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-    .art-body h3 { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.15em; color: var(--red); text-transform: uppercase; margin: 2rem 0 0.75rem; }
-    blockquote { border-left: 2px solid var(--red); padding: 0.75rem 1.5rem; margin: 2rem 0; }
-    blockquote p { font-family: var(--font-spec); font-style: italic; font-size: 1.05rem; color: var(--text); margin: 0; }
-    .exp-box { background: var(--bg3); border: 1px solid var(--border2); border-left: 2px solid var(--red-dim); padding: 1.25rem 1.5rem; margin: 2rem 0; }
-    .exp-box-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text3); text-transform: uppercase; margin-bottom: 0.5rem; }
-    .exp-box p { font-size: 0.85rem; margin: 0; color: var(--text2); }
-    .redacted { background: var(--text); color: transparent; user-select: none; padding: 0 2px; }
-    .art-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-    .tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; padding: 3px 8px; border: 1px solid var(--border2); color: var(--text2); text-transform: uppercase; transition: color 0.15s, border-color 0.15s; }
-    .tag:hover { color: var(--red); border-color: var(--red-dim); }
-    .art-layout { display: grid; grid-template-columns: 1fr 260px; gap: 4rem; }
-    @media (max-width: 800px) { .art-layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
-    .sidebar .sidebar-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
-    .sidebar .sidebar-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; color: var(--text3); text-transform: uppercase; margin-bottom: 1rem; }
-  </style>
 </head>
 <body>
 
@@ -80,47 +73,64 @@ const archiveGroups = allPosts.reduce((groups: Record<string, number>, post: any
         <span class="logo-name">ZONA MUERTA</span>
       </a>
       <nav>
-        <a href="#" class="nav-link active">{frontmatter.category}</a>
-        <a href="#" class="nav-link">Leyendas</a>
-        <a href="#" class="nav-link">Folklore</a>
-        <a href="#" class="nav-link">Videojuegos</a>
-        <a href="#" class="nav-link">/x/</a>
-        <a href="#" class="nav-link">Media</a>
+        <a href="/" class="nav-link active">Inicio</a>
+        <a href="/categorias/urbex" class="nav-link">Urbex</a>
+        <a href="/categorias/leyendas" class="nav-link">Leyendas</a>
+        <a href="/categorias/folklore" class="nav-link">Folklore</a>
+        <a href="/categorias/videojuegos" class="nav-link">Videojuegos</a>
+        <a href="/categorias/-x-" class="nav-link">/x/</a>
+        <a href="/categorias/media" class="nav-link">Media</a>
+        <a href="/categorias/contacto" class="nav-link">Contacto</a>
       </nav>
     </div>
   </header>
 
   <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
 
-    <div class="art-hero">
-      <div class="breadcrumb"><a href="/">Inicio</a> → <a href="#">{frontmatter.category}</a> → Expediente</div>
-      <div class={`post-cat ${frontmatter.catClass}`} style="margin-bottom:1rem;">{frontmatter.category}</div>
-      <h1>{frontmatter.title}</h1>
+  <div class="art-hero">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> → 
+      <a href="#">{finalPost.category === "Sistema" ? "Categorías" : finalPost.category}</a> 
+      {finalPost.category !== "Sistema" && "→ Expediente"}
+    </div>
+    
+    {finalPost.category !== "Sistema" && (
+      <div class={`post-cat ${finalPost.catClass}`} style="margin-bottom:1rem;">{finalPost.category}</div>
+    )}
+    
+    <h1>{finalPost.title}</h1>
       <div class="art-meta">
-        <span>{frontmatter.date}</span>
-        <span>·</span>
-        <span>{frontmatter.duration} lectura</span>
-        <span>·</span>
-        <span>N38°31'16" W1°46'09"</span>
+        <span>{finalPost.date}</span>
+        {finalPost.duration && (
+          <>
+            <span>·</span>
+            <span>{finalPost.duration} lectura</span>
+            <span>·</span>
+            <span>N38°31'16" W1°46'09"</span>
+          </>
+        )}
       </div>
     </div>
 
-    <div class="art-cover">
-      <div class={frontmatter.imgClass}></div>
-    </div>
+    {finalPost.imgClass !== "img-default" && (
+      <div class="art-cover">
+        <div class={finalPost.imgClass}></div>
+      </div>
+    )}
 
     <div class="art-layout">
       <div class="art-body">
         
         <!-- AQUÍ SE INYECTARÁ EL TEXTO ESCRITO EN EL MARKDOWN -->
         <slot />
-
-        <div class="art-tags">
-          <a href="#" class="tag">{frontmatter.category}</a>
-          <a href="#" class="tag">Albacete</a>
-          <a href="#" class="tag">Psiquiátrico</a>
-          <a href="#" class="tag">Edificio abandonado</a>
-        </div>
+          {finalPost.category !== "Sistema" && (
+            <div class="art-tags">
+              <a href="#" class="tag">{finalPost.category}</a>
+              <a href="#" class="tag">Albacete</a>
+              <a href="#" class="tag">Psiquiátrico</a>
+              <a href="#" class="tag">Edificio abandonado</a>
+            </div>
+          )}
       </div>
 
       <!-- SIDEBAR REAL ACTUALIZADA -->
@@ -134,12 +144,12 @@ const archiveGroups = allPosts.reduce((groups: Record<string, number>, post: any
         <div class="sidebar-block">
           <div class="sidebar-title">Categorías</div>
           <div class="nav-categories" style="display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem;">
-            <p style="color: var(--text2)">Urban Exploration: <span style="color: var(--red)">{categoriesCount.Urbex}</span></p>
-            <p style="color: var(--text2)">Leyendas Urbanas: <span style="color: var(--red)">{categoriesCount.Leyendas}</span></p>
-            <p style="color: var(--text2)">Folklore: <span style="color: var(--red)">{categoriesCount.Folklore}</span></p>
-            <p style="color: var(--text2)">Videojuegos: <span style="color: var(--red)">{categoriesCount.Videojuegos}</span></p>
-            <p style="color: var(--text2)">Hilos /x/: <span style="color: var(--red)">{categoriesCount.x}</span></p>
-            <p style="color: var(--text2)">Vídeos y Libros: <span style="color: var(--red)">{categoriesCount.Media}</span></p>
+            <a href="/categorias/urbex" style="color: var(--text2)">Urbex: <span style="color: var(--red)">{categoriesCount.Urbex}</span></a>
+            <a href="/categorias/leyendas" style="color: var(--text2)">Leyendas Urbanas: <span style="color: var(--red)">{categoriesCount.Leyendas}</span></a>
+            <a href="/categorias/folklore" style="color: var(--text2)">Folklore: <span style="color: var(--red)">{categoriesCount.Folklore}</span></a>
+            <a href="/categorias/videojuegos" style="color: var(--text2)">Videojuegos: <span style="color: var(--red)">{categoriesCount.Videojuegos}</span></a>
+            <a href="/categorias/-x-" style="color: var(--text2)">Hilos /x/: <span style="color: var(--red)">{categoriesCount.x}</span></a>
+            <a href="/categorias/media" style="color: var(--text2)">Vídeos y Libros: <span style="color: var(--red)">{categoriesCount.Media}</span></a>
           </div>
         </div>
 
@@ -170,10 +180,10 @@ const archiveGroups = allPosts.reduce((groups: Record<string, number>, post: any
         <div class="sidebar-block">
           <div class="sidebar-title">ARCHIVO</div>
           <ul class="archive-list">
-            {Object.entries(archiveGroups).map(([monthYear, count]) => (
+            {Object.entries(archiveGroups).map(([urlSlug, info]) => (
               <li>
-                <a href="#">
-                  {monthYear} <span style="color: var(--red)">{count}</span>
+                <a href={`/archivo/${urlSlug}`}>
+                  {info.label} <span style="color: var(--red)">({info.count})</span>
                 </a>
               </li>
             ))}
@@ -192,7 +202,14 @@ const archiveGroups = allPosts.reduce((groups: Record<string, number>, post: any
         <span class="logo-name">ZONA MUERTA</span>
       </div>
       <nav class="footer-nav">
-        <a href="/">Inicio</a><a href="#">Urbex</a><a href="#">Leyendas</a>
+        <a href="/" class="nav-link active">Inicio</a>
+        <a href="/categorias/urbex" class="nav-link">Urbex</a>
+        <a href="/categorias/leyendas" class="nav-link">Leyendas</a>
+        <a href="/categorias/folklore" class="nav-link">Folklore</a>
+        <a href="/categorias/videojuegos" class="nav-link">Videojuegos</a>
+        <a href="/categorias/-x-" class="nav-link">/x/</a>
+        <a href="/categorias/media" class="nav-link">Media</a>
+        <a href="/categorias/contacto" class="nav-link">Contacto</a>
       </nav>
       <div class="footer-copy">© 2026 Zona Muerta</div>
     </div>
