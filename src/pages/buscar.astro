@@ -7,6 +7,7 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
   title: post.frontmatter.title,
   excerpt: post.frontmatter.excerpt,
   category: post.frontmatter.category,
+  catClass: post.frontmatter.catClass || 'cat-sistema', // <-- CORREGIDO: Ahora sí extraemos la clase de estilo
   imgClass: post.frontmatter.imgClass,
   thumbImg: post.frontmatter.thumbImg,
   date: post.frontmatter.date,
@@ -48,10 +49,13 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
           ? `<img src="${post.thumbImg}" alt="${post.title}" style="width:100%; height:100%; object-fit:cover;" />`
           : '';
 
+        // CORREGIDO: Validar el nombre visible de la categoría paranormal
+        const displayCategory = (post.category === 'x' || post.category === '-x-' || post.category === '/x/') ? '/x/' : post.category;
+
         return `
           <article class="post-row">
             <div class="post-row-text">
-              <div class="post-cat ${post.catClass}">${post.category}</div>
+              <div class="post-cat ${post.catClass}">${displayCategory}</div>
               <h2 class="post-row-title"><a href="${post.url}">${post.title}</a></h2>
               <p class="post-row-excerpt">${post.excerpt}</p>
             </div>
@@ -94,8 +98,8 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
 
     if (queryFromUrl) {
       const cleanQuery = queryFromUrl.toLowerCase().trim();
-      searchInput.value = queryFromUrl; // Rellenamos el input de la página
-      executeSearch(cleanQuery);        // Ejecutamos la búsqueda automáticamente
+      searchInput.value = queryFromUrl;
+      executeSearch(cleanQuery);
     }
   });
 </script>
