@@ -1,0 +1,216 @@
+---
+// Importamos los posts de la carpeta posts para mantener la barra lateral viva
+const postsGlob = import.meta.glob('../posts/*.md', { eager: true });
+
+const allPosts = Object.values(postsGlob).map((post: any) => ({
+  url: post.url,
+  frontmatter: post.frontmatter
+}));
+
+const sortedPosts = allPosts.sort((a, b) => {
+  return new globalThis.Date(b.frontmatter.date).getTime() - new globalThis.Date(a.frontmatter.date).getTime();
+});
+
+const recentPosts = sortedPosts.slice(0, 3);
+
+const categoriesCount = {
+  Urbex: allPosts.filter(p => (p.frontmatter?.category || '') === 'Urbex').length,
+  Leyendas: allPosts.filter(p => (p.frontmatter?.category || '') === 'Leyendas').length,
+  Folklore: allPosts.filter(p => (p.frontmatter?.category || '') === 'Folklore').length,
+  Videojuegos: allPosts.filter(p => (p.frontmatter?.category || '') === 'Videojuegos').length,
+  x: allPosts.filter(p => (p.frontmatter?.category || '') === 'x' || (p.frontmatter?.category || '') === '/x/' || (p.frontmatter?.category || '') === '-x-').length,
+  Media: allPosts.filter(p => (p.frontmatter?.category || '') === 'Media').length,
+};
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LÍNEA DIRECTA — ZONA MUERTA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div id="main-site">
+
+    <header>
+      <div class="header-inner">
+        <a href="/" class="logo-block">
+          <span class="logo-sym">⊗</span>
+          <span class="logo-name">ZONA MUERTA</span>
+        </a>
+        <nav>
+          <a href="/" class="nav-link">Inicio</a>
+          <a href="/categorias/urbex" class="nav-link">Urbex</a>
+          <a href="/categorias/leyendas" class="nav-link">Leyendas</a>
+          <a href="/categorias/folklore" class="nav-link">Folklore</a>
+          <a href="/categorias/videojuegos" class="nav-link">Videojuegos</a>
+          <a href="/categorias/-x-" class="nav-link">/x/</a>
+          <a href="/categorias/media" class="nav-link">Media</a>
+          <a href="/categorias/contacto" class="nav-link active">Contacto</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="content-layout" style="margin-top: 2rem;">
+
+        <section class="posts-column form-container-box">
+          <div style="margin-bottom: 2rem;">
+            <h1 style="font-family: var(--font-spec); color: var(--red); font-size: 2rem; margin-bottom: 0.5rem;">⊗ LÍNEA DIRECTA</h1>
+            <p style="color: var(--text2); font-size: 0.95rem; line-height: 1.6;">
+              ¿Has sido testigo de algo que desafía la lógica? Usa este canal encriptado para enviarnos tu informe. Si solicitas el anonimato, tu identidad permanecerá clasificada.
+            </p>
+          </div>
+
+          <div id="form-success-status" style="display: none; border: 1px dashed var(--red); background: var(--bg2); padding: 1.5rem; font-family: var(--font-mono); margin-bottom: 2rem;">
+            <div style="color: var(--red); font-weight: bold; margin-bottom: 0.5rem;">[TRANSMISIÓN COMPLETADA CON ÉXITO]</div>
+            <p style="color: var(--text2); font-size: 0.9rem; line-height: 1.5;">
+              El informe ha sido interceptado y guardado en nuestros servidores locales de forma segura. El archivo comenzará a ser analizado de inmediato. Gracias por romper el silencio.
+            </p>
+          </div>
+
+          <form id="secure-contact-form" class="contact-form">
+            
+            <div class="form-group">
+              <label for="name">IDENTIFICATIVO / ALIAS</label>
+              <input type="text" id="name" name="name" placeholder="Ej: Agente_404 o Anónimo" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">VÍA DE CONTACTO (EMAIL)</label>
+              <input type="email" id="email" name="email" placeholder="tu-correo@proto.me" required />
+            </div>
+
+            <div class="form-group">
+              <label for="subject">TIPO DE INFORME</label>
+              <select id="subject" name="subject">
+                <option value="Historia Paranormal">Experiencia Paranormal / Hilo de /x/</option>
+                <option value="Urbex Chivatazo">Chivatazo / Ubicación Urbex</option>
+                <option value="Sugerencia">Sugerencia de Contenido</option>
+                <option value="Error">Reportar un error en el archivo</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">TU HISTORIA / RELATO (SÉ DETALLADO)</label>
+              <textarea id="message" name="message" rows="10" placeholder="Escribe aquí los hechos, fechas, coordenadas o testimonios..." required></textarea>
+            </div>
+
+            <div class="form-group privacy-check">
+              <input type="checkbox" id="privacy" required />
+              <label for="privacy">Autorizo la publicación de este relato bajo las directrices de confidencialidad de Zona Muerta.</label>
+            </div>
+
+            <button type="submit" id="submit-btn" class="submit-form-btn">ENVIAR TRANSMISIÓN ⊗</button>
+          </form>
+        </section>
+
+        <aside class="sidebar">
+          <div class="sidebar-block">
+            <div class="sidebar-title">SOBRE ZONA MUERTA</div>
+            <p class="sidebar-text">Documentamos lo inexplicable: urbex, leyendas, folklore, hilos de /x/ y todo lo que la realidad oficial prefiere ignorar.</p>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-title">Categorías</div>
+            <div class="nav-categories" style="display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem;">
+              <a href="/categorias/urbex" style="color: var(--text2)">Urbex: <span style="color: var(--red)">{categoriesCount.Urbex}</span></a>
+              <a href="/categorias/leyendas" style="color: var(--text2)">Leyendas Urbanas: <span style="color: var(--red)">{categoriesCount.Leyendas}</span></a>
+              <a href="/categorias/folklore" style="color: var(--text2)">Folklore: <span style="color: var(--red)">{categoriesCount.Folklore}</span></a>
+              <a href="/categorias/videojuegos" style="color: var(--text2)">Videojuegos: <span style="color: var(--red)">{categoriesCount.Videojuegos}</span></a>
+              <a href="/categorias/-x-" style="color: var(--text2)">Hilos /x/: <span style="color: var(--red)">{categoriesCount.x}</span></a>
+              <a href="/categorias/media" style="color: var(--text2)">Vídeos y Libros: <span style="color: var(--red)">{categoriesCount.Media}</span></a>
+            </div>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-title">ENTRADAS RECIENTES</div>
+            <div class="recent-list">
+              {recentPosts.map((post) => (
+                <a href={post.url} class="recent-item">
+                  <div class={`recent-thumb ${post.frontmatter.imgClass || ''}`}>
+                    {post.frontmatter.thumbImg ? (
+                      <img src={post.frontmatter.thumbImg} alt={post.frontmatter.title} style="width:100%; height:100%; object-fit:cover;" />
+                    ) : null}
+                  </div>
+                  <div class="recent-text">
+                    <div class="recent-title">{post.frontmatter.title}</div>
+                    <div class="recent-date">{post.frontmatter.date}</div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span class="logo-sym">⊗</span>
+          <span class="logo-name">ZONA MUERTA</span>
+        </div>
+        <div class="footer-copy">© 2026 Zona Muerta</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('secure-contact-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const successStatus = document.getElementById('form-success-status');
+
+      // REEMPLAZA ESTO CON TU URL DE FORMSPREE COMPLETA
+      const FORMSPREE_URL = 'https://formspree.io/f/xkoaekld';
+
+      if (!form) return;
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Evita que el navegador recargue o navegue a otra página
+
+        // Cambiar estado visual del botón para simular carga cifrada
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'TRANSMITIENDO DATOS... ⚡';
+
+        // Recoger la información del formulario de forma limpia
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch(FORMSPREE_URL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            // Envío exitoso: Ocultamos formulario, mostramos mensaje e inicializamos
+            form.reset();
+            form.style.display = 'none';
+            successStatus.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            // El servidor respondió con un error
+            throw new Error('Error en el nodo de transmisión.');
+          }
+        } catch (error) {
+          // Lógica en caso de fallo de red o caída de servicio
+          alert('ERROR: La transmisión falló debido a una interferencia en la red. Inténtalo de nuevo.');
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'REINTENTAR TRANSMISIÓN ⊗';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

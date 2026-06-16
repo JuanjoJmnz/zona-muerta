@@ -1587,3 +1587,90 @@ video {
     height: auto !important;
   }
 }
+
+/* =====================
+   FORMULARIO DE CONTACTO (Estilo Zona Muerta)
+   ===================== */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  color: var(--text);
+  letter-spacing: 1px;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+  background: var(--bg2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 5px rgba(192, 57, 43, 0.3);
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+.privacy-check {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.privacy-check input {
+  margin-top: 0.25rem;
+  cursor: pointer;
+}
+
+.privacy-check label {
+  font-size: 0.75rem;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+.submit-form-btn {
+  background: var(--red-dim);
+  color: var(--text);
+  border: 1px solid var(--red);
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  margin-top: 1rem;
+}
+
+.submit-form-btn:hover {
+  background: var(--red);
+  color: #fff;
+}
+
+.submit-form-btn:active {
+  transform: scale(0.98);
+}
