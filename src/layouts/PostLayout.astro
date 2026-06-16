@@ -203,7 +203,7 @@ const { pathname } = Astro.url;
     )}
 
     <div class="art-layout">
-<div class="art-body">
+      <div class="art-body">
         
         {/* 1. FICHA EXCLUSIVA: URBEX */}
         {finalPost.category === "Urbex" && finalPost.urbexStatus && (
@@ -367,8 +367,8 @@ const { pathname } = Astro.url;
 
         <slot />
 
+      </div>
       <aside class="sidebar" style="padding-top:0.5rem;">
-
         <div class="sidebar-block">
           <div class="sidebar-title">SOBRE ZONA MUERTA</div>
           <p class="sidebar-text">Documentamos lo inexplicable: urbex, leyendas, folklore, hilos de /x/ y todo lo que la reality oficial prefiere ignorar. Sin clickbait. Sin exageraciones.</p>
