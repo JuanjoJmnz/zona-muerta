@@ -5,6 +5,7 @@ dist/
 
 #carpetas
 src/pages/plantillas/
+public/video
 
 # dependencies
 node_modules/

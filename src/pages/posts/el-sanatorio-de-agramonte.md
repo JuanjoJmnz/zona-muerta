@@ -53,7 +53,8 @@ El ala psiquiátrica está en el edificio anexo...
 
 > "Las marcas en las paredes no eran pintura. Lo supimos cuando el flash iluminó la habitación 14 y vimos que llegaban hasta el techo."
 
-<div class="video-responsive">
+<div class="video-evidence">
+  <p class="evidence-tag">📹 GRABACIÓN DE SEGURIDAD / CAMPO</p>
   <iframe 
     width="560" 
     height="315" 

@@ -6,6 +6,8 @@ date: "2026-06-17"
 category: "Videojuegos"
 catClass: "cat-game"
 imgClass: "img-game"
+thumbImg: "/img/santuario_agramonte.png"
+coverImg: "/img/santuario_agramonte.png"
 duration: "6 min"
 excerpt: "Cada ruido, cada sombra y cada palabra pueden atraer a entidades que acechan en la oscuridad esperando el momento perfecto para atacar."
 tags: ["Terror", "Cooperativo", "Fantasmas"]
