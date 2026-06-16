@@ -1,6 +1,5 @@
 ---
 import PostLayout from '../../layouts/PostLayout.astro';
-import { Image } from 'astro:assets';
 
 export async function getStaticPaths() {
   const postsGlob = import.meta.glob('../posts/*.md', { eager: true });
@@ -75,12 +74,9 @@ const { archiveLabel, posts } = Astro.props;
             </div>
             <div class={`post-row-thumb ${post.frontmatter.imgClass || ''}`}>
               {post.frontmatter.thumbImg ? (
-                <Image 
+                <img 
                   src={post.frontmatter.thumbImg} 
                   alt={post.frontmatter.title} 
-                  width={200}
-                  height={150}
-                  loading="lazy"
                   style="width:100%; height:100%; object-fit:cover;" 
                 />
               ) : null}
@@ -114,14 +110,5 @@ const { archiveLabel, posts } = Astro.props;
 
   .archive-list-page .post-row-thumb {
     flex-shrink: 0 !important;
-  }
-
-
-  @media (max-width: 768px) {
-    .archive-list-page .post-row {
-      display: flex !important;
-      flex-direction: column-reverse !important;
-      gap: 15px !important;
-    }
   }
 </style>
