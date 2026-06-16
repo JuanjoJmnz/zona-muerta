@@ -1701,7 +1701,7 @@ video {
 }
 
 /* Cambios estructurales para pantallas de móviles (Máximo 768px) */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   
   /* 1. HEADER Y MENÚ HAMBURGUESA */
   .menu-toggle {
