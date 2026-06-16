@@ -4,6 +4,7 @@ title: "El Sanatorio de Agramonte: Tres Noches en el Lugar que Nadie Debería Vi
 slug: "el-sanatorio-de-agramonte"
 date: "2026-06-16"
 duration: "12 min"
+coordinates: "N41°48'03\" W1°41'34\""
 category: "Urbex"
 catClass: "cat-urbex"
 imgClass: "img-urbex"

@@ -9,7 +9,8 @@ const finalPost = {
   catClass: frontmatter?.catClass || "cat-sistema",
   imgClass: frontmatter?.imgClass || "img-default",
   date: frontmatter?.date || "",
-  duration: frontmatter?.duration || ""
+  duration: frontmatter?.duration || "",
+  coordinates: frontmatter?.coordinates || ""
 };
 
 // --- TODO TU CÓDIGO INTERNO SE QUEDA IGUAL ---
@@ -150,8 +151,12 @@ const { pathname } = Astro.url;
           <>
             <span>·</span>
             <span>{finalPost.duration} lectura</span>
+          </>
+        )}
+        {finalPost.coordinates && (
+          <>
             <span>·</span>
-            <span>N38°31'16" W1°46'09"</span>
+            <span style="font-family: var(--font-mono, monospace); letter-spacing: 0.05em;">{finalPost.coordinates}</span>
           </>
         )}
       </div>
