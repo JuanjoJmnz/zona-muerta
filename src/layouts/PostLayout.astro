@@ -89,17 +89,15 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
   <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
 
   <div class="art-hero">
-    <div class="breadcrumb">
-        <a href="/">Inicio</a> → 
-        {finalPost.category === "Sistema" ? (
-          <a href="#">Categorías</a>
-        ) : (
-          <a href={`/categorias/${finalPost.category === 'x' ? '-x-' : finalPost.category.toLowerCase()}`}>
-            {finalPost.category === 'x' ? '/x/' : finalPost.category}
-          </a>
+    {finalPost.category !== "Sistema" && (
+          <div class="breadcrumb">
+            <a href="/">Inicio</a> → 
+            <a href={`/categorias/${finalPost.category === 'x' ? '-x-' : finalPost.category.toLowerCase()}`}>
+              {finalPost.category === 'x' ? '/x/' : finalPost.category}
+            </a>
+            {" → Expediente"}
+          </div>
         )}
-        {finalPost.category !== "Sistema" && " → Expediente"}
-      </div>
         
         {finalPost.category !== "Sistema" && (
           <div class={`post-cat ${finalPost.catClass}`} style="margin-bottom:1rem;">{finalPost.category}</div>

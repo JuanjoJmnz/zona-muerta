@@ -56,34 +56,32 @@ interface Props {
   posts: MarkdownPost[];
 }
 
-const { categoryName, categorySlug, posts } = Astro.props as Props;
+const { categoryName, posts } = Astro.props as Props;
 
-// Extraemos la descripción de forma segura usando el slug actual
-const currentDesc = categoriesInfo[categorySlug]?.desc || "Archivo de transmisiones clasificadas.";
-const displayCategoryName = categoryName === 'x' ? '/x/' : categoryName;
+// EVITAR EL ERROR DEL PROBLEMA 4:
+// Si la categoría nos llega como 'x' o '-x-', la renombramos limpiamente a '/x/'
+const finalCategoryTitle = (categoryName === 'x' || categoryName === '-x-') ? '/x/' : categoryName;
 ---
 
-<PostLayout title={`Categoría: ${displayCategoryName}`} category="Sistema">
+<PostLayout title={`Categoría: ${finalCategoryTitle}`}>
   <main class="category-page">
     
-    <div class="breadcrumb" style="margin-bottom: 1.5rem; font-family: var(--font-mono, monospace); font-size: 0.8rem; color: #7f8c8d;">
-      <a href="/" style="color: var(--red, #c0392b); text-decoration: none;">Inicio</a> → 
-      <a href="/categorias" style="color: var(--red, #c0392b); text-decoration: none;">Categorías</a> → 
-      <span style="color: #fff;">{displayCategoryName}</span>
+    <div class="breadcrumb" style="margin-bottom: 2rem; font-family: monospace; font-size: 0.8rem; color: #7f8c8d;">
+      <a href="/" style="color: #c0392b; text-decoration: none;">Inicio</a> → 
+      <a href="/categorias" style="color: #c0392b; text-decoration: none;">Categorías</a> → 
+      <span style="color: #fff;">{finalCategoryTitle}</span>
     </div>
 
-    <div class="category-description-block" style="background: rgba(20,20,20,0.4); border-left: 2px solid var(--red, #c0392b); padding: 1rem; margin-bottom: 2rem;">
-      <p style="margin: 0; font-size: 0.95rem; color: #b3b3b3; font-style: italic;">--- {currentDesc} ---</p>
-    </div>
-
-    <h1 class="page-title">Transmisiones en: <span class="highlight">{displayCategoryName}</span></h1>
+    <h1 class="page-title">Transmisiones en: <span class="highlight">{finalCategoryTitle}</span></h1>
     <p class="page-subtitle">Se han encontrado {posts.length} archivos clasificados en la base de datos.</p>
 
     <div class="posts-grid">
       {posts.map((post) => (
         <article class="post-card">
           <div class={`card-header ${post.frontmatter.catClass || ''}`}>
-            <span class="category-badge">{post.frontmatter.category === 'x' ? '/x/' : post.frontmatter.category}</span>
+            <span class="category-badge">
+              {(post.frontmatter.category === 'x' || post.frontmatter.category === '-x-') ? '/x/' : post.frontmatter.category}
+            </span>
             <span class="post-duration">// Lectura: {post.frontmatter.duration}</span>
           </div>
           
