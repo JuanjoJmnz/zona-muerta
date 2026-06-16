@@ -17,6 +17,15 @@ interface MarkdownPost {
   frontmatter: PostFrontmatter;
 }
 
+// Diccionario clonado para emparejar descripciones automáticamente en base al parámetro de la URL
+const categoriesInfo: Record<string, { name: string, desc: string }> = {
+  'urbex': { name: 'Urbex', desc: 'Exploraciones urbanas que desafían el olvido y desentierran secretos ocultos en el hormigón abandonado.' },
+  'leyendas': { name: 'Leyendas Urbanas', desc: 'Mitos contemporáneos y relatos de terror nacidos en el asfalto de todas las ciudades.' },
+  'folklore': { name: 'Folklore', desc: 'Folklore tradicional recopilado de antiguos mitos, leyendas rurales e historias olvidadas del campo.' },
+  'videojuegos': { name: 'Videojuegos', desc: 'Videojuegos malditos, creepypastas interactivos y títulos de terror que te hacen dudar de tu propia pantalla.' },
+  '-x-': { name: '/x/', desc: 'Los hilos de /x/ más terroríficos y misteriosos extraídos directamente del tablón paranormal de internet.' },
+  'media': { name: 'Media', desc: 'Libros, vídeos o películas que profundizan en los rincones más oscuros e inexplicables de nuestra realidad.' }
+};
 
 export async function getStaticPaths() {
   const postFiles = import.meta.glob<MarkdownPost>('../posts/*.md', { eager: true });
@@ -27,34 +36,54 @@ export async function getStaticPaths() {
   ];
 
   return uniqueCategories.map((category: string) => {
-    const urlParam = category.toLowerCase().replace(/\s+/g, '-');
+    let urlParam = category.toLowerCase().replace(/\s+/g, '-');
+    if (urlParam === 'x' || urlParam === '/x/') {
+      urlParam = '-x-';
+    }
+    
     const filteredPosts = allPosts.filter((post) => post.frontmatter.category === category);
     
     return {
       params: { category: urlParam },
-      props: { categoryName: category, posts: filteredPosts },
+      props: { categoryName: category, categorySlug: urlParam, posts: filteredPosts },
     };
   });
 }
 
 interface Props {
   categoryName: string;
+  categorySlug: string;
   posts: MarkdownPost[];
 }
 
-const { categoryName, posts } = Astro.props as Props;
+const { categoryName, categorySlug, posts } = Astro.props as Props;
+
+// Extraemos la descripción de forma segura usando el slug actual
+const currentDesc = categoriesInfo[categorySlug]?.desc || "Archivo de transmisiones clasificadas.";
+const displayCategoryName = categoryName === 'x' ? '/x/' : categoryName;
 ---
 
-<PostLayout title={`Categoría: ${categoryName}`}>
+<PostLayout title={`Categoría: ${displayCategoryName}`} category="Sistema">
   <main class="category-page">
-    <h1 class="page-title">Transmisiones en: <span class="highlight">{categoryName}</span></h1>
+    
+    <div class="breadcrumb" style="margin-bottom: 1.5rem; font-family: var(--font-mono, monospace); font-size: 0.8rem; color: #7f8c8d;">
+      <a href="/" style="color: var(--red, #c0392b); text-decoration: none;">Inicio</a> → 
+      <a href="/categorias" style="color: var(--red, #c0392b); text-decoration: none;">Categorías</a> → 
+      <span style="color: #fff;">{displayCategoryName}</span>
+    </div>
+
+    <div class="category-description-block" style="background: rgba(20,20,20,0.4); border-left: 2px solid var(--red, #c0392b); padding: 1rem; margin-bottom: 2rem;">
+      <p style="margin: 0; font-size: 0.95rem; color: #b3b3b3; font-style: italic;">--- {currentDesc} ---</p>
+    </div>
+
+    <h1 class="page-title">Transmisiones en: <span class="highlight">{displayCategoryName}</span></h1>
     <p class="page-subtitle">Se han encontrado {posts.length} archivos clasificados en la base de datos.</p>
 
     <div class="posts-grid">
       {posts.map((post) => (
         <article class="post-card">
           <div class={`card-header ${post.frontmatter.catClass || ''}`}>
-            <span class="category-badge">{post.frontmatter.category}</span>
+            <span class="category-badge">{post.frontmatter.category === 'x' ? '/x/' : post.frontmatter.category}</span>
             <span class="post-duration">// Lectura: {post.frontmatter.duration}</span>
           </div>
           

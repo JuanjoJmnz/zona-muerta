@@ -1,0 +1,139 @@
+---
+import PostLayout from "../../layouts/PostLayout.astro";
+
+const categoriesData = [
+    {
+        slug: "urbex",
+        name: "Urbex",
+        icon: "🏚️",
+        queryName: "Urbex",
+        desc: "Exploraciones urbanas que desafían el olvido y desentierran secretos ocultos en el hormigón abandonado.",
+    },
+    {
+        slug: "leyendas",
+        name: "Leyendas Urbanas",
+        icon: "👻",
+        queryName: "Leyendas", // <--- Ajustado a lo que pones en tus Markdown
+        desc: "Mitos contemporáneos y relatos de terror nacidos en el asfalto de todas las ciudades.",
+    },
+    {
+        slug: "folklore",
+        name: "Folklore",
+        icon: "🌲",
+        queryName: "Folklore",
+        desc: "Folklore tradicional recopilado de antiguos mitos, leyendas rurales e historias olvidadas del campo.",
+    },
+    {
+        slug: "videojuegos",
+        name: "Videojuegos",
+        icon: "🎮",
+        queryName: "Videojuegos",
+        desc: "Videojuegos malditos, creepypastas interactivos y títulos de terror que te hacen dudar de tu propia pantalla.",
+    },
+    {
+        slug: "-x-",
+        name: "/x/",
+        icon: "📡",
+        queryName: "x", // <--- Tu categoría paranormal 'x' bien definida
+        desc: "Los hilos de /x/ más terroríficos y misteriosos extraídos directamente del tablón paranormal de internet.",
+    },
+    {
+        slug: "media",
+        name: "Media",
+        icon: "📼",
+        queryName: "Media",
+        desc: "Libros, vídeos o películas que profundizan en los rincones más oscuros e inexplicables de nuestra realidad.",
+    },
+];
+
+const postFiles = import.meta.glob("../posts/*.md", { eager: true });
+const allPosts = Object.values(postFiles);
+
+const totalPosts = allPosts.length;
+
+const getCount = (categoryName: string) => {
+    return allPosts.filter(
+        (post: any) => post.frontmatter.category === categoryName,
+    ).length;
+};
+---
+
+<PostLayout title="Índice de Categorías" category="Sistema">
+    <main style="padding: 2rem 0;">
+        <div
+            class="breadcrumb"
+            style="margin-bottom: 2rem; font-family: var(--font-mono, monospace); font-size: 0.8rem; color: #7f8c8d;"
+        >
+            <a
+                href="/"
+                style="color: var(--red, #c0392b); text-decoration: none;"
+            >
+                Inicio
+            </a>
+            →
+            <span style="color: #fff;">Categorías</span>
+        </div>
+
+        <h1
+            style="
+        font-family: var(--font-mono, monospace);
+        font-size: 2.2rem;
+        color: #fff;
+        text-transform: uppercase;
+      "
+        >
+            Terminal de <span style="color: var(--red, #c0392b);"
+                >Categorías</span
+            >
+        </h1>
+
+        <p
+            style="
+        color: #7f8c8d;
+        font-family: var(--font-mono, monospace);
+        font-size: 0.9rem;
+      "
+        >
+            Selecciona un sector de la base de datos para escanear sus
+            transmisiones.
+        </p>
+
+        <div class="database-stats">
+            <span>ARCHIVOS TOTALES: {totalPosts}</span>
+            <span>CATEGORÍAS: {categoriesData.length}</span>
+        </div>
+
+        <p class="categories-intro">
+            Explora todos los archivos disponibles en la base de datos. Desde
+            exploraciones urbanas abandonadas hasta leyendas modernas, folklore
+            ancestral, videojuegos inquietantes y fenómenos paranormales
+            documentados en internet.
+        </p>
+
+        <div class="categories-grid">
+            {
+                categoriesData.map((cat) => (
+                    <a href={`/categorias/${cat.slug}`} class="category-card">
+                        <div>
+                            <div class="category-file">
+                                [ ARCHIVO CLASIFICADO ]
+                            </div>
+
+                            <h2 class="category-card-title">
+                                {cat.icon} {cat.name}
+                            </h2>
+
+                            <p class="category-card-desc">{cat.desc}</p>
+
+                            <div class="category-status">ESTADO: ACTIVO</div>
+                        </div>
+
+                        <span class="category-count">
+                            EXPEDIENTES ACTIVOS // {getCount(cat.queryName)}
+                        </span>
+                    </a>
+                ))
+            }
+        </div>
+    </main>
+</PostLayout>
