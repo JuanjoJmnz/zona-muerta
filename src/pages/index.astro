@@ -252,25 +252,52 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
       </div>
     </main>
 
-    <footer>
-      <div class="footer-inner">
-        <div class="footer-left">
-          <span class="logo-sym">⊗</span>
-          <span class="logo-name">ZONA MUERTA</span>
-        </div>
-        <nav class="footer-nav">
-          <a href="/" class="nav-link active">Inicio</a>
-          <a href="/categorias/urbex" class="nav-link">Urbex</a>
-          <a href="/categorias/leyendas" class="nav-link">Leyendas</a>
-          <a href="/categorias/folklore" class="nav-link">Folklore</a>
-          <a href="/categorias/videojuegos" class="nav-link">Videojuegos</a>
-          <a href="/categorias/-x-" class="nav-link">/x/</a>
-          <a href="/categorias/media" class="nav-link">Media</a>
-          <a href="/categorias/contacto" class="nav-link">Contacto</a>
-        </nav>
-        <div class="footer-copy">© 2026 Zona Muerta</div>
-      </div>
-    </footer>
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <a href="/" class="logo-block">
+        <span class="logo-sym">⊗</span>
+        <span class="logo-name">ZONA MUERTA</span>
+      </a>
+      <p class="footer-desc">
+        Archivo de lo inexplicable. Urbex, leyendas, folklore, videojuegos e hilos de /x/.
+      </p>
+    </div>
+
+    <div class="footer-nav-block">
+      <div class="footer-section-label">// Categorías</div>
+      <nav class="footer-nav">
+        <a href="/categorias/urbex">Urbex</a>
+        <a href="/categorias/leyendas">Leyendas</a>
+        <a href="/categorias/folklore">Folklore</a>
+        <a href="/categorias/videojuegos">Videojuegos</a>
+        <a href="/categorias/-x-">/x/</a>
+        <a href="/categorias/media">Media</a>
+      </nav>
+    </div>
+
+    <div class="footer-links-block">
+      <div class="footer-section-label">// Más</div>
+      <nav class="footer-nav">
+        <a href="/">Inicio</a>
+        <a href="/categorias/contacto">Contacto</a>
+        <a href="https://github.com/JuanjoJmnz" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/juan-josé-jiménez-gil-2588a2222/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Zona Muerta — Juan José Jiménez Gil</span>
+    <span class="footer-signal">
+      <span class="signal-dot"></span>
+      señal activa
+    </span>
+        <div style="color: rgba(255,255,255,0.2);">LOC_RPA_NODE_01</div>
+  </div>
+</footer>
 
   </div><script is:inline src="/js/main.js"></script>
 </body>
