@@ -106,10 +106,10 @@ const { pathname } = Astro.url;
           <a href="/">Inicio</a> → 
           
           {pathname.startsWith('/archivo') && (
-            <>
-              <a href="/archivo" style="color: var(--red, #c0392b); text-decoration: none;">Archivo</a> → 
-              <span style="color: #fff;">Registros por Fecha</span>
-            </>
+          <>
+            <span style="color: var(--text2, #7f8c8d);">Archivo</span> → 
+            <span style="color: #fff;">Registros por Fecha</span>
+          </>
           )}
           
           {pathname.startsWith('/tags') && (
