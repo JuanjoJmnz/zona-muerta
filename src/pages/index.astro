@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 // 1. Leer todos los archivos Markdown de la carpeta posts
 const postsGlob = import.meta.glob('./posts/*.md', { eager: true });
 
@@ -120,7 +121,14 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
             <div class="featured-img-wrap">
               <div class={`featured-img ${featuredPost.frontmatter.imgClass || ''}`}>
                 {featuredPost.frontmatter.coverImg ? (
-                  <img src={featuredPost.frontmatter.coverImg} alt={featuredPost.frontmatter.title} style="width:100%; height:100%; object-fit:cover;" />
+                  <Image 
+                    src={featuredPost.frontmatter.coverImg} 
+                    alt={featuredPost.frontmatter.title} 
+                    width={800} 
+                    height={450} 
+                    loading="eager" 
+                    style="width:100%; height:100%; object-fit:cover;" 
+                  />
                 ) : null}
               </div>
             </div>
@@ -148,7 +156,14 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
               </div>
               <div class={`post-row-thumb ${post.frontmatter.imgClass || ''}`}>
                 {post.frontmatter.thumbImg ? (
-                  <img src={post.frontmatter.thumbImg} alt={post.frontmatter.title} style="width:100%; height:100%; object-fit:cover;" />
+                  <Image 
+                    src={post.frontmatter.thumbImg} 
+                    alt={post.frontmatter.title} 
+                    width={200} 
+                    height={150} 
+                    loading="eager" 
+                    style="width:100%; height:100%; object-fit:cover;" 
+                  />
                 ) : null}
               </div>
             </article>
@@ -183,7 +198,14 @@ const archiveGroups = allPosts.reduce((groups: Record<string, { label: string, c
                 <a href={post.url} class="recent-item">
                   <div class={`recent-thumb ${post.frontmatter.imgClass || ''}`}>
                     {post.frontmatter.thumbImg ? (
-                      <img src={post.frontmatter.thumbImg} alt={post.frontmatter.title} style="width:100%; height:100%; object-fit:cover;" />
+                      <Image 
+                        src={post.frontmatter.thumbImg} 
+                        alt={post.frontmatter.title} 
+                        width={80} 
+                        height={80} 
+                        loading="eager" 
+                        style="width:100%; height:100%; object-fit:cover;" 
+                      />
                     ) : null}
                   </div>
                   <div class="recent-text">
