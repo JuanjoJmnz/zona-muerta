@@ -135,7 +135,7 @@ img { display: block; width: 100%; }
    SITE VISIBILITY
    ===================== */
 #main-site.hidden { opacity: 0; pointer-events: none; }
-#main-site { opacity: 1; transition: opacity 0.5s ease; }
+#main-site { opacity: 1; transition: opacity 0.5s ease; background-color: #0C0C0C;}
 
 /* =====================
    HEADER

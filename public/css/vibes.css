@@ -1,0 +1,180 @@
+/* ==========================================================================
+   ZONA MUERTA — vibes.css
+   Estilos de apoyo para los efectos de vibes.js
+   Añadir al final de style.css, o importar aparte
+   ========================================================================== */
+
+/* =====================
+   RELOJ "TARTAMUDO" (header)
+   ===================== */
+.zm-clock {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  color: var(--text3, #3a3835);
+  letter-spacing: 0.08em;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border, rgba(255, 255, 255, 0.07));
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.zm-clock.glitching {
+  color: var(--red, #c0392b);
+}
+
+@media (max-width: 900px) {
+  .zm-clock { display: none; }
+}
+
+/* =====================
+   MANCHAS / QUEMADURAS EN IMÁGENES
+   Overlay sutil tipo papel envejecido
+   ===================== */
+.img-urbex,
+.img-xchan,
+.img-leyenda,
+.img-game,
+.img-folklore,
+.img-media,
+.img-bunker,
+.featured-img,
+.post-row-thumb,
+.recent-thumb,
+.art-cover {
+  position: relative;
+  isolation: isolate; /* crea un stacking context propio: el multiply se mezcla
+                          con la imagen de dentro, no con el fondo oscuro de la página */
+}
+
+.zm-decay-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.85;
+  /* Viñeta + tinte sepia/quemado: visible incluso sobre imágenes oscuras */
+  background:
+    radial-gradient(ellipse 40% 32% at 6% 10%,  rgba(120, 80, 35, 0.85) 0%, transparent 72%),
+    radial-gradient(ellipse 32% 45% at 96% 88%, rgba(100, 65, 25, 0.8) 0%, transparent 72%),
+    radial-gradient(ellipse 22% 22% at 88% 8%,  rgba(70, 40, 15, 0.7) 0%, transparent 78%),
+    radial-gradient(ellipse 35% 26% at 12% 95%, rgba(110, 75, 30, 0.75) 0%, transparent 72%),
+    radial-gradient(ellipse 140% 140% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%);
+}
+
+.zm-decay-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 3px
+  );
+}
+
+/* =====================
+   INDICADOR DE FRECUENCIA (footer)
+   ===================== */
+.zm-freq {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  color: var(--text3, #3a3835);
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.zm-freq .freq-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--red, #c0392b);
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* =====================
+   SOMBRA DESPLAZADA DEL LOGO
+   La variable --zm-shadow-x se fija una vez por carga desde JS
+   ===================== */
+.logo-sym {
+  text-shadow: var(--zm-shadow-x, 1px) var(--zm-shadow-y, 1px) 6px rgba(192, 57, 43, 0.45);
+}
+
+/* Rotación lenta tras hover prolongado */
+.logo-sym.zm-rotating {
+  display: inline-block;
+  animation: zm-slow-rotate 6s linear infinite;
+}
+
+@keyframes zm-slow-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* =====================
+   PARPADEO EN DOBLE-CLICK
+   ===================== */
+#zm-blink-flash {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9997;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#zm-blink-flash.flash {
+  opacity: 1;
+  transition: opacity 0.05s;
+}
+
+/* =====================
+   CONTADOR DE ANOMALÍAS
+   ===================== */
+.zm-anomaly-counter {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.6rem;
+  color: var(--text3, #3a3835);
+  letter-spacing: 0.06em;
+}
+
+.zm-anomaly-counter strong {
+  color: var(--red, #c0392b);
+  font-weight: 400;
+}
+
+/* =====================
+   TEXTO FLOTANTE (tecla F / konami)
+   ===================== */
+.zm-floating-msg {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  color: var(--red, #c0392b);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 9100;
+}
+
+.zm-floating-msg.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =====================
+   INVERSIÓN DE COLORES (konami code)
+   ===================== */
+#main-site.zm-inverted {
+  filter: invert(1) hue-rotate(180deg);
+  transition: filter 0.15s;
+}
