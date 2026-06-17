@@ -108,6 +108,11 @@
     });
   }
 
+  // La exponemos para que contenido renderizado dinámicamente DESPUÉS
+  // de DOMContentLoaded (por ejemplo, los resultados del buscador) pueda
+  // pedir que se le aplique el mismo efecto.
+  window.ZM_applyDecay = applyDecay;
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', applyDecay);
   } else {
