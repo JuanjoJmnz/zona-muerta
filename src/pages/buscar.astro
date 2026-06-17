@@ -8,9 +8,10 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
   excerpt: post.frontmatter.excerpt,
   category: post.frontmatter.category,
   catClass: post.frontmatter.catClass || 'cat-sistema',
-  imgClass: post.frontmatter.imgClass,
+  imgClass: post.frontmatter.imgClass || '',
   thumbImg: post.frontmatter.thumbImg,
   date: post.frontmatter.date,
+  duration: post.frontmatter.duration || '',
   tags: post.frontmatter.tags || []
 }));
 ---
@@ -28,81 +29,153 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
       Escribe algo para escanear los archivos.
     </p>
   </div>
-  <section id="search-results-container" class="posts-column"></section>
+
+  <div class="archive-list-page">
+    <section id="search-results-container" class="posts-column">
+      
+      {allPosts.map((post) => (
+        <div 
+          class="search-post-card" 
+          style="display: none;" 
+          data-title={post.title.toLowerCase()}
+          data-excerpt={post.excerpt.toLowerCase()}
+          data-category={post.category.toLowerCase()}
+          data-tags={post.tags.join(',').toLowerCase()}
+        >
+          <article class="post-row">
+            <div class="post-row-text">
+              <div class={`post-cat ${post.catClass}`}>
+                {post.category === 'x' || post.category === '-x-' || post.category === '/x/' ? '/x/' : post.category}
+              </div>
+              <h2 class="post-row-title">
+                <a href={post.url}>{post.title}</a>
+              </h2>
+              <p class="post-row-excerpt">{post.excerpt}</p>
+              
+              {/* Añadimos los mismos metadatos que en la página de archivos */}
+              <div class="art-meta" style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text2);">
+                <span>{post.date}</span>
+                {post.duration && (
+                  <>
+                    <span style="margin: 0 0.4rem;">·</span>
+                    <span>{post.duration} lectura</span>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div class={`post-row-thumb ${post.imgClass}`}>
+              {post.thumbImg ? (
+                <img 
+                  src={post.thumbImg} 
+                  alt={post.title} 
+                  style="width:100%; height:100%; object-fit:cover;" 
+                />
+              ) : null}
+            </div>
+          </article>
+          <div class="post-divider"></div>
+        </div>
+      ))}
+
+      {/* Mensaje en caso de que no haya coincidencias */}
+      <p id="no-results-msg" style="display: none; color:var(--text2); font-size:0.9rem;">
+        No se encontraron registros autorizados con ese criterio.
+      </p>
+
+    </section>
+  </div>
 </PostLayout>
 
-<script define:vars={{ allPosts }}>
-  const searchInput = document.getElementById('local-search-input');
-  const resultsContainer = document.getElementById('search-results-container');
+<script>
+  const searchInput = document.getElementById('local-search-input') as HTMLInputElement;
   const counter = document.getElementById('search-counter');
+  const postCards = document.querySelectorAll('.search-post-card') as NodeListOf<HTMLElement>;
+  const noResultsMsg = document.getElementById('no-results-msg');
 
-  function renderPosts(postsToRender) {
-    if (postsToRender.length === 0) {
-      resultsContainer.innerHTML = `<p style="color:var(--text2); font-size:0.9rem;">No se encontraron registros autorizados con ese criterio.</p>`;
-      return;
-    }
-
-    resultsContainer.innerHTML = postsToRender.map(post => {
-      const imageContent = post.thumbImg
-        ? `<img src="${post.thumbImg}" alt="${post.title}" style="width:100%; height:100%; object-fit:cover;" />`
-        : '';
-
-      const displayCategory = (post.category === 'x' || post.category === '-x-' || post.category === '/x/') ? '/x/' : post.category;
-
-      return `
-        <article class="post-row">
-          <div class="post-row-text">
-            <div class="post-cat ${post.catClass}">${displayCategory}</div>
-            <h2 class="post-row-title"><a href="${post.url}">${post.title}</a></h2>
-            <p class="post-row-excerpt">${post.excerpt}</p>
-          </div>
-          <div class="post-row-thumb ${post.imgClass || ''}">${imageContent}</div>
-        </article>
-        <div class="post-divider"></div>
-      `;
-    }).join('');
-
-    // El HTML de arriba se acaba de insertar dinámicamente con innerHTML,
-    // así que vibes2.js (que solo corre una vez en DOMContentLoaded) nunca
-    // llega a ver estas miniaturas nuevas. Si existe la función de aplicar
-    // el efecto de "papel viejo", la volvemos a llamar aquí para que también
-    // se aplique a los resultados de búsqueda.
-    if (typeof window.ZM_applyDecay === 'function') {
-      window.ZM_applyDecay();
-    }
-  }
-
-  function executeSearch(query) {
+  function executeSearch(query: string) {
+    // Si la búsqueda es muy corta, lo ocultamos todo de nuevo
     if (query.length < 2) {
-      resultsContainer.innerHTML = '';
-      counter.innerText = 'Escribe al menos 2 caracteres para escanear...';
+      postCards.forEach(card => card.style.display = 'none');
+      if (noResultsMsg) noResultsMsg.style.display = 'none';
+      if (counter) counter.innerText = 'Escribe al menos 2 caracteres para escanear...';
       return;
     }
 
-    const filtered = allPosts.filter(post => {
-      return post.title.toLowerCase().includes(query) ||
-             post.excerpt.toLowerCase().includes(query) ||
-             post.category.toLowerCase().includes(query) ||
-             post.tags.some(t => t.toLowerCase().includes(query));
+    let visibleCount = 0;
+
+    postCards.forEach(card => {
+      const title = card.getAttribute('data-title') || '';
+      const excerpt = card.getAttribute('data-excerpt') || '';
+      const category = card.getAttribute('data-category') || '';
+      const tags = card.getAttribute('data-tags') || '';
+
+      const matches = title.includes(query) || 
+                      excerpt.includes(query) || 
+                      category.includes(query) || 
+                      tags.includes(query);
+
+      if (matches) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
     });
 
-    counter.innerText = `Se han detectado ${filtered.length} coincidencias.`;
-    renderPosts(filtered);
+    if (counter) {
+      counter.innerText = `Se han detectado ${visibleCount} coincidencias.`;
+    }
+    
+    if (noResultsMsg) {
+      noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    // Si tu script de efectos visuales (papel viejo/decay) está activo, lo relanzamos
+    if (typeof (window as any).ZM_applyDecay === 'function') {
+      (window as any).ZM_applyDecay();
+    }
   }
 
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase().trim();
+  searchInput?.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
     executeSearch(query);
   });
 
+  // Listener para capturar búsquedas que vengan desde la URL de la cabecera (?q=...)
   document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const queryFromUrl = urlParams.get('q');
 
-    if (queryFromUrl) {
+    if (queryFromUrl && searchInput) {
       const cleanQuery = queryFromUrl.toLowerCase().trim();
       searchInput.value = queryFromUrl;
       executeSearch(cleanQuery);
     }
   });
 </script>
+
+<style>
+  /* Aplicamos exactamente las mismas reglas de estilo de la página de archivos */
+  .archive-list-page .post-row {
+    display: flex !important;
+    align-items: flex-start !important;
+  }
+  
+  .archive-list-page .post-row-title {
+    border: none !important;
+    padding: 0 !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 1.25rem !important;
+  }
+
+  .archive-list-page .post-row-title a {
+    text-decoration: none !important;
+    border: none !important;
+  }
+
+  .archive-list-page .post-row-thumb {
+    flex-shrink: 0 !important;
+  }
+</style>

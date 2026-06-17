@@ -138,7 +138,7 @@ const { pathname } = Astro.url;
 
   <div id="main-site">
 
-    <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
+<main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
 
       <div class="art-hero">
         {finalPost.category !== "Sistema" ? (
@@ -194,23 +194,26 @@ const { pathname } = Astro.url;
         )}
         
         <h1>{finalPost.title}</h1>
-        <div class="art-meta">
-          <span>{finalPost.date}</span>
-          {finalPost.duration && (
-            <>
-              <span>·</span>
-              <span>{finalPost.duration} lectura</span>
-            </>
-          )}
-          {finalPost.coordinates && (
-            <>
-              <span>·</span>
-              <span style="font-family: var(--font-mono, monospace); letter-spacing: 0.05em;">{finalPost.coordinates}</span>
-            </>
-          )}
-        </div>
+        
+        {finalPost.category !== "Sistema" && (
+          <div class="art-meta">
+            <span>{finalPost.date}</span>
+            {finalPost.duration && (
+              <>
+                <span>·</span>
+                <span>{finalPost.duration} lectura</span>
+              </>
+            )}
+            {finalPost.coordinates && (
+              <>
+                <span>·</span>
+                <span style="font-family: var(--font-mono, monospace); letter-spacing: 0.05em;">{finalPost.coordinates}</span>
+              </>
+            )}
+          </div>
+        )}
 
-        {finalPost.tags && finalPost.tags.length > 0 && (
+        {finalPost.category !== "Sistema" && finalPost.tags && finalPost.tags.length > 0 && (
           <div class="art-tags">
             {finalPost.tags.map((tag: string) => (
               <a href={`/tags/${tag.toLowerCase()}`} class="tag">
@@ -234,7 +237,6 @@ const { pathname } = Astro.url;
       <div class="art-layout">
         <div class="art-body">
           
-          <!-- 1. FICHA EXCLUSIVA: URBEX -->
           {finalPost.category === "Urbex" && finalPost.urbexStatus && (
             <div class="cat-brief-block">
               <div class="cat-label">Urbex — briefing de entrada</div>
@@ -271,8 +273,7 @@ const { pathname } = Astro.url;
             </div>
           )}
 
-          <!-- 2. FICHA EXCLUSIVA: /x/ PARANORMAL -->
-          {(finalPost.category === "x" || finalPost.category === "/x/" || finalPost.category === "-x-") && finalPost.threadPosts.length > 0 && (
+          {(finalPost.category === "x" || finalPost.category === "/x/" || finalPost.category === "-x-") && finalPost.threadPosts && finalPost.threadPosts.length > 0 && (
             <div class="cat-brief-block">
               <div class="cat-label">/x/ — simulación de hilo archivado</div>
               <div class="thread-wrap">
@@ -297,8 +298,7 @@ const { pathname } = Astro.url;
             </div>
           )}
 
-          <!-- 3. FICHA EXCLUSIVA: VIDEOJUEGOS -->
-          {finalPost.category === "Videojuegos" && finalPost.gameMetrics.length > 0 && (
+          {finalPost.category === "Videojuegos" && finalPost.gameMetrics && finalPost.gameMetrics.length > 0 && (
             <div class="cat-brief-block">
               <div class="cat-label">Videojuegos — análisis de perturbación</div>
               <div class="game-card">
@@ -320,8 +320,7 @@ const { pathname } = Astro.url;
             </div>
           )}
 
-          <!-- 4. FICHA EXCLUSIVA: LEYENDAS -->
-          {finalPost.category === "Leyendas" && finalPost.leyendaRegions.length > 0 && (
+          {finalPost.category === "Leyendas" && finalPost.leyendaRegions && finalPost.leyendaRegions.length > 0 && (
             <div class="cat-brief-block">
               <div class="cat-label">Leyendas — distribución geográfica</div>
               <div class="leyenda-geo">
@@ -344,8 +343,7 @@ const { pathname } = Astro.url;
             </div>
           )}
 
-          <!-- 5. FICHA EXCLUSIVA: FOLKLORE -->
-          {finalPost.category === "Folklore" && finalPost.folkRows.length > 0 && (
+          {finalPost.category === "Folklore" && finalPost.folkRows && finalPost.folkRows.length > 0 && (
             <div class="cat-brief-block">
               <div class="cat-label">Folklore — variantes regionales</div>
               <div class="folk-variants">
@@ -366,8 +364,7 @@ const { pathname } = Astro.url;
             </div>
           )}
 
-          <!-- 6. FICHA EXCLUSIVA: MEDIA -->
-          {finalPost.category === "Media" && finalPost.mediaTimeline.length > 0 && (
+          {finalPost.category === "Media" && finalPost.mediaTimeline && finalPost.mediaTimeline.length > 0 && (
             <div class="cat-brief-block">
               <div class="cat-label">Media — ficha con línea temporal</div>
               <div class="media-card">
