@@ -103,11 +103,18 @@ const { pathname } = Astro.url;
 
   <header>
     <div class="header-inner">
-      <a href="/" class="logo-block">
+      <a class="logo-block">
         <span class="logo-sym">⊗</span>
         <span class="logo-name">ZONA MUERTA</span>
       </a>
-      <nav>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <nav id="nav-menu">
         <a href="/" class="nav-link active">Inicio</a>
         <a href="/categorias/urbex" class="nav-link">Urbex</a>
         <a href="/categorias/leyendas" class="nav-link">Leyendas</a>
@@ -117,382 +124,390 @@ const { pathname } = Astro.url;
         <a href="/categorias/media" class="nav-link">Media</a>
         <a href="/categorias/contacto" class="nav-link">Contacto</a>
       </nav>
+
+      <div class="header-right">
+        <button class="search-btn" onclick="toggleSearch()"><span>&#9906;</span></button>
+      </div>
+    </div>
+    
+    <div id="search-bar" class="search-bar hidden">
+      <input type="text" id="header-search-input" placeholder="Buscar en el archivo..." class="search-input" autofocus>
     </div>
   </header>
 
-  <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
+  <div id="main-site">
 
-    <div class="art-hero">
-      {finalPost.category !== "Sistema" ? (
-        /* 1. Formato para posts individuales reales */
-        <div class="breadcrumb">
-          <a href="/">Inicio</a> → 
-          <a href={`/categorias/${finalPost.category === 'x' ? '-x-' : finalPost.category.toLowerCase()}`}>
-            {finalPost.category === 'x' ? '/x/' : finalPost.category}
-          </a>
-          {" → Expediente"}
-        </div>
-      ) : (
-        /* 2. Formato idéntico para páginas de sistema con enlaces activos */
-        <div class="breadcrumb">
-          <a href="/">Inicio</a> → 
-          
-          {pathname.startsWith('/archivo') && (
-            <>
-              <span style="color: var(--text2, #7f8c8d);">Archivo</span> → 
-              <span style="color: #fff;">Registros por Fecha</span>
-            </>
-          )}
-          
-          {pathname.startsWith('/tags') && (
-            <>
-              <span style="color: var(--text2, #7f8c8d);">Etiquetas</span> → 
-              <span style="color: #fff;">Clasificación</span>
-            </>
-          )}
-          
-          {pathname.startsWith('/buscar') && (
-            <>
-              <span style="color: var(--text2, #7f8c8d);">Terminal</span> → 
-              <span style="color: #fff;">Buscador</span>
-            </>
-          )}
-          
-          {pathname.includes('/categorias') && !pathname.endsWith('/categorias') && (
-            <>
-              <a href="/categorias" style="color: var(--red, #c0392b); text-decoration: none;">Categorías</a> → 
-              <span style="color: #fff;">{(finalPost.title.replace('Categoría: ', ''))}</span>
-            </>
-          )}
+    <main style="max-width:1100px;margin:0 auto;padding:0 1.5rem;">
 
-          {pathname.endsWith('/categorias') && (
-            <span style="color: #fff;">Categorías</span>
-          )}
-        </div>
-      )}
-      
-      {finalPost.category !== "Sistema" && (
-        <div class={`post-cat ${finalPost.catClass}`} style="margin-bottom:1rem;">{finalPost.category}</div>
-      )}
-      
-      <h1>{finalPost.title}</h1>
-      <div class="art-meta">
-        <span>{finalPost.date}</span>
-        {finalPost.duration && (
-          <>
-            <span>·</span>
-            <span>{finalPost.duration} lectura</span>
-          </>
-        )}
-        {finalPost.coordinates && (
-          <>
-            <span>·</span>
-            <span style="font-family: var(--font-mono, monospace); letter-spacing: 0.05em;">{finalPost.coordinates}</span>
-          </>
-        )}
-      </div>
-
-      {/* RESTAURADO: Elemento original con tus clases del proyecto */}
-      {finalPost.tags && finalPost.tags.length > 0 && (
-        <div class="art-tags">
-          {finalPost.tags.map((tag: string) => (
-            <a href={`/tags/${tag.toLowerCase()}`} class="tag">
-              {tag}
+      <div class="art-hero">
+        {finalPost.category !== "Sistema" ? (
+          /* 1. Formato para posts individuales reales */
+          <div class="breadcrumb">
+            <a href="/">Inicio</a> → 
+            <a href={`/categorias/${finalPost.category === 'x' ? '-x-' : finalPost.category.toLowerCase()}`}>
+              {finalPost.category === 'x' ? '/x/' : finalPost.category}
             </a>
-          ))}
-        </div>
-      )}
-    </div>
-
-    {finalPost.category !== "Sistema" && (
-      <div class="art-cover">
-        {frontmatter?.coverImg ? (
-          <img src={frontmatter.coverImg} alt={finalPost.title} style="width:100%; height:100%; object-fit:cover;" />
+            {" → Expediente"}
+          </div>
         ) : (
-          <div class={finalPost.imgClass} style="width:100%; height:100%;"></div>
-        )}
-      </div>
-    )}
+          /* 2. Formato idéntico para páginas de sistema con enlaces activos */
+          <div class="breadcrumb">
+            <a href="/">Inicio</a> → 
+            
+            {pathname.startsWith('/archivo') && (
+              <>
+                <span style="color: var(--text2, #7f8c8d);">Archivo</span> → 
+                <span style="color: #fff;">Registros por Fecha</span>
+              </>
+            )}
+            
+            {pathname.startsWith('/tags') && (
+              <>
+                <span style="color: var(--text2, #7f8c8d);">Etiquetas</span> → 
+                <span style="color: #fff;">Clasificación</span>
+              </>
+            )}
+            
+            {pathname.startsWith('/buscar') && (
+              <>
+                <span style="color: var(--text2, #7f8c8d);">Terminal</span> → 
+                <span style="color: #fff;">Buscador</span>
+              </>
+            )}
+            
+            {pathname.includes('/categorias') && !pathname.endsWith('/categorias') && (
+              <>
+                <a href="/categorias" style="color: var(--red, #c0392b); text-decoration: none;">Categorías</a> → 
+                <span style="color: #fff;">{(finalPost.title.replace('Categoría: ', ''))}</span>
+              </>
+            )}
 
-    <div class="art-layout">
-      <div class="art-body">
+            {pathname.endsWith('/categorias') && (
+              <span style="color: #fff;">Categorías</span>
+            )}
+          </div>
+        )}
         
-        {/* 1. FICHA EXCLUSIVA: URBEX */}
-        {finalPost.category === "Urbex" && finalPost.urbexStatus && (
-          <div class="cat-brief-block">
-            <div class="cat-label">Urbex — briefing de entrada</div>
-            <div class="urbex-brief">
-              <div class="urbex-brief-header">
-                <span class="urbex-brief-title">// Datos de la ubicación</span>
-                <span class={`urbex-status ${finalPost.urbexStatus}`}>● {finalPost.urbexStatusTxt}</span>
-              </div>
-              <div class="urbex-grid">
-                <div class="urbex-field">
-                  <div class="urbex-field-label">Coordenadas</div>
-                  <div class="urbex-field-val">{finalPost.coordinates || "No registradas"}</div>
-                </div>
-                <div class="urbex-field">
-                  <div class="urbex-field-label">Última visita documentada</div>
-                  <div class="urbex-field-val">{finalPost.urbexVisit}</div>
-                </div>
-                <div class="urbex-field">
-                  <div class="urbex-field-label">Nivel de riesgo</div>
-                  <div class="urbex-field-val">
-                    <div class="risk-bar">
-                      {[1, 2, 3, 4, 5].map((num) => (
-                        <div class={`risk-pip ${num <= finalPost.urbexRiskPips ? 'pip-on' : 'pip-off'}`}></div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div class="urbex-field">
-                  <div class="urbex-field-label">Equipo recomendado</div>
-                  <div class="urbex-field-val">{finalPost.urbexEquipment}</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        {finalPost.category !== "Sistema" && (
+          <div class={`post-cat ${finalPost.catClass}`} style="margin-bottom:1rem;">{finalPost.category}</div>
         )}
-
-        {/* 2. FICHA EXCLUSIVA: /x/ PARANORMAL */}
-        {(finalPost.category === "x" || finalPost.category === "/x/" || finalPost.category === "-x-") && finalPost.threadPosts.length > 0 && (
-          <div class="cat-brief-block">
-            <div class="cat-label">/x/ — simulación de hilo archivado</div>
-            <div class="thread-wrap">
-              <div class="thread-banner">
-                <span>/x/ — paranormal — archivo zona muerta</span>
-                <span>{finalPost.threadBannerRight}</span>
-              </div>
-              {finalPost.threadPosts.map((post: any) => (
-                <div class="thread-post">
-                  <div class="thread-post-header">
-                    <span class="thread-anon">{post.anonName || "Anónimo"}</span>
-                    <span class="thread-date">{post.date}</span>
-                    <span class="thread-num">No.<a href="#">{post.num}</a></span>
-                  </div>
-                  <div class="thread-body" set:html={post.body}></div>
-                </div>
-              ))}
-              {finalPost.threadDeletedTxt && (
-                <div class="thread-deleted">{finalPost.threadDeletedTxt}</div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* 3. FICHA EXCLUSIVA: VIDEOJUEGOS */}
-        {finalPost.category === "Videojuegos" && finalPost.gameMetrics.length > 0 && (
-          <div class="cat-brief-block">
-            <div class="cat-label">Videojuegos — análisis de perturbación</div>
-            <div class="game-card">
-              <div class="game-card-header">
-                <span class="game-card-title">{finalPost.title}</span>
-                <span class="game-card-year">{finalPost.gameDeveloper} · {finalPost.gameYear}</span>
-              </div>
-              <div class="game-metrics">
-                {finalPost.gameMetrics.map((m: any) => (
-                  <div class="metric-row">
-                    <span class="metric-name">{m.name}</span>
-                    <div class="metric-track"><div class="metric-fill" style={`width:${m.val * 10}%`}></div></div>
-                    <span class="metric-val">{m.val.toFixed(1)}</span>
-                  </div>
-                ))}
-              </div>
-              {finalPost.gameVerdict && <div class="game-verdict">{finalPost.gameVerdict}</div>}
-            </div>
-          </div>
-        )}
-
-        {/* 4. FICHA EXCLUSIVA: LEYENDAS */}
-        {finalPost.category === "Leyendas" && finalPost.leyendaRegions.length > 0 && (
-          <div class="cat-brief-block">
-            <div class="cat-label">Leyendas — distribución geográfica</div>
-            <div class="leyenda-geo">
-              <div class="leyenda-geo-header">{finalPost.leyendaHeader || "// Presencia documentada"}</div>
-              <div class="leyenda-regions">
-                {finalPost.leyendaRegions.map((r: any) => (
-                  <div class="leyenda-region">
-                    <div class={`region-dot ${r.dot}`}></div>
-                    <span class="region-name">{r.name}</span>
-                    <span class="region-variant">{r.variant}</span>
-                  </div>
-                ))}
-              </div>
-              <div class="leyenda-geo-footer">
-                <div class="geo-legend-item"><div class="region-dot dot-high"></div> Presencia fuerte</div>
-                <div class="geo-legend-item"><div class="region-dot dot-mid"></div> Presencia moderada</div>
-                <div class="geo-legend-item"><div class="region-dot dot-low"></div> Registros aislados</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* 5. FICHA EXCLUSIVA: FOLKLORE */}
-        {finalPost.category === "Folklore" && finalPost.folkRows.length > 0 && (
-          <div class="cat-brief-block">
-            <div class="cat-label">Folklore — variantes regionales</div>
-            <div class="folk-variants">
-              <div class="folk-variants-header">{finalPost.folkHeader || "// Comparativa de versiones"}</div>
-              <div class="folk-row folk-head">
-                <div class="folk-cell">Región</div>
-                <div class="folk-cell">Nombre local</div>
-                <div class="folk-cell">Diferencia clave</div>
-              </div>
-              {finalPost.folkRows.map((row: any) => (
-                <div class="folk-row">
-                  <div class="folk-cell"><strong>{row.region}</strong></div>
-                  <div class="folk-cell">{row.name}</div>
-                  <div class="folk-cell">{row.diff}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 6. FICHA EXCLUSIVA: MEDIA */}
-        {finalPost.category === "Media" && finalPost.mediaTimeline.length > 0 && (
-          <div class="cat-brief-block">
-            <div class="cat-label">Media — ficha con línea temporal</div>
-            <div class="media-card">
-              <div class="media-card-header">
-                <span class="media-type-badge">{finalPost.mediaBadge || "Registro"}</span>
-                <span class="media-title-small">{finalPost.title}</span>
-              </div>
-              <div class="media-timeline">
-                {finalPost.mediaTimeline.map((item: any) => (
-                  <div class="timeline-item">
-                    <span class="timeline-time">{item.time}</span>
-                    <div class={`timeline-dot ${item.active ? 'active' : ''}`}></div>
-                    <span class="timeline-text">{item.text}</span>
-                  </div>
-                ))}
-              </div>
-              {finalPost.mediaQuote && (
-                <div class="media-quote">
-                  "{finalPost.mediaQuote}"
-                  {finalPost.mediaQuoteSrc && <span class="media-quote-src">— {finalPost.mediaQuoteSrc}</span>}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        <slot />
-
-      </div>
-      <aside class="sidebar" style="padding-top:0.5rem;">
-        <div class="sidebar-block">
-          <div class="sidebar-title">SOBRE ZONA MUERTA</div>
-          <p class="sidebar-text">Documentamos lo inexplicable: urbex, leyendas, folklore, hilos de /x/ y todo lo que la reality oficial prefiere ignorar. Sin clickbait. Sin exageraciones.</p>
+        
+        <h1>{finalPost.title}</h1>
+        <div class="art-meta">
+          <span>{finalPost.date}</span>
+          {finalPost.duration && (
+            <>
+              <span>·</span>
+              <span>{finalPost.duration} lectura</span>
+            </>
+          )}
+          {finalPost.coordinates && (
+            <>
+              <span>·</span>
+              <span style="font-family: var(--font-mono, monospace); letter-spacing: 0.05em;">{finalPost.coordinates}</span>
+            </>
+          )}
         </div>
 
-        <div class="sidebar-block">
-          <div class="sidebar-title">Categorías</div>
-          <div class="nav-categories" style="display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem;">
-            <a href="/categorias/urbex" style="color: var(--text2)">Urbex: <span style="color: var(--red)">{categoriesCount.Urbex}</span></a>
-            <a href="/categorias/leyendas" style="color: var(--text2)">Leyendas Urbanas: <span style="color: var(--red)">{categoriesCount.Leyendas}</span></a>
-            <a href="/categorias/folklore" style="color: var(--text2)">Folklore: <span style="color: var(--red)">{categoriesCount.Folklore}</span></a>
-            <a href="/categorias/videojuegos" style="color: var(--text2)">Videojuegos: <span style="color: var(--red)">{categoriesCount.Videojuegos}</span></a>
-            <a href="/categorias/-x-" style="color: var(--text2)">Hilos /x/: <span style="color: var(--red)">{categoriesCount.x}</span></a>
-            <a href="/categorias/media" style="color: var(--text2)">Vídeos y Libros: <span style="color: var(--red)">{categoriesCount.Media}</span></a>
-          </div>
-        </div>
-
-        <div class="sidebar-block">
-          <div class="sidebar-title">ENTRADAS RECIENTES</div>
-          <div class="recent-list">
-            {recentPosts.map((post) => (
-              <a href={post.url} class="recent-item">
-                <div class={`recent-thumb ${post.frontmatter.imgClass || ''}`}>
-                  {post.frontmatter.thumbImg ? (
-                    <img src={post.frontmatter.thumbImg} alt={post.frontmatter.title} style="width:100%; height:100%; object-fit:cover;" />
-                  ) : null}
-                </div>
-                <div class="recent-text">
-                  <div class="recent-title">{post.frontmatter.title}</div>
-                  <div class="recent-date">{post.frontmatter.date}</div>
-                </div>
+        {finalPost.tags && finalPost.tags.length > 0 && (
+          <div class="art-tags">
+            {finalPost.tags.map((tag: string) => (
+              <a href={`/tags/${tag.toLowerCase()}`} class="tag">
+                {tag}
               </a>
             ))}
           </div>
-        </div>
+        )}
+      </div>
 
-        <div class="sidebar-block sidebar-newsletter">
-          <div class="sidebar-title">TRANSMISIONES</div>
-          <p class="sidebar-text">Artículos nuevos directo a tu correo. Sin spam.</p>
-          <form class="sub-form">
-            <input type="email" placeholder="tu@email.com" class="sub-input" required>
-            <button type="submit" class="sub-btn">Suscribirse</button>
-          </form>
+      {finalPost.category !== "Sistema" && (
+        <div class="art-cover">
+          {frontmatter?.coverImg ? (
+            <img src={frontmatter.coverImg} alt={finalPost.title} style="width:100%; height:100%; object-fit:cover;" />
+          ) : (
+            <div class={finalPost.imgClass} style="width:100%; height:100%;"></div>
+          )}
         </div>
+      )}
 
-        <div class="sidebar-block">
-          <div class="sidebar-title">ARCHIVO</div>
-          <ul class="archive-list">
-            {Object.entries(archiveGroups).map(([urlSlug, info]) => (
-              <li>
-                <a href={`/archivo/${urlSlug}`}>
-                  {info.label} <span style="color: var(--red)">({info.count})</span>
+      <div class="art-layout">
+        <div class="art-body">
+          
+          <!-- 1. FICHA EXCLUSIVA: URBEX -->
+          {finalPost.category === "Urbex" && finalPost.urbexStatus && (
+            <div class="cat-brief-block">
+              <div class="cat-label">Urbex — briefing de entrada</div>
+              <div class="urbex-brief">
+                <div class="urbex-brief-header">
+                  <span class="urbex-brief-title">// Datos de la ubicación</span>
+                  <span class={`urbex-status ${finalPost.urbexStatus}`}>● {finalPost.urbexStatusTxt}</span>
+                </div>
+                <div class="urbex-grid">
+                  <div class="urbex-field">
+                    <div class="urbex-field-label">Coordenadas</div>
+                    <div class="urbex-field-val">{finalPost.coordinates || "No registradas"}</div>
+                  </div>
+                  <div class="urbex-field">
+                    <div class="urbex-field-label">Última visita documentada</div>
+                    <div class="urbex-field-val">{finalPost.urbexVisit}</div>
+                  </div>
+                  <div class="urbex-field">
+                    <div class="urbex-field-label">Nivel de riesgo</div>
+                    <div class="urbex-field-val">
+                      <div class="risk-bar">
+                        {[1, 2, 3, 4, 5].map((num) => (
+                          <div class={`risk-pip ${num <= finalPost.urbexRiskPips ? 'pip-on' : 'pip-off'}`}></div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="urbex-field">
+                    <div class="urbex-field-label">Equipo recomendado</div>
+                    <div class="urbex-field-val">{finalPost.urbexEquipment}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <!-- 2. FICHA EXCLUSIVA: /x/ PARANORMAL -->
+          {(finalPost.category === "x" || finalPost.category === "/x/" || finalPost.category === "-x-") && finalPost.threadPosts.length > 0 && (
+            <div class="cat-brief-block">
+              <div class="cat-label">/x/ — simulación de hilo archivado</div>
+              <div class="thread-wrap">
+                <div class="thread-banner">
+                  <span>/x/ — paranormal — archivo zona muerta</span>
+                  <span>{finalPost.threadBannerRight}</span>
+                </div>
+                {finalPost.threadPosts.map((post: any) => (
+                  <div class="thread-post">
+                    <div class="thread-post-header">
+                      <span class="thread-anon">{post.anonName || "Anónimo"}</span>
+                      <span class="thread-date">{post.date}</span>
+                      <span class="thread-num">No.<a href="#">{post.num}</a></span>
+                    </div>
+                    <div class="thread-body" set:html={post.body}></div>
+                  </div>
+                ))}
+                {finalPost.threadDeletedTxt && (
+                  <div class="thread-deleted">{finalPost.threadDeletedTxt}</div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <!-- 3. FICHA EXCLUSIVA: VIDEOJUEGOS -->
+          {finalPost.category === "Videojuegos" && finalPost.gameMetrics.length > 0 && (
+            <div class="cat-brief-block">
+              <div class="cat-label">Videojuegos — análisis de perturbación</div>
+              <div class="game-card">
+                <div class="game-card-header">
+                  <span class="game-card-title">{finalPost.title}</span>
+                  <span class="game-card-year">{finalPost.gameDeveloper} · {finalPost.gameYear}</span>
+                </div>
+                <div class="game-metrics">
+                  {finalPost.gameMetrics.map((m: any) => (
+                    <div class="metric-row">
+                      <span class="metric-name">{m.name}</span>
+                      <div class="metric-track"><div class="metric-fill" style={`width:${m.val * 10}%`}></div></div>
+                      <span class="metric-val">{m.val.toFixed(1)}</span>
+                    </div>
+                  ))}
+                </div>
+                {finalPost.gameVerdict && <div class="game-verdict">{finalPost.gameVerdict}</div>}
+              </div>
+            </div>
+          )}
+
+          <!-- 4. FICHA EXCLUSIVA: LEYENDAS -->
+          {finalPost.category === "Leyendas" && finalPost.leyendaRegions.length > 0 && (
+            <div class="cat-brief-block">
+              <div class="cat-label">Leyendas — distribución geográfica</div>
+              <div class="leyenda-geo">
+                <div class="leyenda-geo-header">{finalPost.leyendaHeader || "// Presencia documentada"}</div>
+                <div class="leyenda-regions">
+                  {finalPost.leyendaRegions.map((r: any) => (
+                    <div class="leyenda-region">
+                      <div class={`region-dot ${r.dot}`}></div>
+                      <span class="region-name">{r.name}</span>
+                      <span class="region-variant">{r.variant}</span>
+                    </div>
+                  ))}
+                </div>
+                <div class="leyenda-geo-footer">
+                  <div class="geo-legend-item"><div class="region-dot dot-high"></div> Presencia fuerte</div>
+                  <div class="geo-legend-item"><div class="region-dot dot-mid"></div> Presencia moderada</div>
+                  <div class="geo-legend-item"><div class="region-dot dot-low"></div> Registros aislados</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <!-- 5. FICHA EXCLUSIVA: FOLKLORE -->
+          {finalPost.category === "Folklore" && finalPost.folkRows.length > 0 && (
+            <div class="cat-brief-block">
+              <div class="cat-label">Folklore — variantes regionales</div>
+              <div class="folk-variants">
+                <div class="folk-variants-header">{finalPost.folkHeader || "// Comparativa de versiones"}</div>
+                <div class="folk-row folk-head">
+                  <div class="folk-cell">Región</div>
+                  <div class="folk-cell">Nombre local</div>
+                  <div class="folk-cell">Diferencia clave</div>
+                </div>
+                {finalPost.folkRows.map((row: any) => (
+                  <div class="folk-row">
+                    <div class="folk-cell"><strong>{row.region}</strong></div>
+                    <div class="folk-cell">{row.name}</div>
+                    <div class="folk-cell">{row.diff}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- 6. FICHA EXCLUSIVA: MEDIA -->
+          {finalPost.category === "Media" && finalPost.mediaTimeline.length > 0 && (
+            <div class="cat-brief-block">
+              <div class="cat-label">Media — ficha con línea temporal</div>
+              <div class="media-card">
+                <div class="media-card-header">
+                  <span class="media-type-badge">{finalPost.mediaBadge || "Registro"}</span>
+                  <span class="media-title-small">{finalPost.title}</span>
+                </div>
+                <div class="media-timeline">
+                  {finalPost.mediaTimeline.map((item: any) => (
+                    <div class="timeline-item">
+                      <span class="timeline-time">{item.time}</span>
+                      <div class={`timeline-dot ${item.active ? 'active' : ''}`}></div>
+                      <span class="timeline-text">{item.text}</span>
+                    </div>
+                  ))}
+                </div>
+                {finalPost.mediaQuote && (
+                  <div class="media-quote">
+                    "{finalPost.mediaQuote}"
+                    {finalPost.mediaQuoteSrc && <span class="media-quote-src">— {finalPost.mediaQuoteSrc}</span>}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <slot />
+
+        </div>
+        <aside class="sidebar" style="padding-top:0.5rem;">
+          <div class="sidebar-block">
+            <div class="sidebar-title">SOBRE ZONA MUERTA</div>
+            <p class="sidebar-text">Documentamos lo inexplicable: urbex, leyendas, folklore, hilos de /x/ y todo lo que la reality oficial prefiere ignorar. Sin clickbait. Sin exageraciones.</p>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-title">Categorías</div>
+            <div class="nav-categories" style="display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.75rem;">
+              <a href="/categorias/urbex" style="color: var(--text2)">Urbex: <span style="color: var(--red)">{categoriesCount.Urbex}</span></a>
+              <a href="/categorias/leyendas" style="color: var(--text2)">Leyendas Urbanas: <span style="color: var(--red)">{categoriesCount.Leyendas}</span></a>
+              <a href="/categorias/folklore" style="color: var(--text2)">Folklore: <span style="color: var(--red)">{categoriesCount.Folklore}</span></a>
+              <a href="/categorias/videojuegos" style="color: var(--text2)">Videojuegos: <span style="color: var(--red)">{categoriesCount.Videojuegos}</span></a>
+              <a href="/categorias/-x-" style="color: var(--text2)">Hilos /x/: <span style="color: var(--red)">{categoriesCount.x}</span></a>
+              <a href="/categorias/media" style="color: var(--text2)">Vídeos y Libros: <span style="color: var(--red)">{categoriesCount.Media}</span></a>
+            </div>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-title">ENTRADAS RECIENTES</div>
+            <div class="recent-list">
+              {recentPosts.map((post) => (
+                <a href={post.url} class="recent-item">
+                  <div class={`recent-thumb ${post.frontmatter.imgClass || ''}`}>
+                    {post.frontmatter.thumbImg ? (
+                      <img src={post.frontmatter.thumbImg} alt={post.frontmatter.title} style="width:100%; height:100%; object-fit:cover;" />
+                    ) : null}
+                  </div>
+                  <div class="recent-text">
+                    <div class="recent-title">{post.frontmatter.title}</div>
+                    <div class="recent-date">{post.frontmatter.date}</div>
+                  </div>
                 </a>
-              </li>
-            ))}
-          </ul>
+              ))}
+            </div>
+          </div>
+
+          <div class="sidebar-block sidebar-newsletter">
+            <div class="sidebar-title">TRANSMISIONES</div>
+            <p class="sidebar-text">Artículos nuevos directo a tu correo. Sin spam.</p>
+            <form class="sub-form">
+              <input type="email" placeholder="tu@email.com" class="sub-input" required>
+              <button type="submit" class="sub-btn">Suscribirse</button>
+            </form>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-title">ARCHIVO</div>
+            <ul class="archive-list">
+              {Object.entries(archiveGroups).map(([urlSlug, info]) => (
+                <li>
+                  <a href={`/archivo/${urlSlug}`}>
+                    {info.label} <span style="color: var(--red)">({info.count})</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </aside>
+      </div>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+
+        <div class="footer-brand">
+          <a class="logo-block">
+            <span class="logo-sym">⊗</span>
+            <span class="logo-name">ZONA MUERTA</span>
+          </a>
+          <p class="footer-desc">
+            Archivo de lo inexplicable. Urbex, leyendas, folklore, videojuegos e hilos de /x/.
+          </p>
         </div>
 
-      </aside>
-    </div>
+        <div class="footer-nav-block">
+          <div class="footer-section-label">// Categorías</div>
+          <nav class="footer-nav">
+            <a href="/categorias/urbex">Urbex</a>
+            <a href="/categorias/leyendas">Leyendas</a>
+            <a href="/categorias/folklore">Folklore</a>
+            <a href="/categorias/videojuegos">Videojuegos</a>
+            <a href="/categorias/-x-">/x/</a>
+            <a href="/categorias/media">Media</a>
+          </nav>
+        </div>
 
-  </main>
+        <div class="footer-links-block">
+          <div class="footer-section-label">// Más</div>
+          <nav class="footer-nav">
+            <a href="/">Inicio</a>
+            <a href="/categorias/contacto">Contacto</a>
+            <a href="https://github.com/JuanjoJmnz" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/juan-josé-jiménez-gil-2588a2222/" target="_blank" rel="noopener">LinkedIn</a>
+          </nav>
+        </div>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-
-      <div class="footer-brand">
-        <a href="/" class="logo-block">
-          <span class="logo-sym">⊗</span>
-          <span class="logo-name">ZONA MUERTA</span>
-        </a>
-        <p class="footer-desc">
-          Archivo de lo inexplicable. Urbex, leyendas, folklore, videojuegos e hilos de /x/.
-        </p>
       </div>
 
-      <div class="footer-nav-block">
-        <div class="footer-section-label">// Categorías</div>
-        <nav class="footer-nav">
-          <a href="/categorias/urbex">Urbex</a>
-          <a href="/categorias/leyendas">Leyendas</a>
-          <a href="/categorias/folklore">Folklore</a>
-          <a href="/categorias/videojuegos">Videojuegos</a>
-          <a href="/categorias/-x-">/x/</a>
-          <a href="/categorias/media">Media</a>
-        </nav>
+      <div class="footer-bottom">
+        <span>© 2026 Zona Muerta — Juan José Jiménez Gil</span>
+        <span class="footer-signal">
+          <span class="signal-dot"></span>
+          señal activa
+        </span>
+        <div style="color: rgba(255,255,255,0.2);">LOC_RPA_NODE_01</div>
       </div>
+    </footer>
 
-      <div class="footer-links-block">
-        <div class="footer-section-label">// Más</div>
-        <nav class="footer-nav">
-          <a href="/">Inicio</a>
-          <a href="/categorias/contacto">Contacto</a>
-          <a href="https://github.com/JuanjoJmnz" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/juan-josé-jiménez-gil-2588a2222/" target="_blank" rel="noopener">LinkedIn</a>
-        </nav>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      <span>© 2026 Zona Muerta — Juan José Jiménez Gil</span>
-      <span class="footer-signal">
-        <span class="signal-dot"></span>
-        señal activa
-      </span>
-          <div style="color: rgba(255,255,255,0.2);">LOC_RPA_NODE_01</div>
-    </div>
-  </footer>
-
-  <script is:inline>
-    console.log('%c⊗ ZONA MUERTA','color:#c0392b;font-size:18px;font-family:monospace;font-weight:bold');
-  </script>
+  </div> <script is:inline src="/js/main.js"></script>
+  <script is:inline src="/js/vibes.js"></script>
 </body>
 </html>

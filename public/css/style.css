@@ -1413,3 +1413,16 @@ video {
   .post-row { grid-template-columns: 1fr; }
   .post-row-thumb { display: none; }
 }
+
+#entity-message{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+
+    color:#888;
+    font-family:monospace;
+    font-size:12px;
+
+    opacity:0;
+    transition:opacity 2s;
+}
