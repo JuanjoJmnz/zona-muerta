@@ -1,13 +1,31 @@
 /* ZONA MUERTA — main.js v2 */
 
 /* =====================
-   INTRO ESTÁTICA (The Ring)
+   INTRO ESTÁTICA (The Ring) - Con detección de Recarga
    ===================== */
 (function() {
   const intro   = document.getElementById('static-intro');
   const site    = document.getElementById('main-site');
   const canvas  = document.getElementById('static-canvas');
   if (!intro || !canvas) return;
+
+  // 1. DETECTAR EL TIPO DE ACCESO
+  const navEntries = performance.getEntriesByType('navigation');
+  // Comprobamos si el tipo de navegación es literalmente un F5 / Recarga manual
+  const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
+  // Comprobamos si ya vio la intro en esta sesión de pestaña
+  const hasSeenIntro = sessionStorage.getItem('zm_intro_seen');
+
+  // CONTROL INTERNO: Si ya la ha visto Y NO es una recarga explícita, la destruimos al instante
+  if (hasSeenIntro && !isReload) {
+    intro.style.display = 'none';
+    if (site) site.classList.remove('hidden');
+    return; // Cancelamos el resto de la ejecución (no arranca el canvas)
+  }
+
+  // Si llega aquí, significa que o es su primera entrada o ha pulsado F5 adrede.
+  // Guardamos la marca en la sesión para que los clics en el menú la ignoren a partir de ahora.
+  sessionStorage.setItem('zm_intro_seen', 'true');
 
   const ctx = canvas.getContext('2d');
   let animId;
@@ -54,7 +72,7 @@
     cancelAnimationFrame(animId);
     intro.style.opacity = '0';
     intro.style.transition = 'opacity 0.7s ease';
-    site.classList.remove('hidden');
+    if (site) site.classList.remove('hidden');
     setTimeout(() => { intro.style.display = 'none'; }, 800);
   }
 
