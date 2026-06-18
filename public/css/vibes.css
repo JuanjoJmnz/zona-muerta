@@ -5,28 +5,6 @@
    ========================================================================== */
 
 /* =====================
-   RELOJ "TARTAMUDO" (header)
-   ===================== */
-.zm-clock {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.65rem;
-  color: var(--text3, #3a3835);
-  letter-spacing: 0.08em;
-  padding-left: 1rem;
-  border-left: 1px solid var(--border, rgba(255, 255, 255, 0.07));
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
-.zm-clock.glitching {
-  color: var(--red, #c0392b);
-}
-
-@media (max-width: 900px) {
-  .zm-clock { display: none; }
-}
-
-/* =====================
    MANCHAS / QUEMADURAS EN IMÁGENES
    Overlay sutil tipo papel envejecido
    ===================== */
@@ -79,7 +57,7 @@
 .zm-freq {
   font-family: var(--font-mono, monospace);
   font-size: 0.65rem;
-  color: var(--text3, #3a3835);
+  color: var(--text2, #3a3835);
   letter-spacing: 0.08em;
   display: flex;
   align-items: center;
@@ -116,29 +94,12 @@
 }
 
 /* =====================
-   PARPADEO EN DOBLE-CLICK
-   ===================== */
-#zm-blink-flash {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 9997;
-  opacity: 0;
-  pointer-events: none;
-}
-
-#zm-blink-flash.flash {
-  opacity: 1;
-  transition: opacity 0.05s;
-}
-
-/* =====================
    CONTADOR DE ANOMALÍAS
    ===================== */
 .zm-anomaly-counter {
   font-family: var(--font-mono, monospace);
   font-size: 0.6rem;
-  color: var(--text3, #3a3835);
+  color: var(--text2, #7a7670);
   letter-spacing: 0.06em;
 }
 

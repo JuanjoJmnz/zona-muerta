@@ -148,112 +148,50 @@
     }
   });
 })();
+//   window.ZM_LAST_POST = window.ZM_LAST_POST || new Date(Date.now() - 1000 * 60 * 47);
+
+//   function timeAgo(date) {
+//     const diff = Math.floor((Date.now() - date) / 1000);
+//     if (diff < 60)        return 'hace unos segundos';
+//     if (diff < 3600)      return `hace ${Math.floor(diff / 60)} min`;
+//     if (diff < 86400)     return `hace ${Math.floor(diff / 3600)} h`;
+//     if (diff < 86400 * 2) return 'ayer';
+//     if (diff < 86400 * 7) return `hace ${Math.floor(diff / 86400)} días`;
+//     return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+//   }
+
+//   const style = document.createElement('style');
+//   style.textContent = `
+//     .last-transmission {
+//       font-family: var(--font-mono, monospace);
+//       font-size: 0.8rem;
+//       color: var(--text2, #7a7670);
+//       letter-spacing: 0.08em;
+//       padding-left: 1rem;
+//       border-left: 1px solid var(--border, rgba(255,255,255,0.07));
+//       white-space: nowrap;
+//     }
+//     .last-transmission span { color: var(--text2, #7a7670); }
+//     @media (max-width: 900px) { .last-transmission { display: none; } }
+//   `;
+//   document.head.appendChild(style);
+
+//   const el = document.createElement('div');
+//   el.className = 'last-transmission';
+//   el.innerHTML = `// última transmisión: <span></span>`;
+//   const span = el.querySelector('span');
+
+//   function update() { span.textContent = timeAgo(window.ZM_LAST_POST); }
+//   update();
+//   setInterval(update, 30000);
+
+//   const headerInner = document.querySelector('.header-inner');
+//   if (headerInner) headerInner.appendChild(el);
+// })();
 
 
 /* ==========================================
-   2. CURSOR PERSONALIZADO (Punto de mira)
-   ========================================== */
-(function () {
-  const style = document.createElement('style');
-  style.textContent = `
-    *, *::before, *::after { cursor: none !important; }
-    #zm-cursor {
-      position: fixed;
-      pointer-events: none;
-      z-index: 99999;
-      width: 20px;
-      height: 20px;
-      transform: translate(-50%, -50%);
-      transition: transform 0.08s ease, opacity 0.2s;
-    }
-    #zm-cursor svg { width: 100%; height: 100%; }
-    #zm-cursor.clicking { transform: translate(-50%, -50%) scale(0.75); }
-    a, button, [onclick], label, input, textarea, select {
-      cursor: none !important;
-    }
-    /* En táctil no hay cursor que perseguir: lo quitamos y devolvemos el cursor normal */
-    @media (hover: none) {
-      *, *::before, *::as, *::after { cursor: auto !important; }
-      #zm-cursor { display: none !important; }
-    }
-  `;
-  document.head.appendChild(style);
-
-  // En dispositivos táctiles no tiene sentido crear el elemento ni los listeners
-  if (window.matchMedia('(hover: none)').matches) return;
-
-  const el = document.createElement('div');
-  el.id = 'zm-cursor';
-  el.innerHTML = `
-    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="10" cy="10" r="8" fill="none" stroke="#c0392b" stroke-width="1"/>
-      <line x1="10" y1="2" x2="10" y2="18" stroke="#c0392b" stroke-width="1"/>
-      <line x1="2" y1="10" x2="18" y2="10" stroke="#c0392b" stroke-width="1"/>
-      <circle cx="10" cy="10" r="1.5" fill="#c0392b"/>
-    </svg>
-  `;
-  document.body.appendChild(el);
-
-  document.addEventListener('mousemove', e => {
-    el.style.left = e.clientX + 'px';
-    el.style.top  = e.clientY + 'px';
-  });
-
-  document.addEventListener('mousedown', () => el.classList.add('clicking'));
-  document.addEventListener('mouseup',   () => el.classList.remove('clicking'));
-  document.addEventListener('mouseleave', () => { el.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { el.style.opacity = '1'; });
-})();
-
-
-/* ==========================================
-   3. ÚLTIMA TRANSMISIÓN EN TIEMPO REAL
-   ========================================== */
-(function () {
-  window.ZM_LAST_POST = window.ZM_LAST_POST || new Date(Date.now() - 1000 * 60 * 47);
-
-  function timeAgo(date) {
-    const diff = Math.floor((Date.now() - date) / 1000);
-    if (diff < 60)        return 'hace unos segundos';
-    if (diff < 3600)      return `hace ${Math.floor(diff / 60)} min`;
-    if (diff < 86400)     return `hace ${Math.floor(diff / 3600)} h`;
-    if (diff < 86400 * 2) return 'ayer';
-    if (diff < 86400 * 7) return `hace ${Math.floor(diff / 86400)} días`;
-    return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-  }
-
-  const style = document.createElement('style');
-  style.textContent = `
-    .last-transmission {
-      font-family: var(--font-mono, monospace);
-      font-size: 0.6rem;
-      color: var(--text3, #3a3835);
-      letter-spacing: 0.08em;
-      padding-left: 1rem;
-      border-left: 1px solid var(--border, rgba(255,255,255,0.07));
-      white-space: nowrap;
-    }
-    .last-transmission span { color: var(--text2, #7a7670); }
-    @media (max-width: 900px) { .last-transmission { display: none; } }
-  `;
-  document.head.appendChild(style);
-
-  const el = document.createElement('div');
-  el.className = 'last-transmission';
-  el.innerHTML = `// última transmisión: <span></span>`;
-  const span = el.querySelector('span');
-
-  function update() { span.textContent = timeAgo(window.ZM_LAST_POST); }
-  update();
-  setInterval(update, 30000);
-
-  const headerInner = document.querySelector('.header-inner');
-  if (headerInner) headerInner.appendChild(el);
-})();
-
-
-/* ==========================================
-   4. CONTADOR ESTILO EXPEDIENTE (Persistente)
+   2. CONTADOR ESTILO EXPEDIENTE (Persistente)
    ========================================== */
 (function () {
   const key = 'zm_visit_count';
@@ -270,7 +208,7 @@
     .expediente-num {
       font-family: var(--font-mono, monospace);
       font-size: 0.62rem;
-      color: var(--text3, #3a3835);
+      color: var(--text2, #3a3835);
       letter-spacing: 0.1em;
       line-height: 1.6;
     }
@@ -301,7 +239,7 @@
 
 
 /* ==========================================
-   5. TEXTO CENSURADO CLICKEABLE
+   3. TEXTO CENSURADO CLICKEABLE
    ========================================== */
 (function () {
   const style = document.createElement('style');
@@ -346,7 +284,7 @@
 
 
 /* ==========================================
-   6. EFECTO GLITCH EN HOVER DE TÍTULOS
+   4. EFECTO GLITCH EN HOVER DE TÍTULOS
    ========================================== */
 (function () {
   const CHARS = '▓░█▒╳╬╪╫╢╟╞';
@@ -395,7 +333,7 @@
 
 
 /* ==========================================
-   7. NOTIFICACIÓN TOAST (Fragmento copiado)
+   5. NOTIFICACIÓN TOAST (Fragmento copiado)
    ========================================== */
 (function () {
   const style = document.createElement('style');
@@ -438,7 +376,7 @@
 
 
 /* ==========================================
-   8. EASTER EGG (5 clicks en el Logo = Estática + Audio)
+   6. EASTER EGG (5 clicks en el Logo = Estática + Audio)
    ========================================== */
 (function () {
   const style = document.createElement('style');

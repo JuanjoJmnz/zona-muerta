@@ -4,85 +4,9 @@
    Pensado para cargar DESPUÉS de vibes.js (no lo sustituye).
    ========================================================================== */
 
-/* ==========================================
-   1. RELOJ "TARTAMUDO" en el header
-   Va bien casi siempre; de vez en cuando salta,
-   se congela un frame o muestra 06:66:66
-   ========================================== */
-(function () {
-  function pad(n) { return String(n).padStart(2, '0'); }
-
-  const el = document.createElement('div');
-  el.className = 'zm-clock';
-  el.id = 'zm-clock';
-
-  const headerInner = document.querySelector('.header-inner');
-  if (headerInner) headerInner.appendChild(el);
-
-  let frozen = false;
-  let lastGood = '';
-
-  function realTime() {
-    const d = new Date();
-    return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-  }
-
-  function tick() {
-    if (!el.isConnected) return;
-
-    if (frozen) {
-      // mientras está "congelado" no actualizamos: se queda con lastGood
-      return;
-    }
-
-    const real = realTime();
-    lastGood = real;
-    el.textContent = real;
-    el.classList.remove('glitching');
-  }
-
-  tick();
-  setInterval(tick, 1000);
-
-  // Cada 40-90s, un evento de "fallo" de un par de segundos
-  function scheduleGlitch() {
-    const delay = 40000 + Math.random() * 50000;
-    setTimeout(() => {
-      const roll = Math.random();
-
-      if (roll < 0.34) {
-        // Congelar el reloj 2 segundos
-        frozen = true;
-        el.classList.add('glitching');
-        setTimeout(() => {
-          frozen = false;
-          el.classList.remove('glitching');
-        }, 2000);
-
-      } else if (roll < 0.67) {
-        // Saltar un segundo hacia atrás, una vez
-        const d = new Date();
-        d.setSeconds(d.getSeconds() - 1);
-        el.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-        el.classList.add('glitching');
-        setTimeout(() => el.classList.remove('glitching'), 600);
-
-      } else {
-        // El clásico: 06:66:66
-        el.textContent = '06:66:66';
-        el.classList.add('glitching');
-        setTimeout(() => el.classList.remove('glitching'), 700);
-      }
-
-      scheduleGlitch();
-    }, delay);
-  }
-  scheduleGlitch();
-})();
-
 
 /* ==========================================
-   2. MANCHAS / QUEMADURAS EN IMÁGENES
+   1. MANCHAS / QUEMADURAS EN IMÁGENES
    Inyecta un overlay decorativo sobre cada
    placeholder de imagen. Puramente visual,
    no afecta al layout (position: absolute).
@@ -122,7 +46,7 @@
 
 
 /* ==========================================
-   3. INDICADOR DE FRECUENCIA en el footer
+   2. INDICADOR DE FRECUENCIA en el footer
    Fluctúa lentamente, nunca se queda fijo
    ========================================== */
 (function () {
@@ -151,7 +75,7 @@
 
 
 /* ==========================================
-   4. SOMBRA DESPLAZADA DEL LOGO
+   3. SOMBRA DESPLAZADA DEL LOGO
    Se fija una vez por carga de página (no cambia
    en bucle, solo al recargar)
    ========================================== */
@@ -159,8 +83,9 @@
   const logo = document.querySelector('.logo-sym');
   if (!logo) return;
 
-  const x = (Math.random() > 0.5 ? 1 : -1) * (2 + Math.random() * 4);
-  const y = 1 + Math.random() * 3;
+  const x = (Math.random() > 0.5 ? 1 : -1) * (6 + Math.random() * 10);
+  
+  const y = (Math.random() > 0.5 ? 1 : -1) * (5 + Math.random() * 7);
 
   logo.style.setProperty('--zm-shadow-x', `${x.toFixed(1)}px`);
   logo.style.setProperty('--zm-shadow-y', `${y.toFixed(1)}px`);
@@ -168,7 +93,7 @@
 
 
 /* ==========================================
-   5. PLACEHOLDER QUE "DUDA"
+   4. PLACEHOLDER QUE "DUDA"
    Solo cambia ANTES de que el usuario escriba.
    En cuanto hay foco o input real, se detiene
    y no vuelve a tocar el campo.
@@ -223,32 +148,7 @@
 
 
 /* ==========================================
-   6. PARPADEO EN DOBLE-CLICK
-   Solo si el doble-click es en espacio vacío
-   (no en texto, links, botones o inputs)
-   ========================================== */
-(function () {
-  const flash = document.createElement('div');
-  flash.id = 'zm-blink-flash';
-  document.body.appendChild(flash);
-
-  const INTERACTIVE = 'a, button, input, textarea, select, label, [onclick], .redacted';
-
-  document.addEventListener('dblclick', e => {
-    if (e.target.closest(INTERACTIVE)) return;
-    // Evita activarse si el usuario está seleccionando texto con el doble-click
-    const sel = window.getSelection();
-    if (sel && sel.toString().length > 0) return;
-
-    flash.classList.add('flash');
-    setTimeout(() => flash.classList.remove('flash'), 60);
-    if (window.ZM_registerAnomaly && Math.random() < 0.15) window.ZM_registerAnomaly();
-  });
-})();
-
-
-/* ==========================================
-   7. CONTADOR DE "ANOMALÍAS DETECTADAS"
+   5. CONTADOR DE "ANOMALÍAS DETECTADAS"
    Sube cuando se activa cualquier easter egg.
    Exponemos window.ZM_registerAnomaly() para
    que otros efectos lo llamen.
