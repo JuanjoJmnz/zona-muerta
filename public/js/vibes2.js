@@ -178,7 +178,7 @@
 
 
 /* ==========================================
-   8. KONAMI CODE
+   6. KONAMI CODE
    ↑ ↑ ↓ ↓ ← → ← → — invierte colores 3s
    ========================================== */
 (function () {
@@ -221,7 +221,7 @@
 
 
 /* ==========================================
-   9. HOVER PROLONGADO EN EL LOGO ⊗
+   7. HOVER PROLONGADO EN EL LOGO ⊗
    3s quieto encima → empieza a rotar despacio
    ========================================== */
 (function () {
@@ -244,7 +244,7 @@
 
 
 /* ==========================================
-   10. TECLA OCULTA "F" — frecuencia sincronizada
+   8. TECLA OCULTA "F" — frecuencia sincronizada
    Solo si el foco no está en un campo de texto
    ========================================== */
 (function () {
@@ -269,4 +269,347 @@
 
     if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
   });
+})();
+
+/* ==========================================
+   9. EASTER EGG PARANORMAL: CÓDIGO 666 (Screamer PNG + Zoom In)
+   ========================================== */
+(function () {
+  const style = document.createElement('style');
+  style.textContent = `
+    .sc-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: rgba(0, 0, 0, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      backdrop-filter: blur(2px);
+    }
+
+    .sc-overlay.sc-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
+
+    .sc-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      transform: scale(0.3);
+    }
+
+    .sc-overlay.sc-active .sc-wrapper {
+      animation: sc-zoom-in 0.3s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+    }
+
+    .sc-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      animation: sc-shake 0.08s infinite;
+    }
+
+    .sc-overlay.sc-fade {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1.5s ease, visibility 1.5s;
+    }
+
+    @keyframes sc-zoom-in {
+      0% { transform: scale(0.3); }
+      100% { transform: scale(2.2); }
+    }
+
+    @keyframes sc-shake {
+      0% { transform: translate(3px, 2px) rotate(0deg); }
+      10% { transform: translate(-2px, -3px) rotate(-1deg); }
+      20% { transform: translate(-4px, 0px) rotate(1deg); }
+      30% { transform: translate(0px, 3px) rotate(0deg); }
+      40% { transform: translate(2px, -2px) rotate(1deg); }
+      50% { transform: translate(-2px, 3px) rotate(-1deg); }
+      60% { transform: translate(-4px, 2px) rotate(0deg); }
+      70% { transform: translate(3px, 2px) rotate(-1deg); }
+      80% { transform: translate(-2px, -2px) rotate(1deg); }
+      90% { transform: translate(3px, 3px) rotate(0deg); }
+      100% { transform: translate(2px, -3px) rotate(-1deg); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'sc-overlay';
+  overlay.innerHTML = `
+    <div class="sc-wrapper">
+      <img src="/img/screamer.png" class="sc-img" alt="" />
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  let inputBuffer = "";
+  const SECRET_CODE = "666";
+
+  window.addEventListener('keydown', (e) => {
+    // No interferir nunca mientras el usuario escribe en un campo real
+    // (formulario de contacto, newsletter, buscador, cualquier input/textarea)
+    const tag = (e.target.tagName || '').toLowerCase();
+    const isEditable = tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable;
+    if (isEditable) return;
+
+    if (e.key.length === 1) {
+      inputBuffer += e.key;
+      inputBuffer = inputBuffer.slice(-SECRET_CODE.length);
+
+      if (inputBuffer === SECRET_CODE) {
+        inputBuffer = "";
+        triggerScreamer();
+      }
+    }
+  });
+
+  let audioUnlocked = false;
+  document.addEventListener('click', () => { audioUnlocked = true; }, { once: true });
+  document.addEventListener('keydown', () => { audioUnlocked = true; }, { once: true });
+
+  function triggerScreamer() {
+    if (audioUnlocked) {
+      const screamAudio = new Audio('/audio/screamer.mp3');
+      // Volumen moderado: un sobresalto a 1.0 con auriculares puede ser
+      // realmente desagradable, no solo "creepy". 0.55 sigue dando el golpe
+      // sin arriesgarse a hacer daño a los oídos de quien lo active.
+      screamAudio.volume = 0.55;
+      screamAudio.play().catch(() => {
+        console.warn("[ZONA MUERTA] Audio bloqueado: requiere interacción previa en la página.");
+      });
+    }
+
+    overlay.classList.remove('sc-fade');
+    overlay.classList.add('sc-active');
+
+    if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+
+    setTimeout(() => {
+      overlay.classList.add('sc-fade');
+      setTimeout(() => {
+        overlay.classList.remove('sc-active');
+      }, 1500);
+    }, 1200);
+  }
+})();
+
+/* ==========================================================================
+   10. EASTER EGG PARANORMAL: CÓDIGO 666 (Screamer PNG + Zoom In)
+   ========================================================================== */
+(function () {
+  if (document.getElementById('zm-blood-style')) return;
+
+  const style = document.createElement('style');
+  style.id = 'zm-blood-style';
+  style.textContent = `
+    .blood-container {
+      position: fixed;
+      inset: 0;
+      z-index: 9990;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .blood-container.fade-out {
+      opacity: 0;
+      transition: opacity 1.8s ease;
+    }
+
+    .blood-drop {
+      position: absolute;
+      top: -40px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      animation-name: zm-drip;
+      animation-timing-function: cubic-bezier(0.94, 0, 0.86, 0.46);
+      animation-fill-mode: forwards;
+    }
+
+    .blood-drop::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -1.1em;
+      width: 0;
+      height: 0;
+      border-left: 0.5em solid transparent;
+      border-right: 0.5em solid transparent;
+      border-bottom: 1.5em solid currentColor;
+      transform: translateX(-50%);
+    }
+
+    .blood-ripple {
+      position: absolute;
+      opacity: 0;
+      width: 2px;
+      height: 1px;
+      border: currentColor 4px solid;
+      border-radius: 300px / 150px;
+      animation-name: zm-ripple;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+    }
+
+    .blood-particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    @keyframes zm-drip {
+      0%   { top: -40px; opacity: 1; }
+      92%  { opacity: 1; }
+      100% { top: var(--zm-fall-to); opacity: 0; }
+    }
+
+    @keyframes zm-ripple {
+      from { opacity: 0.8; width: 2px; height: 1px; border-width: 4px; }
+      to   { opacity: 0; width: 90px; height: 40px; border-width: 1px; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  let buffer = '';
+  let isActive = false;
+  const SECRET = 'sangre';
+
+  window.addEventListener('keydown', (e) => {
+    if (isActive) return;
+
+    const tag = (e.target.tagName || '').toLowerCase();
+    const isEditable = tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable;
+    if (isEditable) return;
+
+    if (e.key.length === 1) {
+      buffer += e.key.toLowerCase();
+      buffer = buffer.slice(-SECRET.length);
+      if (buffer === SECRET) {
+        buffer = '';
+        isActive = true;
+        triggerBloodRain();
+      }
+    }
+  });
+
+  function bloodColor(hue) {
+    return `hsl(${hue}, 78%, 38%)`;
+  }
+
+  function spawnParticles(container, x, y, hue) {
+    const count = 5;
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'blood-particle';
+
+      const size = Math.random() * 5 + 3;
+      p.style.width  = `${size}px`;
+      p.style.height = `${size}px`;
+      p.style.left = `${x}px`;
+      p.style.top  = `${y}px`;
+      p.style.background = bloodColor(hue + (Math.random() * 8 - 4));
+
+      container.appendChild(p);
+
+      // Física parabólica: salen disparadas hacia los lados/arriba y caen
+      const angle = (Math.random() * 140 + 20) * (Math.PI / 180); // 20°–160°
+      const force = Math.random() * 55 + 25;
+      const vx = Math.cos(angle) * force;
+      const vy = -Math.sin(angle) * force;
+
+      p.animate(
+        [
+          { transform: 'translate(0,0) scale(1)', opacity: 1 },
+          { transform: `translate(${vx * 0.6}px, ${vy}px) scale(0.85)`, opacity: 1, offset: 0.35 },
+          { transform: `translate(${vx}px, ${vy * -0.15}px) scale(0.15)`, opacity: 0 }
+        ],
+        { duration: 450 + Math.random() * 250, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }
+      );
+
+      setTimeout(() => p.remove(), 750);
+    }
+  }
+
+  function triggerBloodRain() {
+    const container = document.createElement('div');
+    container.className = 'blood-container';
+    document.body.appendChild(container);
+
+    const totalDrops = 666;
+    const vh = window.innerHeight;
+    const rainDuration = 3600; // ms que dura la "lluvia" generando gotas nuevas
+    let stop = false;
+
+    function spawnDrop() {
+      if (stop) return;
+
+      const drop = document.createElement('div');
+      drop.className = 'blood-drop';
+
+      const left   = Math.random() * 100;
+      const size   = Math.random() * 10 + 12;       // 12–22px
+      const hue    = 350 + Math.random() * 15;
+      const fallTo = vh - 20 + Math.random() * 40;   // cae hasta cerca del fondo
+      const duration = Math.random() * 0.5 + 0.45;   // 0.45–0.95s, caída rápida real
+
+      drop.style.left = `${left}%`;
+      drop.style.width = `${size}px`;
+      drop.style.height = `${size}px`;
+      drop.style.fontSize = `${size}px`;            // el triángulo (en em) escala con esto
+      drop.style.color = bloodColor(hue);           // currentColor -> body+triángulo
+      drop.style.background = bloodColor(hue);
+      drop.style.setProperty('--zm-fall-to', `${fallTo}px`);
+      drop.style.animationDuration = `${duration}s`;
+
+      container.appendChild(drop);
+
+      setTimeout(() => {
+        // Splash: anillo de impacto + partículas que saltan del punto de contacto
+        const ripple = document.createElement('div');
+        ripple.className = 'blood-ripple';
+        ripple.style.left = `${left}%`;
+        ripple.style.top  = `${fallTo}px`;
+        ripple.style.color = bloodColor(hue);
+        ripple.style.borderColor = bloodColor(hue);
+        ripple.style.animationDuration = '0.6s';
+        container.appendChild(ripple);
+
+        const impactX = (left / 100) * window.innerWidth;
+        spawnParticles(container, impactX, fallTo, hue);
+
+        drop.remove();
+        setTimeout(() => ripple.remove(), 650);
+      }, duration * 1000);
+    }
+
+    // Generamos gotas a intervalos cortos durante rainDuration,
+    // así no aparecen todas a la vez ni se ve un patrón repetido.
+    const spawnInterval = setInterval(spawnDrop, rainDuration / totalDrops);
+
+    if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+
+    setTimeout(() => {
+      stop = true;
+      clearInterval(spawnInterval);
+    }, rainDuration);
+
+    setTimeout(() => {
+      container.classList.add('fade-out');
+      setTimeout(() => {
+        container.remove();
+        isActive = false;
+      }, 1900);
+    }, rainDuration + 1200);
+  }
 })();

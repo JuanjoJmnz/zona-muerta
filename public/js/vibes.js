@@ -148,46 +148,6 @@
     }
   });
 })();
-//   window.ZM_LAST_POST = window.ZM_LAST_POST || new Date(Date.now() - 1000 * 60 * 47);
-
-//   function timeAgo(date) {
-//     const diff = Math.floor((Date.now() - date) / 1000);
-//     if (diff < 60)        return 'hace unos segundos';
-//     if (diff < 3600)      return `hace ${Math.floor(diff / 60)} min`;
-//     if (diff < 86400)     return `hace ${Math.floor(diff / 3600)} h`;
-//     if (diff < 86400 * 2) return 'ayer';
-//     if (diff < 86400 * 7) return `hace ${Math.floor(diff / 86400)} días`;
-//     return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-//   }
-
-//   const style = document.createElement('style');
-//   style.textContent = `
-//     .last-transmission {
-//       font-family: var(--font-mono, monospace);
-//       font-size: 0.8rem;
-//       color: var(--text2, #7a7670);
-//       letter-spacing: 0.08em;
-//       padding-left: 1rem;
-//       border-left: 1px solid var(--border, rgba(255,255,255,0.07));
-//       white-space: nowrap;
-//     }
-//     .last-transmission span { color: var(--text2, #7a7670); }
-//     @media (max-width: 900px) { .last-transmission { display: none; } }
-//   `;
-//   document.head.appendChild(style);
-
-//   const el = document.createElement('div');
-//   el.className = 'last-transmission';
-//   el.innerHTML = `// última transmisión: <span></span>`;
-//   const span = el.querySelector('span');
-
-//   function update() { span.textContent = timeAgo(window.ZM_LAST_POST); }
-//   update();
-//   setInterval(update, 30000);
-
-//   const headerInner = document.querySelector('.header-inner');
-//   if (headerInner) headerInner.appendChild(el);
-// })();
 
 
 /* ==========================================
