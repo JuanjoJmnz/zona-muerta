@@ -497,7 +497,7 @@
     
     // SVG del cursor clásico estilizado en base64 para que no dependa de imágenes externas
     const cursorSvg = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32">
         <path d="M6 3v22.5l6.2-6.2 4.8 10.7 3.9-1.8-4.8-10.7 7.9-.2Z" 
               fill="white" 
               stroke="black" 
@@ -508,8 +508,8 @@
 
     fakeCursor.style.cssText = `
       position: fixed;
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       background-image: url('${cursorSvg}');
       background-size: contain;
       background-repeat: no-repeat;
