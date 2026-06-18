@@ -24,7 +24,7 @@ tags: ["Albacete", "Psiquiátrico", "Abandono"]
   <p>Estado actual del inmueble: <span class="redacted">█████████</span>. Propietario actual: <span class="redacted">Empresa ████ S.L.</span>. Último accidente registrado: <span class="redacted">██/██/20██</span>.</p>
 </div>
 <br><br><br>
-No existe ningún sanatorio oficial en Agramonte. Si buscas en Google Maps, en los registros del municipio de Hellín, o en cualquier base de datos pública, no encontrarás nada. Pero el edificio lleva en pie desde 1943, y la gente del pueblo sabe perfectamente lo que fue.
+<span class="redacted">No existe ningún sanatorio oficial en Agramonte</span>. Si buscas en Google Maps, en los registros del municipio de Hellín, o en cualquier base de datos pública, no encontrarás nada. Pero el edificio lleva en pie desde 1943, y la gente del pueblo sabe perfectamente lo que fue.
 
 
 

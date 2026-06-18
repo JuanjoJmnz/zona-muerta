@@ -256,7 +256,6 @@
       border-bottom: 1px solid var(--red, #c0392b);
     }
     .redacted::after {
-      content: 'click para desbloquear';
       position: absolute;
       bottom: 100%;
       left: 50%;
@@ -270,15 +269,44 @@
       pointer-events: none;
       margin-bottom: 4px;
     }
-    .redacted:not(.revealed):hover::after { opacity: 1; }
+    
+    /* Texto dinámico según el estado del expediente */
+    .redacted:not(.revealed)::after {
+      content: 'click para desbloquear';
+    }
+    .redacted.revealed::after {
+      content: 'click para volver a bloquear';
+    }
+    
+    /* Mostramos el tooltip al pasar el cursor en cualquier estado */
+    .redacted:hover::after { 
+      opacity: 1; 
+    }
   `;
   document.head.appendChild(style);
 
   document.addEventListener('click', e => {
     const el = e.target.closest('.redacted');
-    if (!el || el.classList.contains('revealed')) return;
-    el.classList.add('revealed');
-    if (el.dataset.real) el.textContent = el.dataset.real;
+    if (!el) return;
+
+    if (el.classList.contains('revealed')) {
+      // ACCIÓN: VOLVER A BLOQUEAR
+      el.classList.remove('revealed');
+      if (el.dataset.original) {
+        el.textContent = el.dataset.original;
+      }
+    } else {
+      // ACCIÓN: DESBLOQUEAR
+      // Guardamos el contenido censurado original (ej: "████") para no perderlo
+      if (!el.dataset.original) {
+        el.dataset.original = el.textContent;
+      }
+      
+      el.classList.add('revealed');
+      if (el.dataset.real) {
+        el.textContent = el.dataset.real;
+      }
+    }
   });
 })();
 
