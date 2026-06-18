@@ -41,7 +41,6 @@ const finalPost = {
   mediaQuoteSrc: frontmatter?.mediaQuoteSrc || ""
 };
 
-// --- TODO TU CÓDIGO INTERNO SE QUEDA IGUAL ---
 const postsGlob = import.meta.glob('../pages/posts/*.md', { eager: true });
 const allPosts = Object.values(postsGlob).map((post: any) => ({
   url: post.url,
