@@ -50,8 +50,6 @@ Blog construido con [Astro](https://astro.build), desplegado en [Vercel](https:/
 └── README.md
 ```
 
-> Nota: `blood.js` y `screamer.js` viven actualmente fusionados dentro de `vibes2.js` (ver tabla de easter eggs más abajo). Si en algún momento los separas en sus propios archivos, actualiza tanto este árbol como el orden de carga indicado abajo.
-
 ## Contenido (posts)
 
 Cada entrada es un archivo `.md` dentro de `posts/`, con frontmatter del tipo:
@@ -95,8 +93,8 @@ Estas páginas comparten el mismo set de clases CSS que `index.astro`. Igual que
 
 | Disparador | Efecto | Archivo |
 |---|---|---|
-| Escribir `sangre` | Lluvia de gotas de sangre + salpicaduras | `blood.js` |
-| Escribir `666` | Screamer (imagen + audio) | `screamer.js` |
+| Escribir `sangre` | Lluvia de gotas de sangre + salpicaduras | `eggs.js` |
+| Escribir `666` | Screamer (imagen + audio) | `eggs.js` |
 | Escribir `luz` | Parpadeo de bombilla fundiéndose | `eggs.js` |
 | Escribir `ayuda` | Sacudido sutil de la página | `eggs.js` |
 | Escribir `mirar` | Ojos aparecen en posición aleatoria | `eggs.js` |
