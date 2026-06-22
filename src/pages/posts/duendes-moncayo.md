@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Los Duendes del Moncayo: Mitos y desapariciones reales"
 slug: "duendes-moncayo"
-date: "2026-04-11"
+date: "11/04/2026"
 category: "Folklore"
 catClass: "cat-folklore"
 imgClass: "img-folklore"

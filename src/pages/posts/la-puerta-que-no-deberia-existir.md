@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "La puerta que no existía en los planos"
 slug: "puerta-no-existia-planos"
-date: "2026-06-16"
+date: "16/06/2026"
 category: "x"
 catClass: "cat-xchan"
 imgClass: "img-xchan"
