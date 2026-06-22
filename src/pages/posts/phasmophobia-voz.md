@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Phasmophobia: Cuando el miedo escucha tu voz"
 slug: "phasmophobia-voz"
-date: "17/06/2026"
+date: "2026-06-17"
 category: "Videojuegos"
 catClass: "cat-game"
 imgClass: "img-game"

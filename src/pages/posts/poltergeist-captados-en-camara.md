@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "El poltergeist captado por una cámara de seguridad"
 slug: "poltergeist-captado-camara"
-date: "16/06/2026"
+date: "2026-06-16"
 category: "Media"
 catClass: "cat-media"
 imgClass: "img-media"
