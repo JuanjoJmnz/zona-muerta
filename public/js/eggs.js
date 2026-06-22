@@ -318,7 +318,7 @@
             // Solo corrompemos si parece una fecha (contiene dígitos)
             if (!/\d/.test(original)) return;
 
-            el.textContent = '06/06/███6';
+            el.textContent = '███6-06-06';
             el.classList.add('zm-date-corrupt');
 
             setTimeout(() => {
