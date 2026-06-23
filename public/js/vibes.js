@@ -504,6 +504,7 @@
     drawEggNoise();
 
     if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+    if (window.ZM_unlockEgg) window.ZM_unlockEgg('logo');
 
     staticAudio.currentTime = 0;
     staticAudio.play().catch(e => {

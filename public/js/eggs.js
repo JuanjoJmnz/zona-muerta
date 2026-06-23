@@ -158,6 +158,7 @@
         }, 1800); // debe coincidir con la duración del @keyframes
 
         if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+        if (window.ZM_unlockEgg) window.ZM_unlockEgg('luz');
       }
     });
   })();
@@ -191,6 +192,7 @@
           shaking = false;
         }
         if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+        if (window.ZM_unlockEgg) window.ZM_unlockEgg('ayuda');
       }
     });
   })();
@@ -252,6 +254,7 @@
         buf = '';
         spawnEyes();
         if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+        if (window.ZM_unlockEgg) window.ZM_unlockEgg('mirar');
       }
     });
   })();
@@ -290,6 +293,7 @@
           setTimeout(() => site.classList.remove('zm-jolt'), 320);
         }
         if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+        if (window.ZM_unlockEgg) window.ZM_unlockEgg('scroll');
         setTimeout(() => { cooldown = false; }, 4000); // evita que se repita en bucle mientras sigues scrolleando
       }
     }, { passive: true });
@@ -327,6 +331,7 @@
             }, 2000);
 
             if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+            if (window.ZM_unlockEgg) window.ZM_unlockEgg('fecha');
           }
         });
       });
@@ -379,6 +384,7 @@
             } catch (err) {}
             if (window.ZM_registerAnomaly) {
               for (let i = 0; i < 13; i++) window.ZM_registerAnomaly();
+              if (window.ZM_unlockEgg) window.ZM_unlockEgg('trece');
             }
           }
         }
@@ -392,7 +398,7 @@
     });
   })();
 
-  /* ====================================================
+/* ====================================================
      7. UMBRALES DE ANOMALÍAS — mensaje críptico cada 10
      ==================================================== */
   (function () {
@@ -453,6 +459,27 @@
       setTimeout(() => msg.classList.remove('show'), 3800);
     }
 
+    // El logro "umbral" se desbloquea la primera vez que el contador
+    // alcanza 10, sin importar si ese múltiplo exacto ya se "saltó"
+    // antes por un salto brusco (p.ej. el +13 de un solo golpe), o si
+    // el contador ya estaba muy por encima de 10 antes de que este
+    // chequeo existiera. Antes esto dependía de showThresholdMessage
+    // recibiendo multiple === 10 EXACTO, lo cual nunca volvía a pasar
+    // una vez lastShownMultiple ya estaba por encima de 10.
+    let umbralUnlocked = false;
+    try {
+      umbralUnlocked = localStorage.getItem('zm_umbral_unlocked') === '1';
+    } catch (e) {}
+
+    function checkUmbralUnlock(count) {
+      if (umbralUnlocked) return;
+      if (count >= 10) {
+        umbralUnlocked = true;
+        try { localStorage.setItem('zm_umbral_unlocked', '1'); } catch (e) {}
+        if (window.ZM_unlockEgg) window.ZM_unlockEgg('umbral');
+      }
+    }
+
     const originalRegister = window.ZM_registerAnomaly;
     if (typeof originalRegister === 'function') {
       window.ZM_registerAnomaly = function () {
@@ -460,6 +487,8 @@
 
         let count = 0;
         try { count = parseInt(localStorage.getItem('zm_anomaly_count') || '0'); } catch (e) {}
+
+        checkUmbralUnlock(count);
 
         const currentMultiple = Math.floor(count / STEP) * STEP;
 

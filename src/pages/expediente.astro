@@ -1,0 +1,190 @@
+---
+// src/pages/expediente.astro
+import PostLayout from '../layouts/PostLayout.astro';
+---
+
+<PostLayout title="Expediente de Anomalías">
+  <div class="exp-header" style="margin-bottom: 2rem;">
+    <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red); letter-spacing: 0.1em;">
+      // REGISTRO DE FENÓMENOS DETECTADOS
+    </p>
+    <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text2); margin-top: 0.75rem; max-width: 640px; line-height: 1.7;">
+      Este archivo no se completa leyendo. Se completa explorando. Cada anomalía detectada
+      en Zona Muerta deja un rastro. Las que ya encontraste están abiertas. Las que no,
+      siguen como expedientes sellados — con una pista, nada más.
+    </p>
+    <p id="exp-counter" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text); margin-top: 1rem;">
+      Cargando registro...
+    </p>
+  </div>
+
+  <div id="exp-list" class="exp-list"></div>
+</PostLayout>
+
+<style is:global>
+  .exp-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .exp-card {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .exp-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .exp-card.unlocked { border-left: 2px solid #3b6d11; }
+  .exp-card.locked   { border-left: 2px solid #5a1a13; }
+
+  .exp-card.unlocked:hover { border-color: #5dba7d; }
+  .exp-card.locked:hover   { border-color: var(--red); }
+
+  /* Textura ambiental, reutilizando los mismos placeholders del resto del sitio */
+  .exp-card-img {
+    width: 100%;
+    height: 90px;
+    flex-shrink: 0;
+    position: relative;
+    isolation: isolate;
+  }
+
+  .exp-card.locked .exp-card-img {
+    filter: grayscale(0.4) brightness(0.7);
+  }
+
+  .exp-card-body {
+    padding: 1rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-card-status {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .exp-card.unlocked .exp-card-status { color: #5dba7d; }
+  .exp-card.locked .exp-card-status { color: var(--red); }
+
+  .exp-card-title {
+    font-family: var(--font-disp);
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+
+  .exp-card.unlocked .exp-card-title { color: var(--text); }
+  .exp-card.locked .exp-card-title {
+    color: var(--red);
+    opacity: 0.85;
+    font-style: italic;
+  }
+
+  .exp-card-detail {
+    font-family: var(--font-spec);
+    font-size: 0.88rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .exp-card.unlocked .exp-card-detail {
+    color: #97c459;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+  }
+
+  .exp-card.locked .exp-card-detail {
+    color: var(--text2);
+  }
+</style>
+
+<script>
+  // Declaramos la forma de los datos que vienen de egg-tracker.js
+  // (un script plano cargado por separado, así que TypeScript no
+  // puede inferirlo solo). Esto es solo para que el editor deje de
+  // marcar avisos; no cambia el comportamiento en el navegador.
+  interface EggData {
+    title: string;
+    hint: string;
+    revealed: string;
+  }
+
+  interface EggProgress {
+    unlockedIds: string[];
+    unlockedCount: number;
+    total: number;
+    catalog: Record<string, EggData>;
+  }
+
+  declare global {
+    interface Window {
+      ZM_getEggProgress?: () => EggProgress;
+      ZM_applyDecay?: () => void;
+    }
+  }
+
+  // Reutilizamos las texturas ambientales que ya existen en style.css
+  // (.img-urbex, .img-xchan, etc.), rotando entre ellas para que cada
+  // tarjeta tenga una ambientación visual distinta sin depender de
+  // subir imágenes nuevas.
+  const AMBIENT_TEXTURES = [
+    'img-urbex', 'img-xchan', 'img-leyenda', 'img-game',
+    'img-folklore', 'img-media', 'img-bunker'
+  ];
+
+  function render() {
+    const counterEl = document.getElementById('exp-counter');
+    const listEl = document.getElementById('exp-list');
+    if (!counterEl || !listEl) return;
+
+    if (typeof window.ZM_getEggProgress !== 'function') {
+      counterEl.textContent = '// el registro no está disponible en este momento';
+      return;
+    }
+
+    const { unlockedIds, unlockedCount, total, catalog } = window.ZM_getEggProgress();
+
+    counterEl.innerHTML = `EXPEDIENTES ABIERTOS: <strong style="color:var(--red)">${unlockedCount}</strong> / ${total}`;
+
+    listEl.innerHTML = Object.entries(catalog).map(([id, data], index) => {
+      const isUnlocked = unlockedIds.includes(id);
+      const texture = AMBIENT_TEXTURES[index % AMBIENT_TEXTURES.length];
+
+      return `
+        <div class="exp-card ${isUnlocked ? 'unlocked' : 'locked'}">
+          <div class="exp-card-img ${texture}"></div>
+          <div class="exp-card-body">
+            <div class="exp-card-status">${isUnlocked ? '◉ expediente abierto' : '◎ expediente sellado'}</div>
+            <div class="exp-card-title">${isUnlocked ? data.title : '??? — sin identificar'}</div>
+            <div class="exp-card-detail">${isUnlocked ? `// cómo se desbloqueó: ${data.revealed}` : data.hint}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // El efecto de "papel viejo" (vibes2.js) solo se aplicó en DOMContentLoaded,
+    // antes de que existieran estas tarjetas (se generan después, por JS).
+    // Lo volvemos a pedir ahora que el HTML ya está insertado, igual que
+    // hacemos en el buscador.
+    if (typeof window.ZM_applyDecay === 'function') {
+      window.ZM_applyDecay();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', render);
+  } else {
+    render();
+  }
+</script>

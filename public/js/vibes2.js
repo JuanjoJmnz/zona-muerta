@@ -211,6 +211,7 @@
         }
         showMsg();
         if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+        if (window.ZM_unlockEgg) window.ZM_unlockEgg('konami');
       }
     } else {
       // Si rompe la secuencia, reiniciamos (salvo que justo reinicie con la primera tecla correcta)
@@ -235,11 +236,14 @@
       logo.classList.add('zm-rotating');
     }, 3000);
   });
-
+  
   logo.addEventListener('mouseleave', () => {
     clearTimeout(hoverTimer);
     logo.classList.remove('zm-rotating');
   });
+  
+  if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+  if (window.ZM_unlockEgg) window.ZM_unlockEgg('rotar');
 })();
 
 
@@ -268,6 +272,7 @@
     setTimeout(() => { cooldown = false; }, 2000);
 
     if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+    if (window.ZM_unlockEgg) window.ZM_unlockEgg('frecuencia');
   });
 })();
 
@@ -394,6 +399,7 @@
     overlay.classList.add('sc-active');
 
     if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+    if (window.ZM_unlockEgg) window.ZM_unlockEgg('bestia');
 
     setTimeout(() => {
       overlay.classList.add('sc-fade');
@@ -405,7 +411,7 @@
 })();
 
 /* ==========================================================================
-   10. EASTER EGG PARANORMAL: CÓDIGO 666 (Screamer PNG + Zoom In)
+   10. EASTER EGG PARANORMAL: CÓDIGO sangre
    ========================================================================== */
 (function () {
   if (document.getElementById('zm-blood-style')) return;
@@ -598,6 +604,7 @@
     const spawnInterval = setInterval(spawnDrop, rainDuration / totalDrops);
 
     if (window.ZM_registerAnomaly) window.ZM_registerAnomaly();
+    if (window.ZM_unlockEgg) window.ZM_unlockEgg('sangre');
 
     setTimeout(() => {
       stop = true;
