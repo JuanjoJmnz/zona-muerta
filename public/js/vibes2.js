@@ -93,13 +93,31 @@
 
 
 /* ==========================================
-   4. PLACEHOLDER QUE "DUDA"
+   4. PLACEHOLDER QUE "DUDA" (Con mensajes aleatorios)
    Solo cambia ANTES de que el usuario escriba.
    En cuanto hay foco o input real, se detiene
    y no vuelve a tocar el campo.
    ========================================== */
 (function () {
-  const DOUBT_TEXT = '¿estás seguro?';
+  // 1. Definimos un array con los diferentes mensajes que quieres mostrar
+  const DOUBT_TEXTS = [
+    '¿estás seguro?',
+    '¿estás solo en la habitación?',
+    'alguien te mira por la webcam...',
+    'no tendrías que estar aquí',
+    '¿has oído ese ruido?',
+    'ya saben tu nombre',
+    'detrás de ti',
+    '¿quién hay a tu lado?',
+    'te estamos observando',
+    'ya es demasiado tarde'
+  ];
+
+  // Función auxiliar para obtener un elemento aleatorio del array
+  function getRandomMessage() {
+    const randomIndex = Math.floor(Math.random() * DOUBT_TEXTS.length);
+    return DOUBT_TEXTS[randomIndex];
+  }
 
   function attachDoubt(input) {
     if (input._zmDoubtAttached) return;
@@ -109,11 +127,14 @@
     let timer;
     let stopped = false;
 
-    function loop() {
+  function loop() {
       if (stopped) return;
       timer = setTimeout(() => {
         if (stopped) return;
-        input.placeholder = DOUBT_TEXT;
+        
+        // 2. Elegimos un mensaje aleatorio justo antes de mostrarlo
+        input.placeholder = getRandomMessage(); 
+        
         timer = setTimeout(() => {
           if (stopped) return;
           input.placeholder = original;
