@@ -38,7 +38,10 @@ Esta interacción directa rompe la cuarta pared de una manera brillante: el jueg
 
 <div class="exp-box exp-box--game">
   <div class="exp-box-label">// Ficha técnica</div>
-  <p>Desarrollador: <strong>Kinetic Games</strong>. Lanzamiento: <strong>18 de septiembre de 2020</strong>. Tipo de juego: <strong>investigación paranormal cooperativa</strong>. Mecánica distintiva: <strong>reconocimiento de voz real del jugador</strong>.</p>
+  <p>Desarrollador: <strong>Kinetic Games</strong>. 
+  <br>Lanzamiento: <strong>18 de septiembre de 2020</strong>.
+  <br>Tipo de juego: <strong>investigación paranormal cooperativa</strong>.
+  <br>Mecánica distintiva: <strong>reconocimiento de voz real del jugador</strong>.</p>
 </div>
 
 ## Los mapas: catorce escenarios, ningún sitio seguro
@@ -51,7 +54,7 @@ Algo que muchos jugadores nuevos no saben es que el número de luces que puedes 
 
 <div class="exp-box exp-box--game">
   <div class="exp-box-label">// Datos de mapas</div>
-  <p>Mapas pequeños: <strong>7</strong> (límite de luces: 9). Mapas medianos: <strong>5</strong> (límite: 8). Mapas grandes: <strong>2</strong> (límite: 7). Mapa retirado del juego: <strong>Asylum</strong>.</p>
+  <p>Mapas pequeños: <strong>7</strong> (límite de luces: 9). <br>Mapas medianos: <strong>5</strong> (límite: 8). <br>Mapas grandes: <strong>2</strong> (límite: 7).</p>
 </div>
 
 ## Las siete pruebas que delatan al fantasma
@@ -72,7 +75,7 @@ Un detalle curioso para los que ya llevan tiempo jugando: hay exactamente **seis
 
 <div class="exp-box exp-box--game">
   <div class="exp-box-label">// Sistema de pruebas</div>
-  <p>Pruebas totales: <strong>7</strong>. Pruebas por fantasma en dificultad normal: <strong>3</strong>. En Pesadilla: <strong>2</strong> (1 oculta). En Locura: <strong>1</strong> (2 ocultas). Combinaciones imposibles de 3 pruebas: <strong>6</strong>.</p>
+  <p>Pruebas totales: <strong>7</strong>. <br>Pruebas por fantasma en dificultad normal: <strong>3</strong>. <br>En Pesadilla: <strong>2</strong> (1 oculta). <br>En Locura: <strong>1</strong> (2 ocultas). <br>Combinaciones imposibles de 3 pruebas: <strong>6</strong>.</p>
 </div>
 
 ## 29 entidades, 29 formas de morir
@@ -87,7 +90,7 @@ Cada fantasma recibe también una identidad generada al azar en cada contrato: g
 
 <div class="exp-box exp-box--game">
   <div class="exp-box-label">// Bestiario</div>
-  <p>Tipos de fantasmas: <strong>29</strong>. Aparición por contrato: aleatoria y equitativa, salvo <strong>Deogen</strong> (requiere Prestigio 0, Nivel 30). Identidad generada por partida: <strong>género, nombre, edad y años desde la muerte</strong>.</p>
+  <p>Tipos de fantasmas: <strong>29</strong>. <br>Aparición por contrato: aleatoria y equitativa, salvo <strong>Deogen</strong> (requiere Prestigio 0, Nivel 30). <br>Identidad generada por partida: <strong>género, nombre, edad y años desde la muerte</strong>.</p>
 </div>
 
 ## Una experiencia grabada a fuego (y horas de juego)
