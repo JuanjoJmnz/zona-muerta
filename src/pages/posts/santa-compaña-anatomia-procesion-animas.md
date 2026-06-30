@@ -27,7 +27,7 @@ folkRows:
     diff: "Dos jinetes fantasmales de la madrugada en Las Hurdes que siembran el pánico; cruzarse con su cabalgata implica la muerte o la locura inmediata."
 tags: ["Santa Compaña", "Folklore Gallego", "Misterios de Galicia", "Camino de Santiago"]
 ---
-
+<br>
 El silencio en los bosques del noroeste peninsular no siempre es sinónimo de paz. En ocasiones, es el preludio de un vacío absoluto donde la fauna calla y el aire se satura con el denso aroma de la cera quemada y el incienso de iglesia. Quienes han estudiado el fenómeno coinciden: la frontera entre el plano físico y el *Aisla* (el más allá) se diluye en las encrucijadas de caminos rurales, especialmente durante las noches de San Juan y Todos los Santos.
 
 <div class="exp-box exp-box--folklore">
@@ -76,7 +76,7 @@ Si te paralizas, estás perdido. El manual de supervivencia folclórica exige re
 *   **El Círculo de Salomón:** Dibujar un círculo con tiza o con una vara en la tierra y refugiarse en su interior con los ojos cerrados.
 *   **La postura del difunto:** Arrojarse al suelo boca abajo, ocultando el rostro entre los brazos, e ignorar los rezos y el olor a cera.
 *   **Ocupación de manos:** Llevar las manos ocupadas (con los bastones de senderismo, una piedra) o realizar el gesto de la higa (metiendo el pulgar entre los dedos índice y corazón).
-
+<br>
 Hoy en día, el respeto por estos caminos sigue tan vigente que incluso las cámaras de seguridad periféricas de las zonas industriales colindantes a las rutas forestales registran extrañas anomalías lumínicas imposibles de catalogar.
 
 > "A Santa Compaña non se cre nela, pero habelas, hábilas". La máxima gallega resume la prudencia ante lo invisible: el misterio no requiere que creas en él para manifestarse en mitad de la noche.
@@ -87,4 +87,4 @@ Para profundizar en el análisis antropológico de cómo la Iglesia intentó cam
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zJXlLebrNfw?si=BiPf7iPtWZdq4F83" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
-Y tú, ¿has sentido alguna vez ese repentino y gélido silencio absoluto cruzando un bosque en mitad de la noche? Déjanos tu experiencia en la sección de comentarios. La Zona Muerta permanece atenta.
+Y tú, ¿has sentido alguna vez ese repentino y gélido silencio absoluto cruzando un bosque en mitad de la noche? Si es así, no dudes en enviar un mensaje a través de nuestra sección de <a href="#contacto">contacto</a>. La Zona Muerta permanece atenta.
