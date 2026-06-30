@@ -87,4 +87,4 @@ Para profundizar en el análisis antropológico de cómo la Iglesia intentó cam
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zJXlLebrNfw?si=BiPf7iPtWZdq4F83" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
-Y tú, ¿has sentido alguna vez ese repentino y gélido silencio absoluto cruzando un bosque en mitad de la noche? Si es así, no dudes en enviar un mensaje a través de nuestra sección de <a href="#contacto">contacto</a>. La Zona Muerta permanece atenta.
+Y tú, ¿has sentido alguna vez ese repentino y gélido silencio absoluto cruzando un bosque en mitad de la noche? Si es así, no dudes en enviar tu experiencia a través de nuestra sección de <a href="../categorias/contacto" style="color: red">contacto</a>. La Zona Muerta permanece atenta.
