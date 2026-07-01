@@ -3,10 +3,16 @@ import PostLayout from '../../layouts/PostLayout.astro';
 
 export async function getStaticPaths() {
   const postsGlob = import.meta.glob('../posts/*.md', { eager: true });
-  const allPosts = Object.values(postsGlob).map((post: any) => ({
-    url: post.url,
-    frontmatter: post.frontmatter
-  }));
+  
+  // Modificado: Mapeamos los posts y los ordenamos por fecha (más reciente primero)
+  const allPosts = Object.values(postsGlob)
+    .map((post: any) => ({
+      url: post.url,
+      frontmatter: post.frontmatter
+    }))
+    .sort((a: any, b: any) => {
+      return new globalThis.Date(b.frontmatter.date).getTime() - new globalThis.Date(a.frontmatter.date).getTime();
+    });
 
   const archiveSlugs = new Set(
     allPosts.map((post: any) => {

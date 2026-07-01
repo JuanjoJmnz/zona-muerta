@@ -6,8 +6,8 @@ date: "2026-06-25"
 category: "Leyendas"
 catClass: "cat-leyenda"
 imgClass: "img-leyenda"
-coverImg: "/img/llorona_cover.png"
-thumbImg: "/img/lloronna-thumb.jpg"
+coverImg: "/img/covers/llorona_cover.png"
+thumbImg: "/img/thumbs/lloronna-thumb.jpg"
 duration: "11 min"
 excerpt: "Antes de ser un fantasma, fue una diosa. Antes de ser una advertencia para niños, fue un castigo para mujeres. Esta es la leyenda que cambia de nombre en cada frontera pero nunca deja de llorar."
 # COMPONENTE: DISTRIBUCIÓN GEOGRÁFICA
@@ -56,7 +56,7 @@ Según el análisis del Doctor Gabriel Ignacio Verduzco Argüelles, casi todas l
 Esta última distinción es la más importante para entender por qué la leyenda se ramifica tanto. En algunas versiones, La Llorona es una víctima trágica. En otras, es directamente una fuerza de castigo.
 
 <figure class="post-internal-image">
-  <img src="/img/llorona-rio.jpg" alt="Orilla de río nocturna, niebla baja" />
+  <img src="/img/content/llorona-rio.jpg" alt="Orilla de río nocturna, niebla baja" />
   <figcaption>La mayoría de las apariciones reportadas comparten un mismo escenario: agua en calma, niebla, y la sensación de que el llanto suena más cerca o más lejos de lo que realmente está.</figcaption>
 </figure>
 

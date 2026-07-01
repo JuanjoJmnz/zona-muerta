@@ -2,6 +2,8 @@
 import PostLayout from '../layouts/PostLayout.astro';
 
 const postsGlob = import.meta.glob('./posts/*.md', { eager: true });
+
+// Modificado: Mapeamos los datos y añadimos el .sort() al final para ordenar de más reciente a más antiguo
 const allPosts = Object.values(postsGlob).map((post: any) => ({
   url: post.url,
   title: post.frontmatter.title,
@@ -13,7 +15,9 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
   date: post.frontmatter.date,
   duration: post.frontmatter.duration || '',
   tags: post.frontmatter.tags || []
-}));
+})).sort((a, b) => {
+  return new globalThis.Date(b.date).getTime() - new globalThis.Date(a.date).getTime();
+});
 ---
 
 <PostLayout title="Buscador de Expedientes">

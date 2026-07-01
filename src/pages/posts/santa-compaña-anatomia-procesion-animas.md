@@ -6,8 +6,8 @@ date: "2026-06-30"
 category: "Folklore"
 catClass: "cat-folklore"
 imgClass: "img-folklore"
-thumbImg: "/img/santa-compana.jpg"
-coverImg: "/img/santa-compana-cover.png"
+thumbImg: "/img/thumbs/santa-compana.jpg"
+coverImg: "/img/covers/santa-compana-cover.png"
 duration: "11 min"
 excerpt: "A medianoche, por los caminos de la antigua Gallaecia, sale una procesión de ánimas en pena que visita las casas donde habrá una muerte. Lo peor que puede pasarte no es verla. Es que te den la vela."
 # COMPONENTE: COMPARATIVA DE VERSIONES REGIONALES
@@ -54,7 +54,7 @@ La descripción más extendida coincide en varios puntos con independencia de la
 Al frente de la comitiva camina una figura viva — un mortal atrapado en el papel de guía, cargando una cruz de madera y un caldero con agua bendita. El vivo no recuerda nada durante el día, lo que le impide buscar ayuda o advertir a nadie. Su única salida es encontrar a otra persona en la oscuridad y transferirle la carga. Mientras no lo consiga, su salud se deteriora noche tras noche: palidez extrema, delgadez esquelética, el desgaste de quien no descansa jamás. No es la Compaña quien lo mata directamente: es el agotamiento de cargar con algo que no tiene fin hasta que alguien más lo recoja.
 
 <figure class="post-internal-image">
-  <img src="/img/cruceiro-piedra.jpg" alt="Cruceiro de piedra en la niebla gallega" />
+  <img src="/img/content/cruceiro-piedra.jpg" alt="Cruceiro de piedra en la niebla gallega" />
   <figcaption>Los cruceiros gallegos que salpican las etapas del Camino funcionan como marcas de protección territorial. El folklore dicta que las ánimas tienen estrictamente prohibido pisar sus peldaños consagrados.</figcaption>
 </figure>
 
@@ -93,7 +93,7 @@ Los investigadores del folklore ibérico discuten desde hace décadas si la Comp
 Lo que sí parece claro es que el elemento cristiano — la cruz, el caldero de agua bendita, el rosario que entonan las ánimas — no es el núcleo del mito sino el barniz que le dio el Medievo. Debajo está algo bastante más antiguo: la idea de que los muertos de una parroquia siguen perteneciendo a ese territorio, que tienen tareas pendientes, y que si necesitan un vivo para completarlas, lo van a buscar.
 
 <figure class="post-internal-image">
-  <img src="/img/santa-compana-camino.jpg" alt="Camino rural gallego de noche entre árboles" />
+  <img src="/img/content/santa-compana-camino.jpg" alt="Camino rural gallego de noche entre árboles" />
   <figcaption>La coincidencia entre el folklore gallego y el escocés no es del todo sorprendente: ambos forman parte del grupo de culturas con sustrato celta atlántico, junto a Irlanda, Gales, Bretaña y Cornualles.</figcaption>
 </figure>
 

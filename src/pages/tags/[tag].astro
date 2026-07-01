@@ -3,10 +3,14 @@ import PostLayout from '../../layouts/PostLayout.astro';
 
 export async function getStaticPaths() {
   const postsGlob = import.meta.glob('../posts/*.md', { eager: true });
+  
+  // Modificado: Mapeamos y ordenamos globalmente por fecha (más reciente primero)
   const allPosts = Object.values(postsGlob).map((post: any) => ({
     url: post.url,
     frontmatter: post.frontmatter
-  }));
+  })).sort((a: any, b: any) => {
+    return new globalThis.Date(b.frontmatter.date).getTime() - new globalThis.Date(a.frontmatter.date).getTime();
+  });
 
   const allTags = new Set<string>();
   allPosts.forEach(post => {
@@ -16,9 +20,11 @@ export async function getStaticPaths() {
   });
 
   return Array.from(allTags).map((tag) => {
+    // Al filtrar, los posts ya vienen ordenados del paso anterior
     const filteredPosts = allPosts.filter(post => 
       post.frontmatter.tags?.map((t: string) => t.toLowerCase()).includes(tag)
     );
+    
     return {
       params: { tag },
       props: { tagName: tag, posts: filteredPosts },
