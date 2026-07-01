@@ -113,8 +113,6 @@ Poco después, el hilo dejó de estar accesible mediante el enlace original y nu
 [✗] Imagen de la trampilla
 </pre>
 
-> El horror en los tablones anónimos se alimenta siempre de la misma contradicción: la imposibilidad de discernir dónde termina el aburrimiento de un programador con talento para los montajes y dónde empieza el registro de un evento real.
-
 Ningún archivo completo del hilo ha vuelto a aparecer desde entonces. Las capturas que circulan hoy por foros alternativos proceden de recopilaciones anónimas de usuarios que realizaban capturas de pantalla de forma manual en ese momento, muchas de ellas contradictorias entre sí. Unos aseguran ver una silueta clara; otros defienden que la imagen original estaba vacía. Alguien afirma que el hilo nunca llegó a existir esa noche y que las capturas son una invención posterior de otro tablón. No existe forma de verificar cuál fue realmente el último mensaje publicado por OP. <br>
 
 <pre><strong>Última copia conocida</strong>
