@@ -62,7 +62,7 @@ threadPosts:
     date: "12/03/24(Tue)03:12:44"
     num: "44722115"
     body: "<span class='greentext'>No further replies.</span><br><span class='greentext'>404 Not Found.</span>"
-tags: ["4chan", "tablón /x/", "Archivos Perdidos", "Mitos de Virginia"]
+tags: ["4chan", "Archivos Perdidos", "Mitos de Virginia"]
 ---
 <br>Hay hilos que desaparecen porque nadie responde. Otros desaparecen demasiado rápido.<br><br>
 El tablón /x/ de 4Chan (dedicado al misterio y lo paranormal) es un vertedero de montajes, teorías de la conspiración y fanatismo ufológico. Pero de vez en cuando, entre miles de publicaciones basura, brota un hilo que hiela la sangre de la comunidad. Publicaciones que no buscan el aplauso, que irrumpen en mitad de la madrugada y que desaparecen del tablón pocas horas después, ya sea por la actividad normal del board o porque nunca llegan a quedar archivadas.

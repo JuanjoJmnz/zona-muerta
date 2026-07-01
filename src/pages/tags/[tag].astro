@@ -4,6 +4,7 @@ import PostLayout from '../../layouts/PostLayout.astro';
 export async function getStaticPaths() {
   const postsGlob = import.meta.glob('../posts/*.md', { eager: true });
   
+  // Modificado: Mapeamos y ordenamos globalmente por fecha (más reciente primero)
   const allPosts = Object.values(postsGlob).map((post: any) => ({
     url: post.url,
     frontmatter: post.frontmatter
@@ -19,16 +20,14 @@ export async function getStaticPaths() {
   });
 
   return Array.from(allTags).map((tag) => {
-    // 1. Creamos un slug seguro (reemplazamos espacios y caracteres especiales)
-    const slug = tag.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    
+    // Al filtrar, los posts ya vienen ordenados del paso anterior
     const filteredPosts = allPosts.filter(post => 
       post.frontmatter.tags?.map((t: string) => t.toLowerCase()).includes(tag)
     );
     
     return {
-      params: { tag: slug }, // 2. Usamos el slug en la URL
-      props: { tagName: tag, posts: filteredPosts }, // 3. Mantenemos el original para mostrar
+      params: { tag },
+      props: { tagName: tag, posts: filteredPosts },
     };
   });
 }
