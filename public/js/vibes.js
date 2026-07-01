@@ -10,7 +10,6 @@
   const originalTitle = document.title;
   const CHARS = "▓░█▒╳╬╪╫╢╟╞";
 
-  // Rutas corregidas: todo lo que está en /public/ se sirve desde la raíz "/"
   const audioFiles = [
     "/audio/whisper_01.mp3",
     "/audio/whisper_02.mp3",
@@ -24,7 +23,9 @@
   ];
 
   let audioUnlocked = false;
-  function unlockAudio() { audioUnlocked = true; }
+  function unlockAudio() { 
+    audioUnlocked = true; 
+  }
   document.addEventListener("click", unlockAudio, { once: true });
   document.addEventListener("keydown", unlockAudio, { once: true });
   document.addEventListener("touchstart", unlockAudio, { once: true });
@@ -33,17 +34,15 @@
   try {
     visitCount = Number(localStorage.getItem("entity_visits") || 0) + 1;
     localStorage.setItem("entity_visits", visitCount);
-  } catch (e) {
-    // localStorage bloqueado — seguimos con visitCount = 1
-  }
+  } catch (e) {}
 
   console.log(`[ZONA MUERTA] Expediente de acceso núm: ${visitCount}`);
 
   const messages = [
     "...", "¿me oyes?", "sigues aquí", "te veo", "no cierres esto",
-    "has vuelto", "te estaba esperando", "ya puedo verte",
+    "has vuelto", "te estaba esperando", "ya puedo verte mejor",
     "¿por qué has regresado?", "ya te conozco", "no mires detrás de ti",
-    "no estás solo", "puedo escucharte", "sé cuándo vuelves", "estuve aquí todo el tiempo"
+    "no estás solo", "puedo escucharte", "sé cuándo vuelves", "estoy aquí todo el tiempo"
   ];
   if (visitCount >= 20) {
     messages.push("siempre vuelves", "nunca te fuiste");
@@ -76,10 +75,17 @@
     if (!audioUnlocked) return;
     const randomSrc = audioFiles[Math.floor(Math.random() * audioFiles.length)];
     const anomalyAudio = new Audio(randomSrc);
+    
     anomalyAudio.volume = 0.08;
-    anomalyAudio.play().catch((e) => {
-      console.warn("[ZONA MUERTA] Bloqueo de reproducción de audio:", e);
-    });
+    anomalyAudio.load(); // Forzamos carga
+    
+    const playPromise = anomalyAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((e) => {
+        console.warn("[ZONA MUERTA] Bloqueo de reproducción detectado:", e);
+        audioUnlocked = false; // Reset si el navegador bloquea
+      });
+    }
   }
 
   function initEntityDOM() {
@@ -141,14 +147,73 @@
       hiddenTimer = setTimeout(() => { startPresence(); }, 20000);
     } else {
       clearTimeout(hiddenTimer);
-      if (titleInterval && visitCount >= 3) {
-        playRandomAnomalySound();
+      // Solo si el glitch estaba activo (estuvo fuera > 20s)
+      if (titleInterval) {
+        setTimeout(() => {
+          if (visitCount >= 3) {
+            playRandomAnomalySound();
+          }
+        }, 1500); // Retraso de seguridad para el sistema de audio
+        stopPresence();
       }
-      stopPresence();
     }
   });
 })();
 
+/* ==========================================
+   1.5 Cursor presonalizado
+   ========================================== */
+(function () {
+    const style = document.createElement('style');
+    style.textContent = `
+    *, *::before, *::after { cursor: none !important; }
+    #zm-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      width: 20px;
+      height: 20px;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease, opacity 0.2s;
+    }
+    #zm-cursor svg { width: 100%; height: 100%; }
+    #zm-cursor.clicking { transform: translate(-50%, -50%) scale(0.75); }
+    a, button, [onclick], label, input, textarea, select {
+      cursor: none !important;
+    }
+  `;
+    document.head.appendChild(style);
+
+    const el = document.createElement('div');
+    el.id = 'zm-cursor';
+    el.innerHTML = `
+    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="8" fill="none" stroke="#c0392b" stroke-width="1"/>
+      <line x1="10" y1="2" x2="10" y2="18" stroke="#c0392b" stroke-width="1"/>
+      <line x1="2" y1="10" x2="18" y2="10" stroke="#c0392b" stroke-width="1"/>
+      <circle cx="10" cy="10" r="1.5" fill="#c0392b"/>
+    </svg>
+  `;
+    document.body.appendChild(el);
+
+    let mx = -100,
+        my = -100;
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+        el.style.left = mx + 'px';
+        el.style.top = my + 'px';
+    });
+
+    document.addEventListener('mousedown', () => el.classList.add('clicking'));
+    document.addEventListener('mouseup', () => el.classList.remove('clicking'));
+    document.addEventListener('mouseleave', () => {
+        el.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        el.style.opacity = '1';
+    });
+})();
 
 /* ==========================================
    2. CONTADOR ESTILO EXPEDIENTE (Persistente)

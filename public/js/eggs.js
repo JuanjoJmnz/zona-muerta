@@ -506,120 +506,117 @@
 /* ====================================================
    8. INACTIVIDAD — El cursor cobra vida tras 30s quieto
    ==================================================== */
-  (function () {
+(function () {
+    // --- 1. Configuración de Estilos ---
+    const style = document.createElement('style');
+    style.textContent = `
+        *, *::before, *::after { cursor: none !important; }
+        #zm-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999999; /* Asegurado por encima de todo */
+            width: 20px;
+            height: 20px;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease, opacity 0.2s;
+            will-change: transform;
+        }
+        #zm-cursor svg { width: 100%; height: 100%; }
+        #zm-cursor.clicking { transform: translate(-50%, -50%) scale(0.75); }
+    `;
+    document.head.appendChild(style);
+
+    // --- 2. Crear Cursor ---
+    const el = document.createElement('div');
+    el.id = 'zm-cursor';
+    el.innerHTML = `
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="8" fill="none" stroke="#c0392b" stroke-width="1"/>
+            <line x1="10" y1="2" x2="10" y2="18" stroke="#c0392b" stroke-width="1"/>
+            <line x1="2" y1="10" x2="18" y2="10" stroke="#c0392b" stroke-width="1"/>
+            <circle cx="10" cy="10" r="1.5" fill="#c0392b"/>
+        </svg>
+    `;
+    document.body.appendChild(el);
+
+    // --- 3. Lógica de Estado (Idle) ---
     const originalTitle = document.title;
     const idleTitle = '...¿sigues ahí?';
     let idleTimer;
     let isIdle = false;
-    
-    // Variables para la animación del cursor falso
     let animationFrameId;
+
     let currentX = window.innerWidth / 2;
     let currentY = window.innerHeight / 2;
     let targetX = currentX;
     let targetY = currentY;
-    const speed = 0.05; // Controla la suavidad (menor = más suave/lento)
+    const speed = 0.05;
 
-    // 1. Creamos el elemento del cursor falso utilizando un SVG idéntico al estándar de Windows/Web
-    const fakeCursor = document.createElement('div');
-    fakeCursor.id = 'fake-cursor';
-    
-    // SVG del cursor clásico estilizado en base64 para que no dependa de imágenes externas
-    const cursorSvg = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32">
-        <path d="M6 3v22.5l6.2-6.2 4.8 10.7 3.9-1.8-4.8-10.7 7.9-.2Z" 
-              fill="white" 
-              stroke="black" 
-              stroke-width="2" 
-              stroke-linejoin="round"/>
-      </svg>
-    `.trim());
-
-    fakeCursor.style.cssText = `
-      position: fixed;
-      width: 30px;
-      height: 30px;
-      background-image: url('${cursorSvg}');
-      background-size: contain;
-      background-repeat: no-repeat;
-      display: none;
-      pointer-events: none;
-      z-index: 999999;
-      left: 0;
-      top: 0;
-      will-change: transform;
-    `;
-    document.body.appendChild(fakeCursor);
-
-    // 2. Función que calcula nuevas coordenadas aleatorias en la pantalla
     function updateTargetPosition() {
-      if (!isIdle) return;
-      // Margen de 30px para que no se salga completamente de los bordes de la ventana
-      targetX = Math.random() * (window.innerWidth - 30);
-      targetY = Math.random() * (window.innerHeight - 30);
-      
-      // Cambia de dirección de forma errática cada cierto tiempo (entre 800ms y 2s)
-      setTimeout(updateTargetPosition, Math.random() * 1200 + 800);
+        if (!isIdle) return;
+        targetX = Math.random() * (window.innerWidth - 30) + 15;
+        targetY = Math.random() * (window.innerHeight - 30) + 15;
+        setTimeout(updateTargetPosition, Math.random() * 1200 + 800);
     }
 
-    // 3. Bucle de animación suave (Lerp)
     function animateFakeCursor() {
-      if (!isIdle) return;
-
-      // Interpolación lineal: se acerca un % al objetivo en cada frame
-      currentX += (targetX - currentX) * speed;
-      currentY += (targetY - currentY) * speed;
-
-      // Aplicamos la posición con transform para un rendimiento óptimo de 60fps
-      fakeCursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-
-      animationFrameId = requestAnimationFrame(animateFakeCursor);
+        if (!isIdle) return;
+        currentX += (targetX - currentX) * speed;
+        currentY += (targetY - currentY) * speed;
+        
+        // Aplicamos posición
+        el.style.left = currentX + 'px';
+        el.style.top = currentY + 'px';
+        
+        animationFrameId = requestAnimationFrame(animateFakeCursor);
     }
 
-    // 4. Activación de la inactividad
     function setIdle() {
-      isIdle = true;
-      document.title = idleTitle;
-      
-      // Ocultamos el puntero real en toda la página y mostramos el falso
-      document.body.style.cursor = 'none';
-      fakeCursor.style.display = 'block';
-      
-      // Colocamos el falso donde se quedó el usuario aproximadamente si quisiéramos,
-      // o simplemente empezamos desde el centro actual.
-      targetX = currentX;
-      targetY = currentY;
-
-      // Arrancamos las rutinas de movimiento
-      updateTargetPosition();
-      animateFakeCursor();
+        isIdle = true;
+        document.title = idleTitle;
+        targetX = currentX;
+        targetY = currentY;
+        updateTargetPosition();
+        animateFakeCursor();
     }
 
-    // 5. Restauración al mover el ratón real o pulsar teclas
     function resetIdle(e) {
-      // Si el usuario se mueve, guardamos su última posición real para que el fake no "teletransporte" al activarse
-      if (e && e.clientX && e.clientY) {
-        currentX = e.clientX;
-        currentY = e.clientY;
-      }
+        if (e && e.clientX !== undefined) {
+            currentX = e.clientX;
+            currentY = e.clientY;
+            // Si el usuario mueve el ratón, posicionamos el cursor inmediatamente
+            el.style.left = currentX + 'px';
+            el.style.top = currentY + 'px';
+        }
 
-      if (isIdle) {
-        document.title = originalTitle;
-        document.body.style.cursor = 'default';
-        fakeCursor.style.display = 'none';
-        isIdle = false;
-        cancelAnimationFrame(animationFrameId);
-      }
-      
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(setIdle, 30000); // 30 segundos
+        if (isIdle) {
+            document.title = originalTitle;
+            isIdle = false;
+            cancelAnimationFrame(animationFrameId);
+        }
+        
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(setIdle, 30000); // 30 segundos
     }
 
-    // Escuchadores de eventos
-    ['mousemove', 'keydown', 'scroll', 'click'].forEach(evt => {
-      document.addEventListener(evt, resetIdle, { passive: true });
+    // --- 4. Eventos ---
+    document.addEventListener('mousemove', e => {
+        if (!isIdle) {
+            el.style.left = e.clientX + 'px';
+            el.style.top = e.clientY + 'px';
+        }
+        resetIdle(e);
     });
 
+    ['keydown', 'scroll', 'click'].forEach(evt => {
+        document.addEventListener(evt, resetIdle, { passive: true });
+    });
+
+    document.addEventListener('mousedown', () => el.classList.add('clicking'));
+    document.addEventListener('mouseup', () => el.classList.remove('clicking'));
+    document.addEventListener('mouseleave', () => el.style.opacity = '0');
+    document.addEventListener('mouseenter', () => el.style.opacity = '1');
+
     resetIdle();
-  })();
+})();
 })();
