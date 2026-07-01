@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "La Santa Compaña: Anatomía de la procesión de las ánimas"
 slug: "santa-compana-anatomia-procesion-animas"
-date: "2026-07-01"
+date: "2026-06-30"
 category: "Folklore"
 catClass: "cat-folklore"
 imgClass: "img-folklore"
