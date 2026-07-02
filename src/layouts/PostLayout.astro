@@ -500,13 +500,14 @@ const { pathname } = Astro.url;
                   <div class="cat-brief-block">
                     <div class="cat-label">
                       Media — ficha con línea temporal
-                    </div>
+                    </div>{" "}
+                    <br />
                     <div class="media-card">
                       <div class="media-card-header">
                         <span class="media-type-badge">
                           {finalPost.mediaBadge || "Registro"}
                         </span>
-                        <span class="media-title-small">{finalPost.title}</span>
+                        <span class="media-title-small"> </span>
                       </div>
                       <div class="media-timeline">
                         {finalPost.mediaTimeline.map((item: any) => (
