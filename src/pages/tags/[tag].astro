@@ -1,30 +1,37 @@
 ---
-import PostLayout from '../../layouts/PostLayout.astro';
+import PostLayout from "../../layouts/PostLayout.astro";
 
 export async function getStaticPaths() {
-  const postsGlob = import.meta.glob('../posts/*.md', { eager: true });
-  
+  const postsGlob = import.meta.glob("../posts/*.md", { eager: true });
+
   // Modificado: Mapeamos y ordenamos globalmente por fecha (más reciente primero)
-  const allPosts = Object.values(postsGlob).map((post: any) => ({
-    url: post.url,
-    frontmatter: post.frontmatter
-  })).sort((a: any, b: any) => {
-    return new globalThis.Date(b.frontmatter.date).getTime() - new globalThis.Date(a.frontmatter.date).getTime();
-  });
+  const allPosts = Object.values(postsGlob)
+    .map((post: any) => ({
+      url: post.url,
+      frontmatter: post.frontmatter,
+    }))
+    .sort((a: any, b: any) => {
+      return (
+        new globalThis.Date(b.frontmatter.date).getTime() -
+        new globalThis.Date(a.frontmatter.date).getTime()
+      );
+    });
 
   const allTags = new Set<string>();
-  allPosts.forEach(post => {
+  allPosts.forEach((post) => {
     if (post.frontmatter.tags) {
-      post.frontmatter.tags.forEach((t: string) => allTags.add(t.toLowerCase()));
+      post.frontmatter.tags.forEach((t: string) =>
+        allTags.add(t.toLowerCase()),
+      );
     }
   });
 
   return Array.from(allTags).map((tag) => {
     // Al filtrar, los posts ya vienen ordenados del paso anterior
-    const filteredPosts = allPosts.filter(post => 
-      post.frontmatter.tags?.map((t: string) => t.toLowerCase()).includes(tag)
+    const filteredPosts = allPosts.filter((post) =>
+      post.frontmatter.tags?.map((t: string) => t.toLowerCase()).includes(tag),
     );
-    
+
     return {
       params: { tag },
       props: { tagName: tag, posts: filteredPosts },
@@ -37,43 +44,54 @@ const { tagName, posts } = Astro.props;
 
 <PostLayout title={`Etiqueta: ${tagName}`}>
   <div class="archive-list-page">
-    
     <div class="archive-header" style="margin-bottom: 2rem;">
-      <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red); margin: 0;">FILTRO POR ETIQUETA</p>
-      <h2 style="font-family: var(--font-disp); font-size: 1.5rem; margin-top: 0.5rem; text-transform: uppercase; border: none; padding: 0;">
+      <p
+        style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red); margin: 0;"
+      >
+        FILTRO POR ETIQUETA
+      </p>
+      <h2
+        style="font-family: var(--font-disp); font-size: 1.5rem; margin-top: 0.5rem; text-transform: uppercase; border: none; padding: 0;"
+      >
         Resultados para: #{tagName}
       </h2>
     </div>
 
     <section class="posts-column">
-      {posts.map((post) => (
-        <>
-          <article class="post-row">
-            <div class="post-row-text">
-              <div class={`post-cat ${post.frontmatter.catClass}`}>{post.frontmatter.category}</div>
-              <h2 class="post-row-title"><a href={post.url}>{post.frontmatter.title}</a></h2>
-              <p class="post-row-excerpt">{post.frontmatter.excerpt}</p>
-              
-              <div class="post-meta">
-                <span>{post.frontmatter.date}</span>
-                <span class="sep">·</span>
-                <span>{post.frontmatter.duration}</span>
+      {
+        posts.map((post) => (
+          <>
+            <article class="post-row">
+              <div class="post-row-text">
+                <div class={`post-cat ${post.frontmatter.catClass}`}>
+                  {post.frontmatter.category}
+                </div>
+                <h2 class="post-row-title">
+                  <a href={post.url}>{post.frontmatter.title}</a>
+                </h2>
+                <p class="post-row-excerpt">{post.frontmatter.excerpt}</p>
+
+                <div class="post-meta">
+                  <span>{post.frontmatter.date}</span>
+                  <span class="sep">·</span>
+                  <span>{post.frontmatter.duration}</span>
+                </div>
               </div>
-            </div>
-            
-            <div class={`post-row-thumb ${post.frontmatter.imgClass || ''}`}>
-              {post.frontmatter.thumbImg ? (
-                <img 
-                  src={post.frontmatter.thumbImg} 
-                  alt={post.frontmatter.title} 
-                  style="width:100%; height:100%; object-fit:cover;" 
-                />
-              ) : null}
-            </div>
-          </article>
-          <div class="post-divider"></div>
-        </>
-      ))}
+
+              <div class={`post-row-thumb ${post.frontmatter.imgClass || ""}`}>
+                {post.frontmatter.thumbImg ? (
+                  <img
+                    src={post.frontmatter.thumbImg}
+                    alt={post.frontmatter.title}
+                    style="width:100%; height:100%; object-fit:cover;"
+                  />
+                ) : null}
+              </div>
+            </article>
+            <div class="post-divider" />
+          </>
+        ))
+      }
     </section>
   </div>
 </PostLayout>
@@ -83,7 +101,7 @@ const { tagName, posts } = Astro.props;
     display: flex !important;
     align-items: flex-start !important;
   }
-  
+
   .archive-list-page .post-row-title {
     border: none !important;
     padding: 0 !important;

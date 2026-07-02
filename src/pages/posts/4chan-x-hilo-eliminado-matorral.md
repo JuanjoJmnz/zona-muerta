@@ -64,6 +64,7 @@ threadPosts:
     body: "<span class='greentext'>No further replies.</span><br><span class='greentext'>404 Not Found.</span>"
 tags: ["4chan", "Archivos Perdidos", "Mitos de Virginia"]
 ---
+
 <br>Hay hilos que desaparecen porque nadie responde. Otros desaparecen demasiado rápido.<br><br>
 El tablón /x/ de 4Chan (dedicado al misterio y lo paranormal) es un vertedero de montajes, teorías de la conspiración y fanatismo ufológico. Pero de vez en cuando, entre miles de publicaciones basura, brota un hilo que hiela la sangre de la comunidad. Publicaciones que no buscan el aplauso, que irrumpen en mitad de la madrugada y que desaparecen del tablón pocas horas después, ya sea por la actividad normal del board o porque nunca llegan a quedar archivadas.
 
@@ -97,10 +98,9 @@ La última actividad registrada del creador del hilo dejó congelada la pantalla
 
 Última actividad del OP:
 
->03:12:14: Subiendo imagen de la trampilla
+> 03:12:14: Subiendo imagen de la trampilla
 
-
-Poco después, el hilo dejó de estar accesible mediante el enlace original y nunca apareció en los indexadores habituales. Las plataformas de indexación automática como *4plebs* o *Archived.moe* no llegaron a almacenar una copia completa debido a la brevedad de su exposición en el tablón.
+Poco después, el hilo dejó de estar accesible mediante el enlace original y nunca apareció en los indexadores habituales. Las plataformas de indexación automática como _4plebs_ o _Archived.moe_ no llegaron a almacenar una copia completa debido a la brevedad de su exposición en el tablón.
 
 <pre>Estado del material recuperado
 
@@ -126,6 +126,7 @@ Missing: 1
 Last successful archive: 02:58:41
 No further captures.<br>
 </pre>
+
 Quizá nunca sepamos qué apareció realmente en aquella última imagen. O quizá el problema sea que alguien sí llegó a verla.
 
 Y tú, ¿has presenciado alguna vez la caída en tiempo real de un hilo en /x/ que resultaba demasiado contradictorio y crudo para ser un simple 'creepypasta'? Si es así, no dudes en enviar tu experiencia a través de nuestra sección de <a href="/categorias/contacto" style="color: var(--red)">contacto</a>. La Zona Muerta permanece atenta.

@@ -31,8 +31,15 @@ folkRows:
   - region: "Escocia (paralelo, no variante)"
     name: "El Sluagh"
     diff: "Espíritus errantes que vuelan en formación y pueden obligar a un vivo a acompañarlos toda la noche. Solo los videntes con 'segunda vista' son capaces de percibirlos."
-tags: ["Santa Compaña", "Folklore Gallego", "Camino de Santiago", "Procesión de Muertos"]
+tags:
+  [
+    "Santa Compaña",
+    "Folklore Gallego",
+    "Camino de Santiago",
+    "Procesión de Muertos",
+  ]
 ---
+
 <br>
 Hay una regla en el folklore gallego que no admite excepciones: si a medianoche escuchas una campanilla por el camino y percibes un olor suave a cera, no te pares. No mires. Y si alguien, desde la oscuridad, intenta darte una vela encendida — no la cojas. Porque la persona que lleva la vela al frente de la Santa Compaña no puede dejar de caminar hasta que alguien más se la quite de las manos. Y en cuanto lo haga, el nuevo portador ocupará su lugar.
 
@@ -45,7 +52,7 @@ Hay una regla en el folklore gallego que no admite excepciones: si a medianoche 
 
 La Santa Compaña es la versión gallega de un mito que recorre todo el noroeste peninsular bajo distintos nombres: Güestia en Asturias, Huéspeda o Hueste de Ánimas en León y Zamora, Estantigua en Extremadura y Castilla, Hoste en el norte de Portugal. El territorio de la leyenda coincide casi exactamente con el de la antigua Gallaecia romana — y antes de ella, con la zona de mayor influencia celta de la península.
 
-Lo primero que conviene aclarar es que el nombre "Santa Compaña" es, según varios investigadores del folklore gallego, técnicamente incorrecto — o al menos inexacto. El pueblo nunca la llamó así en la práctica cotidiana. La llamaba simplemente *a Compaña*, y el adjetivo "santa" se añadía de forma apotropaica, como los asturianos que la denominan *bona xente* (buena gente): no porque lo sea, sino precisamente porque nombrarla por lo que es se consideraba peligroso. Es el mismo mecanismo que en la antigüedad clásica hacía llamar a las Erinias "las Benévolas" — un eufemismo de protección, no una descripción. <cite index="5-1">La denominación de Santa Compaña es errónea a pesar de su éxito literario. La gente no la llama así y, además, la Compaña puede ser muchas cosas, pero santa, desde luego, no.</cite>
+Lo primero que conviene aclarar es que el nombre "Santa Compaña" es, según varios investigadores del folklore gallego, técnicamente incorrecto — o al menos inexacto. El pueblo nunca la llamó así en la práctica cotidiana. La llamaba simplemente _a Compaña_, y el adjetivo "santa" se añadía de forma apotropaica, como los asturianos que la denominan _bona xente_ (buena gente): no porque lo sea, sino precisamente porque nombrarla por lo que es se consideraba peligroso. Es el mismo mecanismo que en la antigüedad clásica hacía llamar a las Erinias "las Benévolas" — un eufemismo de protección, no una descripción. <cite index="5-1">La denominación de Santa Compaña es errónea a pesar de su éxito literario. La gente no la llama así y, además, la Compaña puede ser muchas cosas, pero santa, desde luego, no.</cite>
 
 ### // Lo que ven quienes la ven
 
@@ -60,7 +67,7 @@ Al frente de la comitiva camina una figura viva — un mortal atrapado en el pap
 
 ## Cuaderno de campo: El silencio del bosque de Amenal (Verano, 2022)
 
-Los encuentros con la Compaña no pertenecen únicamente a los libros de historia o a las leyendas de aldea. El propio Camino de Santiago es un escenario activo de avistamientos nocturnos. El siguiente testimonio, remitido a la redacción de *Zona Muerta*, sitúa los hechos en la última etapa de la ruta jacobea:
+Los encuentros con la Compaña no pertenecen únicamente a los libros de historia o a las leyendas de aldea. El propio Camino de Santiago es un escenario activo de avistamientos nocturnos. El siguiente testimonio, remitido a la redacción de _Zona Muerta_, sitúa los hechos en la última etapa de la ruta jacobea:
 
 > "Era el último día del Camino, en pleno verano de 2022. Acababa de salir de O Pedrouzo muy temprano, alrededor de las 4 de la mañana, para evitar que el sofocante calor me atrapase en los últimos kilómetros antes de llegar a la Catedral de Santiago. Iba completamente solo; no se veía la silueta ni las linternas de ningún otro peregrino, ni por delante ni por detrás.
 >
@@ -103,7 +110,7 @@ Lo que sí parece claro es que el elemento cristiano — la cruz, el caldero de 
 
 ## Cómo no acabar llevando la vela
 
-El folklore es tan detallado en las formas de cruzarse con la Compaña como en las formas de sobrevivir al encuentro. Si el vivo que encabeza la procesión intenta entregarte la cruz o el caldero, la respuesta ritual es abrir los brazos en forma de cruz y contestar en gallego: *Cruz xa teño* — cruz ya tengo. El resto de mecanismos de defensa documentados:
+El folklore es tan detallado en las formas de cruzarse con la Compaña como en las formas de sobrevivir al encuentro. Si el vivo que encabeza la procesión intenta entregarte la cruz o el caldero, la respuesta ritual es abrir los brazos en forma de cruz y contestar en gallego: _Cruz xa teño_ — cruz ya tengo. El resto de mecanismos de defensa documentados:
 
 - **El círculo de sal:** trazar un círculo en el suelo y mantenerse dentro, sin mirar, hasta que el último integrante haya pasado. Las ánimas no pueden cruzarlo.
 - **El Círculo de Salomón:** variante asturiana, trazado con más precisión, con la misma lógica de zona de exclusión.

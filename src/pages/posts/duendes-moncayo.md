@@ -12,6 +12,7 @@ duration: "9 min"
 excerpt: "Tras las historias tradicionales se esconden registros policiales de senderistas que se desvanecieron sin dejar rastro."
 tags: ["Montaña", "Mitos", "Desapariciones"]
 ---
+
 El monte esconde guardianes ancestrales...
 
 <div class="exp-box exp-box--folklore">

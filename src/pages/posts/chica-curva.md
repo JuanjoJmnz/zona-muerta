@@ -12,6 +12,7 @@ duration: "7 min"
 excerpt: "Analizamos los testimonios de conductores en la carretera secundaria A-32. Todos coinciden en la misma advertencia."
 tags: ["Carretera", "Apariciones", "Espíritus"]
 ---
+
 Aparece cuando la niebla cubre el asfalto...
 
 <div class="exp-box exp-box--leyenda">

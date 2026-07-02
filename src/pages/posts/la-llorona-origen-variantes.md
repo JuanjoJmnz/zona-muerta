@@ -33,8 +33,10 @@ leyendaRegions:
     variant: "La Banshee — grito que anuncia la muerte, sin relación genealógica"
 tags: ["Llorona", "Folklore", "Latinoamérica", "Leyenda urbana"]
 ---
+
 ##
-Hay una historia que cualquier niño latinoamericano ha escuchado al menos una vez, casi siempre de boca de un abuelo, casi siempre cerca de la hora de dormir, casi siempre con la misma advertencia al final: *no salgas de noche, no te acerques al río, no respondas si oyes llorar*. La Llorona no necesita presentación en gran parte del continente. Lo que pocos saben es que la mujer que persigue niños cerca del agua en México es, con otro nombre y otra cara, la misma que castiga a hombres infieles en Venezuela, la que tiene pies de ave en Panamá, o la que escupe fuego en el noroeste argentino.
+
+Hay una historia que cualquier niño latinoamericano ha escuchado al menos una vez, casi siempre de boca de un abuelo, casi siempre cerca de la hora de dormir, casi siempre con la misma advertencia al final: _no salgas de noche, no te acerques al río, no respondas si oyes llorar_. La Llorona no necesita presentación en gran parte del continente. Lo que pocos saben es que la mujer que persigue niños cerca del agua en México es, con otro nombre y otra cara, la misma que castiga a hombres infieles en Venezuela, la que tiene pies de ave en Panamá, o la que escupe fuego en el noroeste argentino.
 
 <div class="exp-box exp-box--leyenda">
   <div class="exp-box-label">// Primer registro documentado</div>
@@ -84,7 +86,6 @@ Hay un detalle que casi ningún relato de La Llorona omite, sin importar el paí
 ## Un paralelismo que no es descendencia, sino coincidencia
 
 Conviene aclarar algo que se presta a confusión: la **Banshee** irlandesa —el espíritu femenino cuyo grito anuncia una muerte próxima— no es un antepasado ni un pariente de La Llorona. Son tradiciones que nacieron en continentes distintos, sin conexión histórica directa, y que sin embargo llegaron a una figura sorprendentemente parecida: una mujer, un lamento, un presagio. Los folkloristas suelen citar este tipo de coincidencias como ejemplo de cómo determinados arquetipos —la mujer en duelo, el aviso de muerte— emergen de forma independiente en culturas que nunca tuvieron contacto entre sí, simplemente porque responden a miedos humanos que no dependen de la geografía.
-
 
 > "Si la oyes cerca, está lejos. Si la oyes lejos, ya está detrás de ti."
 

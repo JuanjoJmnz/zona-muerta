@@ -1,155 +1,183 @@
 ---
-import PostLayout from '../layouts/PostLayout.astro';
+import PostLayout from "../layouts/PostLayout.astro";
 
-const postsGlob = import.meta.glob('./posts/*.md', { eager: true });
+const postsGlob = import.meta.glob("./posts/*.md", { eager: true });
 
 // Modificado: Mapeamos los datos y añadimos el .sort() al final para ordenar de más reciente a más antiguo
-const allPosts = Object.values(postsGlob).map((post: any) => ({
-  url: post.url,
-  title: post.frontmatter.title,
-  excerpt: post.frontmatter.excerpt,
-  category: post.frontmatter.category,
-  catClass: post.frontmatter.catClass || 'cat-sistema',
-  imgClass: post.frontmatter.imgClass || '',
-  thumbImg: post.frontmatter.thumbImg,
-  date: post.frontmatter.date,
-  duration: post.frontmatter.duration || '',
-  tags: post.frontmatter.tags || []
-})).sort((a, b) => {
-  return new globalThis.Date(b.date).getTime() - new globalThis.Date(a.date).getTime();
-});
+const allPosts = Object.values(postsGlob)
+  .map((post: any) => ({
+    url: post.url,
+    title: post.frontmatter.title,
+    excerpt: post.frontmatter.excerpt,
+    category: post.frontmatter.category,
+    catClass: post.frontmatter.catClass || "cat-sistema",
+    imgClass: post.frontmatter.imgClass || "",
+    thumbImg: post.frontmatter.thumbImg,
+    date: post.frontmatter.date,
+    duration: post.frontmatter.duration || "",
+    tags: post.frontmatter.tags || [],
+  }))
+  .sort((a, b) => {
+    return (
+      new globalThis.Date(b.date).getTime() -
+      new globalThis.Date(a.date).getTime()
+    );
+  });
 ---
 
 <PostLayout title="Buscador de Expedientes">
   <div class="search-page-header" style="margin-bottom: 2rem;">
-    <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red);">TERMINAL DE BÚSQUEDA</p>
-    <input 
-      type="text" 
-      id="local-search-input" 
-      placeholder="Introduce palabras clave (ej: psiquiátrico, curva...)" 
+    <p
+      style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--red);"
+    >
+      TERMINAL DE BÚSQUEDA
+    </p>
+    <input
+      type="text"
+      id="local-search-input"
+      placeholder="Introduce palabras clave (ej: psiquiátrico, curva...)"
       style="width:100%; max-width:600px; background:var(--bg3); border:1px solid var(--border2); padding:0.75rem; font-family:var(--font-mono); color:var(--text); margin-top:1rem; outline:none;"
     />
-    <p id="search-counter" style="font-size: 0.85rem; color: var(--text2); margin-top: 0.75rem;">
+    <p
+      id="search-counter"
+      style="font-size: 0.85rem; color: var(--text2); margin-top: 0.75rem;"
+    >
       Escribe algo para escanear los archivos.
     </p>
   </div>
 
   <div class="archive-list-page">
     <section id="search-results-container" class="posts-column">
-      
-      {allPosts.map((post) => (
-        <div 
-          class="search-post-card" 
-          style="display: none;" 
-          data-title={post.title.toLowerCase()}
-          data-excerpt={post.excerpt.toLowerCase()}
-          data-category={post.category.toLowerCase()}
-          data-tags={post.tags.join(',').toLowerCase()}
-        >
-          <article class="post-row">
-            <div class="post-row-text">
-              <div class={`post-cat ${post.catClass}`}>
-                {post.category === 'x' || post.category === '-x-' || post.category === '/x/' ? '/x/' : post.category}
-              </div>
-              <h2 class="post-row-title">
-                <a href={post.url}>{post.title}</a>
-              </h2>
-              <p class="post-row-excerpt">{post.excerpt}</p>
-              
-              {/* Añadimos los mismos metadatos que en la página de archivos */}
-              <div class="art-meta" style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text2);">
-                <span>{post.date}</span>
-                {post.duration && (
-                  <>
-                    <span style="margin: 0 0.4rem;">·</span>
-                    <span>{post.duration} lectura</span>
-                  </>
-                )}
-              </div>
-            </div>
+      {
+        allPosts.map((post) => (
+          <div
+            class="search-post-card"
+            style="display: none;"
+            data-title={post.title.toLowerCase()}
+            data-excerpt={post.excerpt.toLowerCase()}
+            data-category={post.category.toLowerCase()}
+            data-tags={post.tags.join(",").toLowerCase()}
+          >
+            <article class="post-row">
+              <div class="post-row-text">
+                <div class={`post-cat ${post.catClass}`}>
+                  {post.category === "x" ||
+                  post.category === "-x-" ||
+                  post.category === "/x/"
+                    ? "/x/"
+                    : post.category}
+                </div>
+                <h2 class="post-row-title">
+                  <a href={post.url}>{post.title}</a>
+                </h2>
+                <p class="post-row-excerpt">{post.excerpt}</p>
 
-            <div class={`post-row-thumb ${post.imgClass}`}>
-              {post.thumbImg ? (
-                <img 
-                  src={post.thumbImg} 
-                  alt={post.title} 
-                  style="width:100%; height:100%; object-fit:cover;" 
-                />
-              ) : null}
-            </div>
-          </article>
-          <div class="post-divider"></div>
-        </div>
-      ))}
+                {/* Añadimos los mismos metadatos que en la página de archivos */}
+                <div
+                  class="art-meta"
+                  style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text2);"
+                >
+                  <span>{post.date}</span>
+                  {post.duration && (
+                    <>
+                      <span style="margin: 0 0.4rem;">·</span>
+                      <span>{post.duration} lectura</span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div class={`post-row-thumb ${post.imgClass}`}>
+                {post.thumbImg ? (
+                  <img
+                    src={post.thumbImg}
+                    alt={post.title}
+                    style="width:100%; height:100%; object-fit:cover;"
+                  />
+                ) : null}
+              </div>
+            </article>
+            <div class="post-divider" />
+          </div>
+        ))
+      }
 
       {/* Mensaje en caso de que no haya coincidencias */}
-      <p id="no-results-msg" style="display: none; color:var(--text2); font-size:0.9rem;">
+      <p
+        id="no-results-msg"
+        style="display: none; color:var(--text2); font-size:0.9rem;"
+      >
         No se encontraron registros autorizados con ese criterio.
       </p>
-
     </section>
   </div>
 </PostLayout>
 
 <script>
-  const searchInput = document.getElementById('local-search-input') as HTMLInputElement;
-  const counter = document.getElementById('search-counter');
-  const postCards = document.querySelectorAll('.search-post-card') as NodeListOf<HTMLElement>;
-  const noResultsMsg = document.getElementById('no-results-msg');
+  const searchInput = document.getElementById(
+    "local-search-input",
+  ) as HTMLInputElement;
+  const counter = document.getElementById("search-counter");
+  const postCards = document.querySelectorAll(
+    ".search-post-card",
+  ) as NodeListOf<HTMLElement>;
+  const noResultsMsg = document.getElementById("no-results-msg");
 
   function executeSearch(query: string) {
     // Si la búsqueda es muy corta, lo ocultamos todo de nuevo
     if (query.length < 2) {
-      postCards.forEach(card => card.style.display = 'none');
-      if (noResultsMsg) noResultsMsg.style.display = 'none';
-      if (counter) counter.innerText = 'Escribe al menos 2 caracteres para escanear...';
+      postCards.forEach((card) => (card.style.display = "none"));
+      if (noResultsMsg) noResultsMsg.style.display = "none";
+      if (counter)
+        counter.innerText = "Escribe al menos 2 caracteres para escanear...";
       return;
     }
 
     let visibleCount = 0;
 
-    postCards.forEach(card => {
-      const title = card.getAttribute('data-title') || '';
-      const excerpt = card.getAttribute('data-excerpt') || '';
-      const category = card.getAttribute('data-category') || '';
-      const tags = card.getAttribute('data-tags') || '';
+    postCards.forEach((card) => {
+      const title = card.getAttribute("data-title") || "";
+      const excerpt = card.getAttribute("data-excerpt") || "";
+      const category = card.getAttribute("data-category") || "";
+      const tags = card.getAttribute("data-tags") || "";
 
-      const matches = title.includes(query) || 
-                      excerpt.includes(query) || 
-                      category.includes(query) || 
-                      tags.includes(query);
+      const matches =
+        title.includes(query) ||
+        excerpt.includes(query) ||
+        category.includes(query) ||
+        tags.includes(query);
 
       if (matches) {
-        card.style.display = 'block';
+        card.style.display = "block";
         visibleCount++;
       } else {
-        card.style.display = 'none';
+        card.style.display = "none";
       }
     });
 
     if (counter) {
       counter.innerText = `Se han detectado ${visibleCount} coincidencias.`;
     }
-    
+
     if (noResultsMsg) {
-      noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+      noResultsMsg.style.display = visibleCount === 0 ? "block" : "none";
     }
 
     // Si tu script de efectos visuales (papel viejo/decay) está activo, lo relanzamos
-    if (typeof (window as any).ZM_applyDecay === 'function') {
+    if (typeof (window as any).ZM_applyDecay === "function") {
       (window as any).ZM_applyDecay();
     }
   }
 
-  searchInput?.addEventListener('input', (e) => {
+  searchInput?.addEventListener("input", (e) => {
     const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
     executeSearch(query);
   });
 
   // Listener para capturar búsquedas que vengan desde la URL de la cabecera (?q=...)
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const queryFromUrl = urlParams.get('q');
+    const queryFromUrl = urlParams.get("q");
 
     if (queryFromUrl && searchInput) {
       const cleanQuery = queryFromUrl.toLowerCase().trim();
@@ -165,7 +193,7 @@ const allPosts = Object.values(postsGlob).map((post: any) => ({
     display: flex !important;
     align-items: flex-start !important;
   }
-  
+
   .archive-list-page .post-row-title {
     border: none !important;
     padding: 0 !important;
