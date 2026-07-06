@@ -1,4 +1,6 @@
 ---
+import Analytics from '@vercel/analytics/astro';
+
 // Extraemos las propiedades de forma flexible
 const { frontmatter, title: customTitle } = Astro.props;
 
@@ -124,6 +126,7 @@ const { pathname } = Astro.url;
 
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/vibes.css" />
+    <Analytics />
   </head>
   <body>
     <header>

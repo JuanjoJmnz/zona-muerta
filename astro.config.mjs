@@ -6,5 +6,9 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   output: 'static',
   site: 'https://zona-muerta.vercel.app',
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
 });
