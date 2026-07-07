@@ -68,8 +68,8 @@
     },
     konami: {
       title: 'La secuencia antigua',
-      hint: 'Una secuencia vieja de los videojuegos invierte el mundo: arriba, arriba, abajo, abajo, izquierda, derecha, izquierda, derecha.',
-      revealed: 'El código Konami: ↑ ↑ ↓ ↓ ← → ← →',
+      hint: 'Una secuencia vieja de los videojuegos invierte el mundo: arriba, arriba, abajo, abajo, izquierda, derecha, izquierda, derecha, b, a.',
+      revealed: 'El código Konami: ↑ ↑ ↓ ↓ ← → ← → b a',
     },
     frecuencia: {
       title: 'Frecuencia sincronizada',
