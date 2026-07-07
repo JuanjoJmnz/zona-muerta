@@ -203,7 +203,8 @@
    ↑ ↑ ↓ ↓ ← → ← → — invierte colores 3s
    ========================================== */
 (function () {
-  const SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight'];
+  // Añadidas 'b' y 'a' al final de la secuencia
+  const SEQUENCE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
   let progress = 0;
 
   const msg = document.createElement('div');
@@ -221,7 +222,11 @@
     const tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
 
-    if (e.key === SEQUENCE[progress]) {
+    // Convertimos a minúsculas por si acaso el usuario tiene el Bloq Mayús activado
+    const pressedKey = e.key.toLowerCase();
+    const expectedKey = SEQUENCE[progress].toLowerCase();
+
+    if (pressedKey === expectedKey) {
       progress++;
       if (progress === SEQUENCE.length) {
         progress = 0;
@@ -236,7 +241,8 @@
       }
     } else {
       // Si rompe la secuencia, reiniciamos (salvo que justo reinicie con la primera tecla correcta)
-      progress = (e.key === SEQUENCE[0]) ? 1 : 0;
+      const firstKey = SEQUENCE[0].toLowerCase();
+      progress = (pressedKey === firstKey) ? 1 : 0;
     }
   });
 })();
