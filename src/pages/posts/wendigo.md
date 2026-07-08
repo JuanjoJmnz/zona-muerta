@@ -25,6 +25,8 @@ folkRows:
 tags: ["Norteamérica", "PueblosAlgonquinos", "Invierno", "Canibalismo"]
 ---
 
+##
+
 Antes de nada, una aclaración necesaria: el Wendigo no es un monstruo de ficción sin dueño. Es una figura del folclore de los pueblos algonquinos —Ojibwe, Cree, Algonquin, entre otros— con un peso espiritual y cultural real para comunidades indígenas que existen hoy. Lo tratamos aquí desde el respeto, no como un "monstruo de videojuego" más.
 
 <div class="exp-box exp-box--folklore">
